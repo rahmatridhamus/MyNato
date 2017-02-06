@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.rahmatridham.mynato">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Splashscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".LandingPage" />
+        <activity
+            android:name=".StepCoCActivity.Step1VisiMisi"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".StepCoCActivity.Step2Motivasi"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".StepCoCActivity.Step3TataNilai"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".StepCoCActivity.Step4DoAndDont"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".StepCoCActivity.Step5Thematik"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".StepCoCActivity.Step6Absensi"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".StepCoCActivity.CocVerified" />
+        <activity android:name=".Pemberitahuan.Pemberitahuan" />
+        <activity android:name=".Pemberitahuan.pemberitahuanDetil"></activity>
+    </application>
+
+</manifest>

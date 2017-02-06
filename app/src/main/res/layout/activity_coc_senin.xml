@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_coc_senin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rahmatridham.mynato.StepCoCActivity.CocVerified">
+
+    <TextView
+        android:text="Anda akan memulai Coc dengan memilih role yang telah disepakati"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_width="250dp"
+        android:textAlignment="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/anggotaCoc"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/adminInput"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/coc_senin"
+            android:id="@+id/adminInputsi" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/adminInput"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/coc_senin"
+            android:id="@+id/adminInputs" />
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:text="Tata Nilai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="76dp"
+            android:id="@+id/textView4tatanilai" />
+
+        <TextView
+            android:text="Do and Dont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="94dp"
+            android:id="@+id/textView7doanddont" />
+
+        <TextView
+            android:text="Kontrak Manajemen / RUPTL / RJPP / RKAP / Kebijakan Bidang Teknik, Operasi dan Pembangkit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8topik"
+            android:textAlignment="center"
+            android:layout_below="@+id/textView7doanddont"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Visi dan Misi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3visidanmisi"
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/textView4tatanilai"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="22dp" />
+
+        <TextView
+            android:text="Konten CoC Senin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/kontenCocHari"
+            android:textStyle="normal|bold"
+            android:textSize="18sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
