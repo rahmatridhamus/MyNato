@@ -25,14 +25,14 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:id="@+id/kolomVisi"
-        android:layout_height="205dp"
         android:layout_below="@+id/stepbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_height="225dp">
 
         <RelativeLayout
             android:id="@+id/relvisi"
@@ -52,8 +52,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_below="@id/relvisi">
+            android:layout_height="match_parent"
+            android:layout_below="@id/relvisi"
+            android:id="@+id/scrollView3"
+            android:layout_above="@+id/checkBoxVisi">
 
             <TextView
                 android:layout_width="match_parent"
@@ -69,25 +71,30 @@
             android:text="Kami Telah Melaksanakan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:id="@+id/checkBoxVisi" />
+            android:id="@+id/checkBoxVisi"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_marginTop="9dp"
+            android:layout_alignParentBottom="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:id="@+id/kolomMisi"
-        android:layout_height="205dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/kolomVisi"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonLanjutkan">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:background="@android:color/darker_gray">
+            android:background="@android:color/darker_gray"
+            android:id="@+id/relativeLayout2">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,10 +103,23 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="18sp" />
         </RelativeLayout>
+
+        <CheckBox
+            android:text="Kami Telah Melaksanakan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxMisi"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false" />
+
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_below="@id/relvisi">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayout2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/checkBoxMisi">
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,14 +130,7 @@
                 android:paddingTop="10dp" />
 
         </ScrollView>
-
-        <CheckBox
-            android:text="Kami Telah Melaksanakan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:id="@+id/checkBoxMisi" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:text="Lanjutkan"
@@ -126,7 +139,6 @@
         android:id="@+id/buttonLanjutkan"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
