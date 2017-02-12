@@ -31,17 +31,32 @@
         android:layout_below="@+id/stepbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_height="205dp">
+        android:layout_height="255dp">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relDatdir"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data Kehadiran"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/kolomDokumentasi"
-        android:layout_below="@+id/kolomDataKehadiran"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="205dp">
+        <RadioGroup
+            android:id="@+id/radioTataNilai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/relDatdir">
+
+        </RadioGroup>
 
     </RelativeLayout>
 
@@ -53,5 +68,84 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:layout_margin="5dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:id="@+id/kolomDokumentasi"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/kolomDataKehadiran"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonSelesai">
+
+        <RelativeLayout
+            android:id="@+id/relTanil"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dokumentasi Kehadiran"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp">
+                <ImageView
+                    android:id="@+id/fotocuy"
+                    android:layout_width="140dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/icon_coc_kamis" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foto Absen"
+                    android:id="@+id/textView3"
+                    android:layout_below="@+id/fotocuy"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp">
+                <ImageView
+                    android:id="@+id/fotocuys"
+                    android:layout_width="140dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/icon_coc_kamis" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foto Pegawai"
+                    android:id="@+id/textView"
+                    android:layout_below="@+id/fotocuys"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

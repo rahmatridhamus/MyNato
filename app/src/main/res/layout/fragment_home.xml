@@ -63,14 +63,15 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
 
                             <ImageView
                                 android:id="@+id/coc_senin"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:src="@drawable/coc_senin" />
+                                android:src="@drawable/icon_coc_senin" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -95,13 +96,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
 
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:src="@drawable/coc_rabu" />
+                                android:src="@drawable/icon_coc_rabu" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -126,11 +128,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/coc_kamis"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_coc_kamis"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -155,11 +158,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/coc_jumat"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_coc_jumat"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -185,11 +189,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="match_parent">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/coc_insidental"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_coc_insidental"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -214,11 +219,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="match_parent">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/pemberitahuan"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_pemberitahuan"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -244,11 +250,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="match_parent">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/kadir"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_pak_kadir"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -274,11 +281,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:gravity="center"
                             android:layout_height="match_parent">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/coc_selasa"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_survey"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -305,11 +313,12 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:src="@drawable/coc_selasa"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/icon_absensi"
                                 android:layout_marginLeft="5dp" />
 
                             <TextView
@@ -332,13 +341,14 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:gravity="center">
 
                             <ImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:src="@drawable/coc_selasa" />
+                                android:src="@drawable/icon_coc_selasa" />
 
                             <TextView
                                 android:layout_width="wrap_content"

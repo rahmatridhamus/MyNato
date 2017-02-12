@@ -39,7 +39,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".StepCoCActivity.CocVerified" />
         <activity android:name=".Pemberitahuan.Pemberitahuan" />
-        <activity android:name=".Pemberitahuan.pemberitahuanDetil"></activity>
+        <activity android:name=".Pemberitahuan.pemberitahuanDetil" />
+        <activity android:name=".StepCoCActivity.PrepareAddCoc"></activity>
     </application>
 
 </manifest>

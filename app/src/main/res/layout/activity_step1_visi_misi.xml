@@ -25,25 +25,99 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:id="@+id/kolomDataKehadiran"
+        android:id="@+id/kolomVisi"
+        android:layout_height="205dp"
         android:layout_below="@+id/stepbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="205dp">
+        android:layout_alignParentStart="true">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relvisi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visi"
+                android:textStyle="normal|bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp" />
+        </RelativeLayout>
 
-    <RelativeLayout
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_below="@id/relvisi">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp" />
+
+        </ScrollView>
+
+        <CheckBox
+            android:text="Kami Telah Melaksanakan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/checkBoxVisi" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:id="@+id/kolomMisi"
-        android:layout_below="@+id/kolomDataKehadiran"
+        android:layout_height="205dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/kolomVisi"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="205dp">
+        android:layout_alignParentStart="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Misi"
+                android:textStyle="normal|bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_below="@id/relvisi">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp" />
+
+        </ScrollView>
+
+        <CheckBox
+            android:text="Kami Telah Melaksanakan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:id="@+id/checkBoxMisi" />
+    </LinearLayout>
 
     <Button
         android:text="Lanjutkan"
@@ -54,4 +128,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp" />
+
 </RelativeLayout>

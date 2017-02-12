@@ -26,29 +26,55 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/body"
         android:layout_below="@+id/stepbar"
-        android:layout_height="340dp">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relvisi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cerita Motivasi"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/listCardMotivasi"
+            android:layout_height="330dp">
+
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
     <CheckBox
-        android:text="Kami telah melaksanakan"
-        android:layout_width="wrap_content"
+        android:text="Kami Telah Melaksanakan"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/body"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/checkBox" />
+        android:id="@+id/checkBoxVisi"
+        android:layout_above="@+id/buttonLanjutkan" />
 
     <Button
         android:text="Lanjutkan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
         android:id="@+id/buttonLanjutkan"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp" />
+
 </RelativeLayout>

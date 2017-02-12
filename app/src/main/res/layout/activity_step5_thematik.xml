@@ -31,26 +31,56 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/body"
-        android:layout_height="380dp"
-        android:layout_below="@+id/stepbar">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stepbar"
+        android:layout_above="@+id/checkBox">
+
+        <RelativeLayout
+            android:id="@+id/relTanil"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray">
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Static Content Thematik"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/relTanil"
+            android:id="@+id/relayPertSebelum"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"></RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/radioTataNilai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relayPertSebelum">
+
+        </RadioGroup>
 
     </RelativeLayout>
-
-    <CheckBox
-        android:text="Kami telah melaksanakan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/body"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/checkBox" />
 
     <Button
         android:text="Lanjutkan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
         android:id="@+id/buttonLanjutkan"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="Kami telah melaksanakan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_above="@+id/buttonLanjutkan"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
