@@ -63,7 +63,8 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingStart="10dp"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:id="@+id/descVisi" />
 
         </ScrollView>
 
@@ -127,7 +128,8 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingStart="10dp"
-                android:paddingTop="10dp" />
+                android:paddingTop="10dp"
+                android:id="@+id/descMisi" />
 
         </ScrollView>
     </RelativeLayout>

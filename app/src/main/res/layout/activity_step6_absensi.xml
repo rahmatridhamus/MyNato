@@ -48,15 +48,16 @@
                 android:textSize="18sp" />
         </RelativeLayout>
 
-        <RadioGroup
-            android:id="@+id/radioTataNilai"
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/checkAbsensi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/relDatdir">
 
-        </RadioGroup>
+        </LinearLayout>
 
     </RelativeLayout>
 

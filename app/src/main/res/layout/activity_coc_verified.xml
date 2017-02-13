@@ -70,6 +70,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/relaycoc"
         android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
         android:id="@+id/radioTipecoc"
         android:layout_above="@+id/buttonSelanjutnya" />
 
