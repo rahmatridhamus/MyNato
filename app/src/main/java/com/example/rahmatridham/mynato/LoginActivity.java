@@ -18,11 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText username,password;
+    EditText username, password;
     Button signIn;
     private boolean loggedIn = false;
 
@@ -38,9 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!username.getText().equals(null) && !password.getText().equals(null)){
+                if (!username.getText().equals(null) && !password.getText().equals(null)) {
 
-                    login();
+//                    login();
+                    authenticate();
                 }
             }
         });
@@ -64,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    void login(){
+    void login() {
         SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         //Creating editor to store values to shared preferences
@@ -83,44 +87,54 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    void authenticate(){
+    void authenticate() {
         final String email = username.getText().toString().trim();
         final String password = this.password.getText().toString().trim();
 
 
         //Creating a string request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Login/create",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //If we are getting success from server
-                        if (!response.equals("failure")) {
-//                      if(response.equalsIgnoreCase(Config.LOGIN_SUCCESS)){
-                            String a = response.substring(6);
-                            a = a.replace("}","").trim().replace(" ","");
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                JSONObject data = jsonObject.getJSONObject("data");
+//                                Toast.makeText(LoginActivity.this, "masuk di proses", Toast.LENGTH_SHORT).show();
 
-                            int id = Integer.valueOf(a);
-                            //Creating a shared preference
-                            SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                                //Creating a shared preference
+                                SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-                            //Creating editor to store values to shared preferences
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                //Creating editor to store values to shared preferences
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            //Adding values to editor
-                            editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
-                            editor.putString(Config.EMAIL_SHARED_PREF, email);
-                            editor.putString("idUser",""+id);
+                                //Adding values to editor
+                                editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
+                                editor.putString(Config.EMAIL_SHARED_PREF, email);
+                                editor.putString(Config.USERID_SHARED_PREF, data.optString("user_id"));
+                                editor.putString(Config.NIPEG_SHARED_PREF, data.optString("nipeg"));
+                                editor.putString(Config.NAMA_SHARED_PREF, data.optString("nama"));
+                                editor.putString(Config.KODEPOSISI_SHARED_PREF, data.optString("kode_posisi"));
+                                editor.putString(Config.ROLE_SHARED_PREF, data.optString("role"));
+                                editor.putString(Config.JABATAN_SHARED_PREF, data.optString("jabatan"));
 
-                            //Saving values to editor
-                            editor.commit();
+                                //Saving values to editor
+                                editor.commit();
 
-                            //Starting profile activity
-                            Intent intent = new Intent(LoginActivity.this, LandingPage.class);
-                            startActivity(intent);
-                        } else {
-                            //If the server response is not success
-                            //Displaying an error message on toast
-                            Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                                //Starting profile activity
+                                Intent intent = new Intent(LoginActivity.this, LandingPage.class);
+                                startActivity(intent);
+
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this, "error: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

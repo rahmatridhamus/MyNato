@@ -14,10 +14,10 @@
         <RelativeLayout
             android:id="@+id/ChartRelative"
             android:layout_width="match_parent"
+            android:layout_height="170dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_height="170dp">
+            android:layout_alignParentTop="true">
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart1"
@@ -30,339 +30,213 @@
         <RelativeLayout
             android:id="@+id/MenuRelative"
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="@android:color/darker_gray"
-            android:layout_below="@+id/ChartRelative">
+            android:layout_below="@+id/ChartRelative"
+            android:background="@color/cardview_light_background"
+            android:gravity="center_vertical">
 
-            <ScrollView
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/cardview_light_background">
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_light_background"
+                android:padding="5dp"
+                android:paddingBottom="10dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/cardview_light_background"
-                    android:padding="5dp"
-                    android:paddingBottom="10dp">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cocThematik"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/adminInput"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_coc_jumat" />
 
-                            <ImageView
-                                android:id="@+id/coc_senin"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginLeft="5dp"
-                                android:src="@drawable/icon_coc_senin" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Coc Thematik"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:paddingLeft="5dp"
-                                android:text="Coc Senin"
-                                android:textSize="10sp" />
-                        </LinearLayout>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/insidental"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp">
 
-                    </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/cocRabu"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="80dp">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_coc_insidental" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Coc Insidental"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginLeft="5dp"
-                                android:src="@drawable/icon_coc_rabu" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/pemberitahuan"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/cocThematik"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:paddingLeft="5dp"
-                                android:text="Coc Rabu"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/cocKamis"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="@+id/cocSelasa"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="80dp">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_pemberitahuan" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_coc_kamis"
-                                android:layout_marginLeft="5dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Pemberitahuan"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Coc Kamis"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/pakKadir"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/insidental"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/cocJumat"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="160dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_coc_jumat"
-                                android:layout_marginLeft="5dp" />
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_pak_kadir" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Coc Jum'at"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Pak Kadir"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/insidental"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="@+id/cocSelasa"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="160dp">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/survey"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/pemberitahuan"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:gravity="center"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_coc_insidental"
-                                android:layout_marginLeft="5dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Coc Insidental"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_survey" />
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/pemberitahuan"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="240dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Survey"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:gravity="center"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_pemberitahuan"
-                                android:layout_marginLeft="5dp" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/absensi"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/pakKadir"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Pemberitahuan"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/pakKadir"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="@+id/cocSelasa"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="240dp">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_absensi" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:gravity="center"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_pak_kadir"
-                                android:layout_marginLeft="5dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="Absensi"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Pak Kadir"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/survey"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="320dp"
-                        android:layout_marginBottom="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:gravity="center"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_survey"
-                                android:layout_marginLeft="5dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Survey"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/absensi"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="@+id/cocSelasa"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="320dp"
-                        android:layout_marginBottom="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:src="@drawable/icon_absensi"
-                                android:layout_marginLeft="5dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="Absensi"
-                                android:textSize="10sp"
-                                android:paddingLeft="5dp" />
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/cocSelasa"
-                        android:layout_width="150dp"
-                        android:layout_height="70dp"
-                        android:layout_alignLeft="@+id/cocKamis"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignStart="@+id/cocKamis">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginLeft="5dp"
-                                android:src="@drawable/icon_coc_selasa" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:paddingLeft="5dp"
-                                android:text="Coc Selasa"
-                                android:textSize="10sp" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </RelativeLayout>
-            </ScrollView>
+            </RelativeLayout>
 
         </RelativeLayout>
     </RelativeLayout>

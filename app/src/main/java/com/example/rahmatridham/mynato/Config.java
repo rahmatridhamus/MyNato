@@ -5,7 +5,7 @@ package com.example.rahmatridham.mynato;
  */
 public class Config {
     //URL to our loginBut.php file
-    public static final String LOGIN_URL = "http://192.168.43.29/optik/login.php";
+    public static final String MAIN_URL = "http://scripthink.com/mynato/api/";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php
     public static final String KEY_EMAIL = "email";
@@ -15,11 +15,14 @@ public class Config {
     public static final String LOGIN_SUCCESS = "success";
 
     //Keys for Sharedpreferences
-    //This would be the name of our shared preferences
     public static final String SHARED_PREF_NAME = "myloginapp";
-
-    //This would be used to store the email of current logged in user
     public static final String EMAIL_SHARED_PREF = "email";
+    public static final String USERID_SHARED_PREF = "USERID";
+    public static final String NIPEG_SHARED_PREF = "NIPEG";
+    public static final String NAMA_SHARED_PREF = "NAMA";
+    public static final String KODEPOSISI_SHARED_PREF = "kode_posisi";
+    public static final String ROLE_SHARED_PREF = "ROLE";
+    public static final String JABATAN_SHARED_PREF = "JABATAN";
 
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
     public static final String LOGGEDIN_SHARED_PREF = "loggedin";
