@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.rahmatridham.mynato.Config;
 import com.example.rahmatridham.mynato.R;
 import com.example.rahmatridham.mynato.StepCoCActivity.CocVerified;
 
@@ -20,7 +21,6 @@ import com.example.rahmatridham.mynato.StepCoCActivity.CocVerified;
 public class Home extends Fragment implements View.OnClickListener {
 
     CardView cocThematik, cocinsidental, absensi, pemberitahuan, survey;
-
 
     public Home() {
         // Required empty public constructor
@@ -54,13 +54,13 @@ public class Home extends Fragment implements View.OnClickListener {
         switch (i) {
             case R.id.cocThematik:
                 Intent intent5 = new Intent(v.getContext(), CocVerified.class);
-                intent5.putExtra("menuClicked", "Jumat");
+                intent5.putExtra(Config.KETERANGAN_SHARED_PREF, "THEMATIK");
                 startActivity(intent5);
                 break;
 
             case R.id.insidental:
                 Intent intent6 = new Intent(v.getContext(), CocVerified.class);
-                intent6.putExtra("menuClicked", "insidental");
+                intent6.putExtra(Config.IDGROUPCOC_SHARED_PREF, "INSIDENTAL");
                 startActivity(intent6);
                 break;
 

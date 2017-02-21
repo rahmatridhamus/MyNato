@@ -64,7 +64,7 @@
         android:text="Kami Telah Melaksanakan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBoxVisi"
+        android:id="@+id/checkBoxMotivasi"
         android:layout_above="@+id/buttonLanjutkan" />
 
     <Button

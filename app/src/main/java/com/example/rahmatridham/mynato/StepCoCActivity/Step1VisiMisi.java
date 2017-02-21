@@ -21,13 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rahmatridham.mynato.Config;
-import com.example.rahmatridham.mynato.Model.GroupCoc;
 import com.example.rahmatridham.mynato.R;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,10 +32,10 @@ public class Step1VisiMisi extends AppCompatActivity {
 
     RelativeLayout screen;
     Button lanjut;
-    CheckBox cbVisi,cbMisi;
-    TextView txtVisi,txtMisi;
-    String vis="";
-    String mis="";
+    CheckBox cbVisi, cbMisi;
+    TextView txtVisi, txtMisi;
+    String vis = "";
+    String mis = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +52,7 @@ public class Step1VisiMisi extends AppCompatActivity {
         });
 
         screen = (RelativeLayout) findViewById(R.id.activity_step1_visi_misi);
-        cbVisi = (CheckBox) findViewById(R.id.checkBoxVisi);
+        cbVisi = (CheckBox) findViewById(R.id.checkBoxMotivasi);
         cbMisi = (CheckBox) findViewById(R.id.checkBoxMisi);
         txtVisi = (TextView) findViewById(R.id.descVisi);
         txtMisi = (TextView) findViewById(R.id.descMisi);
@@ -64,19 +61,21 @@ public class Step1VisiMisi extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Step1VisiMisi.this,Step2Motivasi.class);
-                startActivity(intent);
+                if (cbMisi.isChecked() && cbVisi.isChecked()) {
+                    Intent intent = new Intent(Step1VisiMisi.this, Step2Motivasi.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(Step1VisiMisi.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        getVisi();
-        getMisi();
-        txtVisi.setText(vis);
-        txtMisi.setText(mis);
+        getVisiMisi();
+
     }
 
-    private void getVisi() {
+    private void getVisiMisi() {
         //Creating a string request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Visi_Misi/get_visi",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Visi_Misi",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -84,17 +83,17 @@ public class Step1VisiMisi extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < data.length(); i++) {
-                                    JSONObject object = data.getJSONObject(i);
-                                    vis = object.optString("visi");
-                                }
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                vis = data.optString("visi");
+                                mis = data.optString("misi");
+                                txtVisi.setText(vis);
+                                txtMisi.setText(mis);
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step1VisiMisi.this, "error: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -111,14 +110,15 @@ public class Step1VisiMisi extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
 
                 try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = Step1VisiMisi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                     //Adding parameters to request
-
-                    //returning parameter
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step1VisiMisi.this, "error: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }
@@ -129,57 +129,5 @@ public class Step1VisiMisi extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getMisi() {
-        //Creating a string request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Visi_Misi/get_misi",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String status = jsonObject.optString("status").trim();
-                            if (status.equals(String.valueOf(1))) {
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < data.length(); i++) {
-                                    JSONObject object = data.getJSONObject(i);
-                                    mis = object.optString("misi");
-                                }
-                            } else {
-                                String error = jsonObject.optString("message");
-                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            Toast.makeText(Step1VisiMisi.this, "error: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //You can handle error here if you want
-                        error.printStackTrace();
-                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
 
-                try {
-                    //Adding parameters to request
-
-                    //returning parameter
-                    return params;
-                } catch (Exception e) {
-                    e.getMessage();
-                    Toast.makeText(Step1VisiMisi.this, "error: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-                return params;
-            }
-        };
-
-        //Adding the string request to the queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
 }
