@@ -35,7 +35,11 @@
         android:id="@+id/buttonLanjutkan"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:background="@color/greenButton"
+        android:textStyle="normal|bold"
+        android:textColor="@color/cardview_light_background" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,13 +58,17 @@
             android:layout_height="35dp">
 
             <TextView
-                android:text="dipilih: "
-                android:layout_width="wrap_content"
+                android:text="dipilih: Kosong"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewDipilihThematik"
                 android:layout_marginRight="5dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/red" />
 
             <TextView
                 android:layout_margin="10dp"

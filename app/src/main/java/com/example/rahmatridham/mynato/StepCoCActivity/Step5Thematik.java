@@ -88,7 +88,8 @@ public class Step5Thematik extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 themSel = thematikArrayList.get(groupPosition).getId_content_list();
                 subThemSel = thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getId_sub_content_list();
-                dipilihThematik.setText(thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getSub_title());
+                dipilihThematik.setText("dipilih: "+thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getSub_title());
+                dipilihThematik.setTextColor(getResources().getColor(R.color.holo_green));
                 final Dialog dialog = new Dialog(parent.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.thematik_weburl);

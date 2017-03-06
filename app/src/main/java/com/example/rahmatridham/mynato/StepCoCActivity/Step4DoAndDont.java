@@ -40,7 +40,6 @@ import java.util.Map;
 
 public class Step4DoAndDont extends AppCompatActivity {
     Button lanjut;
-    RelativeLayout screen;
     ArrayList<DoAndDont> doandontArrayList = new ArrayList<>();
     ExpandableListView listView;
     DoAndDontAdapter listAdapter;
@@ -56,7 +55,6 @@ public class Step4DoAndDont extends AppCompatActivity {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
-        screen = (RelativeLayout) findViewById(R.id.activity_step1_visi_misi);
         Toolbar mToolBar = (Toolbar) findViewById(R.id.my_toolbar);
         listView = (ExpandableListView) findViewById(R.id.listDoandDont);
         descDodontBef = (TextView) findViewById(R.id.strDodontSebelum);
@@ -99,7 +97,8 @@ public class Step4DoAndDont extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //do things
-                                dipilihDodont.setText("dipilih: "+listDataHeader.get(groupPosition)+", "+doandontArrayList.get(groupPosition).getSubtit().get(childPosition));
+                                dipilihDodont.setText("dipilih: "+doandontArrayList.get(groupPosition).getSubtit().get(childPosition)+", "+listDataHeader.get(groupPosition));
+                                dipilihDodont.setTextColor(getResources().getColor(R.color.holo_green));
                                 doDontSel = doandontArrayList.get(groupPosition).getId_do_and_dont();
                                 subDoDontSel = doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getId_sub_do_and_dont();
                             }

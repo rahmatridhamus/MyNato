@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#96a4f2</color>
-    <color name="colorPrimaryDark">#3d4cab</color>
+    <color name="colorPrimaryDarkBlue">#3d4cab</color>
     <color name="colorAccent">#FF4081</color>
     <color name="holo_green">#99cc00</color>
-    <color name="red">#D91E18</color>
+    <color name="red">#d91e18</color>
+    <color name="white">#ffffff</color>
+    <color name="greenButton">#2ecc71</color>
+    <color name="greyBorder">#95A5A6</color>
 </resources>

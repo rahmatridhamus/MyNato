@@ -145,6 +145,10 @@
         android:id="@+id/buttonLanjutkan"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/white"
+        android:background="@color/greenButton"
+        android:layout_margin="5dp"
+        android:textStyle="normal|bold" />
 
 </RelativeLayout>

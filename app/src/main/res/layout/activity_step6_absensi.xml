@@ -73,7 +73,10 @@
         android:paddingRight="5dp"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
-        android:layout_margin="5dp" />
+        android:layout_margin="5dp"
+        android:background="@color/greenButton"
+        android:textStyle="normal|bold"
+        android:textColor="@color/cardview_light_background" />
 
     <LinearLayout
         android:orientation="vertical"

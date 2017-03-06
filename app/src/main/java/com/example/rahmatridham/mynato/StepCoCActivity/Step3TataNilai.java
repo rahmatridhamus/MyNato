@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -112,8 +113,15 @@ public class Step3TataNilai extends AppCompatActivity {
         for (int row = 0; row < 1; row++) {
             radioGroup.setOrientation(LinearLayout.VERTICAL);
             radioGroup.setGravity(LinearLayout.SHOW_DIVIDER_MIDDLE);
+            float density = getResources().getDisplayMetrics().density;
+
             for (int i = 1; i <= groupCocs.size(); i++) {
                 RadioButton rdbtn = new RadioButton(this);
+                rdbtn.setBackgroundResource(R.drawable.border_radio);
+                ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+                int margin = (int)(6*density);
+                params.setMargins(0, margin, 0, margin);
+                rdbtn.setLayoutParams(params);
                 rdbtn.setId((row * 2) + (i - 1));
                 rdbtn.setText(groupCocs.get((i - 1)).getTitle());
                 rdbtn.setTextSize(16);

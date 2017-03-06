@@ -99,7 +99,8 @@
             android:id="@+id/listTataNilai"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relayPertSebelumnyaski">
+            android:layout_below="@id/relayPertSebelumnyaski"
+            android:layout_margin="5dp">
 
         </RadioGroup>
     </RelativeLayout>
@@ -111,5 +112,9 @@
         android:id="@+id/buttonLanjutkan"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:background="@color/greenButton"
+        android:textColor="@color/cardview_light_background"
+        android:textStyle="normal|bold" />
 </RelativeLayout>
