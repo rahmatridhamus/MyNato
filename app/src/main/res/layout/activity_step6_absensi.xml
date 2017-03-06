@@ -31,33 +31,33 @@
         android:layout_below="@+id/stepbar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_height="255dp">
+        android:layout_height="320dp">
 
         <RelativeLayout
             android:id="@+id/relDatdir"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:background="@android:color/darker_gray">
+            android:background="@android:color/darker_gray"
+            android:layout_height="35dp">
             <TextView
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Data Kehadiran"
                 android:textStyle="normal|bold"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
         </RelativeLayout>
 
-        <LinearLayout
+        <ListView
             android:orientation="vertical"
-            android:id="@+id/checkAbsensi"
+            android:id="@+id/listCheckAbsensi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/relDatdir">
 
-        </LinearLayout>
+        </ListView>
 
     </RelativeLayout>
 
@@ -88,16 +88,16 @@
         <RelativeLayout
             android:id="@+id/relTanil"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:background="@android:color/darker_gray">
+            android:background="@android:color/darker_gray"
+            android:layout_height="35dp">
             <TextView
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dokumentasi Kehadiran"
                 android:textStyle="normal|bold"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
         </RelativeLayout>
 
@@ -113,17 +113,17 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp">
                 <ImageView
-                    android:id="@+id/fotocuy"
-                    android:layout_width="140dp"
+                    android:id="@+id/fotoAbsen"
+                    android:layout_width="100dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_coc_kamis" />
+                    android:src="@android:drawable/ic_menu_camera" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Foto Absen"
                     android:id="@+id/textView3"
-                    android:layout_below="@+id/fotocuy"
+                    android:layout_below="@+id/fotoAbsen"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>
 
@@ -133,18 +133,39 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp">
                 <ImageView
-                    android:id="@+id/fotocuys"
-                    android:layout_width="140dp"
+                    android:id="@+id/fotoPegawai"
+                    android:layout_width="100dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/icon_coc_kamis" />
+                    android:src="@android:drawable/ic_menu_camera" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Foto Pegawai"
                     android:id="@+id/textView"
-                    android:layout_below="@+id/fotocuys"
+                    android:layout_below="@+id/fotoPegawai"
                     android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/videoSuasana"
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:src="@android:drawable/ic_media_ff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Video Rapat"
+                    android:id="@+id/textView23"
+                    android:layout_below="@+id/videoSuasana"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14sp" />
             </RelativeLayout>
         </LinearLayout>
 

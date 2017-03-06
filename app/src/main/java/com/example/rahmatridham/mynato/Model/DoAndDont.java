@@ -1,18 +1,28 @@
 package com.example.rahmatridham.mynato.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by rahmatridham on 2/21/2017.
  */
 
 public class DoAndDont {
-    String id_do_and_dont,title,sub_title,dost,dont;
+    String id_do_and_dont, title;
+    ArrayList<SubDoDont> subDoDonts;
 
-    public DoAndDont(String id_do_and_dont, String title, String sub_title, String dost, String dont) {
+    public DoAndDont(String id_do_and_dont, String title, ArrayList<SubDoDont> subDoDonts) {
         this.id_do_and_dont = id_do_and_dont;
         this.title = title;
-        this.sub_title = sub_title;
-        this.dost = dost;
-        this.dont = dont;
+        this.subDoDonts = subDoDonts;
+    }
+
+    public List<String> getSubtit(){
+        List<String> res = new ArrayList<String>();
+        for (int i = 0; i < subDoDonts.size(); i++) {
+            res.add(subDoDonts.get(i).getSub_title());
+        }
+        return res;
     }
 
     public String getId_do_and_dont() {
@@ -31,27 +41,20 @@ public class DoAndDont {
         this.title = title;
     }
 
-    public String getSub_title() {
-        return sub_title;
+    public ArrayList<SubDoDont> getSubDoDonts() {
+        return subDoDonts;
     }
 
-    public void setSub_title(String sub_title) {
-        this.sub_title = sub_title;
+    public void setSubDoDonts(ArrayList<SubDoDont> subDoDonts) {
+        this.subDoDonts = subDoDonts;
     }
 
-    public String getDost() {
-        return dost;
-    }
-
-    public void setDost(String dost) {
-        this.dost = dost;
-    }
-
-    public String getDont() {
-        return dont;
-    }
-
-    public void setDont(String dont) {
-        this.dont = dont;
+    @Override
+    public String toString() {
+        return "DoAndDont{" +
+                "id_do_and_dont='" + id_do_and_dont + '\'' +
+                ", title='" + title + '\'' +
+                ", subDoDonts=" + subDoDonts.size() +
+                '}';
     }
 }

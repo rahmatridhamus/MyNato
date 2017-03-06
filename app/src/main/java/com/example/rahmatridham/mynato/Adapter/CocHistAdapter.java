@@ -43,7 +43,7 @@ public class CocHistAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.list_row_mycoc, null, false);
+        View v = inflater.inflate(R.layout.list_row_mycoc, parent, false);
 
         CoC coC = coCArrayList.get(position);
 

@@ -1,13 +1,10 @@
 package com.example.rahmatridham.mynato;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.preference.PreferenceManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,29 +14,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.orhanobut.hawk.Hawk;
-import com.orhanobut.hawk.NoEncryption;
+import com.example.rahmatridham.mynato.StepCoCActivity.CocVerified;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -109,6 +94,8 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
     void authenticate() {
+        final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "", "Loading. Please wait...", true);
+
         final String email = username.getText().toString().trim();
         final String password = this.password.getText().toString().trim();
 
@@ -125,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                     String status = jsonObject.optString("status").trim();
                     if (status.equals(String.valueOf(1))) {
                         JSONObject data = jsonObject.getJSONObject("data");
-//                                Toast.makeText(LoginActivity.this, "masuk di proses", Toast.LENGTH_SHORT).show();
 
                         //Creating a shared preference
                         SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -147,16 +133,18 @@ public class LoginActivity extends AppCompatActivity {
                         //Saving values to editor
                         editor.commit();
 
-
+                        dialog.dismiss();
                         //Starting profile activity
                         Intent intent = new Intent(LoginActivity.this, LandingPage.class);
                         startActivity(intent);
                         finish();
+
                     } else {
                         final String error = jsonObject.optString("message");
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(LoginActivity.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
 
                             }
                         });
@@ -167,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(LoginActivity.this, "errorJSON: \n" + error, Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
 
                         }
                     });
@@ -182,6 +171,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(LoginActivity.this, "errorResponse: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
 
                             }
                         });
@@ -204,6 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "errorParam: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+                    dialog.dismiss();
                     return params;
                 }
             }

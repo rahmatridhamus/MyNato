@@ -1,5 +1,6 @@
 package com.example.rahmatridham.mynato.StepCoCActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,9 +63,9 @@ public class Step1VisiMisi extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (cbMisi.isChecked() && cbVisi.isChecked()) {
-                    Intent intent = new Intent(Step1VisiMisi.this, Step2Motivasi.class);
-                    startActivity(intent);
-                }else {
+                    SharedPreferences sharedPreferences = Step1VisiMisi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    pushVisiMisi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
+                } else {
                     Toast.makeText(Step1VisiMisi.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -75,6 +76,7 @@ public class Step1VisiMisi extends AppCompatActivity {
 
     private void getVisiMisi() {
         //Creating a string request
+        final ProgressDialog dialog = ProgressDialog.show(Step1VisiMisi.this, "", "Loading. Please wait...", true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Visi_Misi",
                 new Response.Listener<String>() {
                     @Override
@@ -88,12 +90,15 @@ public class Step1VisiMisi extends AppCompatActivity {
                                 mis = data.optString("misi");
                                 txtVisi.setText(vis);
                                 txtMisi.setText(mis);
+                                dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                             }
                         } catch (Exception e) {
                             Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                         }
                     }
                 },
@@ -103,6 +108,7 @@ public class Step1VisiMisi extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 }) {
             @Override
@@ -115,6 +121,65 @@ public class Step1VisiMisi extends AppCompatActivity {
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void pushVisiMisi(String idGroup) {
+        final ProgressDialog dialog = ProgressDialog.show(Step1VisiMisi.this, "", "Loading. Please wait...", true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_visi_misi/" + idGroup,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                Intent intent = new Intent(Step1VisiMisi.this, Step2Motivasi.class);
+                                startActivity(intent);
+                                dialog.dismiss();
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        error.printStackTrace();
+                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = Step1VisiMisi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                    //Adding parameters to request
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    params.put("visi", "MELAKSANAKAN");
+                    params.put("misi", "MELAKSANAKAN");
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

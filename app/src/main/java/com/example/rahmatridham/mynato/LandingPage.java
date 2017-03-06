@@ -41,9 +41,9 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {
-            R.mipmap.home,
-            R.mipmap.mycoc,
-            R.mipmap.profile
+            R.drawable.icon_home_active,
+            R.drawable.icon_my_coc_active,
+            R.drawable.icon_profile_active
     };
 
     protected BarChart mChart;
@@ -77,9 +77,9 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     }
 
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]).setText("Home");
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]).setText("My CoC");
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]).setText("Profile");
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 

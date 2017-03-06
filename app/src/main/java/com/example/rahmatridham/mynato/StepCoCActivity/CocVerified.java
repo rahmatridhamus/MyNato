@@ -1,5 +1,6 @@
 package com.example.rahmatridham.mynato.StepCoCActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rahmatridham.mynato.Config;
+import com.example.rahmatridham.mynato.LoginActivity;
 import com.example.rahmatridham.mynato.Model.GroupCoc;
 import com.example.rahmatridham.mynato.R;
 
@@ -49,7 +51,14 @@ public class CocVerified extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CocVerified.this, PrepareAddCoc.class);
-                intent.putExtra(Config.IDGROUPCOC_SHARED_PREF,groupCoc.getId_group_coc());
+
+                //Creating a shared preference
+                SharedPreferences sharedPreferences = CocVerified.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                //Creating editor to store values to shared preferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Config.IDGROUPCOC_SHARED_PREF, groupCoc.getId_group_coc());
+                editor.commit();
+
                 startActivity(intent);
                 next.setEnabled(isCheck);
                 next.setClickable(isCheck);
@@ -59,7 +68,7 @@ public class CocVerified extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(CocVerified.this, "id: " + checkedId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
                 groupCoc = groupCocs.get(checkedId);
 
                 isCheck = true;
@@ -79,10 +88,10 @@ public class CocVerified extends AppCompatActivity {
             group.setOrientation(LinearLayout.VERTICAL);
             group.setGravity(LinearLayout.SHOW_DIVIDER_MIDDLE);
             for (int i = 1; i <= groupCocs.size(); i++) {
-                RadioButton rdbtn = new RadioButton(this);
+                RadioButton rdbtn = new RadioButton(this,null,R.attr.radioButtonStyle);
                 rdbtn.setId((row * 2) + (i - 1));
                 rdbtn.setText(groupCocs.get((i - 1)).getNama_group_coc());
-                rdbtn.setTextSize(16);
+                rdbtn.setTextSize(20);
                 group.addView(rdbtn);
             }
         }
@@ -90,6 +99,7 @@ public class CocVerified extends AppCompatActivity {
 
     private void getGroupCoc() {
         //Creating a string request
+        final ProgressDialog dialog = ProgressDialog.show(CocVerified.this, "", "Loading. Please wait...", true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Group_Coc", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -105,12 +115,15 @@ public class CocVerified extends AppCompatActivity {
                             groupCocs.add(groupCoc);
                         }
                         addRadioButtons(groupCocs);
+                        dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
                         Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 } catch (Exception e) {
                     Toast.makeText(CocVerified.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
         },
@@ -120,6 +133,7 @@ public class CocVerified extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 }) {
             @Override
@@ -138,6 +152,7 @@ public class CocVerified extends AppCompatActivity {
                 } catch (Exception e) {
                     e.getMessage();
                     Toast.makeText(CocVerified.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return params;
                 }
             }

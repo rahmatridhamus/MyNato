@@ -30,55 +30,6 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/body"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/stepbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/checkBoxLanjutkanTataNilai">
-
-        <RelativeLayout
-            android:id="@+id/relTanil"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray">
-            <TextView
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Do and Don't"
-                android:textStyle="normal|bold"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_below="@id/relTanil"
-            android:id="@+id/relayPertSebelum"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"></RelativeLayout>
-
-        <RadioGroup
-            android:id="@+id/radioTataNilai"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/relayPertSebelum">
-
-        </RadioGroup>
-
-    </RelativeLayout>
-
-    <CheckBox
-        android:text="Kami telah melaksanakan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxLanjutkanCoy"
-        android:layout_above="@+id/buttonLanjutkan"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <Button
         android:text="Lanjutkan"
         android:layout_width="match_parent"
@@ -88,5 +39,87 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="5dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/body"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stepbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonLanjutkan">
+
+        <RelativeLayout
+            android:id="@+id/relTanil"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray"
+            android:layout_height="35dp">
+
+            <TextView
+                android:text="dipilih: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewDipilihDodont"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Do and Don't"
+                android:textStyle="normal|bold"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/relTanil"
+            android:id="@+id/relayPertSebelum"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_notifbefore"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="3dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@mipmap/check"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="18dp"
+                    android:id="@+id/imageView4"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:text="Pertemuan Sebelumnya: blablabla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/strDodontSebelum"
+                    android:textSize="10sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:layout_toEndOf="@+id/imageView4" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ExpandableListView
+            android:id="@+id/listDoandDont"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relayPertSebelum"
+            android:layout_alignParentBottom="true">
+
+        </ExpandableListView>
+
+    </RelativeLayout>
 
 </RelativeLayout>

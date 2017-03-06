@@ -4,10 +4,10 @@ package com.example.rahmatridham.mynato.Model;
  * Created by rahmatridham on 2/21/2017.
  */
 
-public class Subtitle{
+public class SubtitleThematik {
     String id_sub_content_list,sub_title,content,url;
 
-    public Subtitle(String id_sub_content_list, String sub_title, String content, String url) {
+    public SubtitleThematik(String id_sub_content_list, String sub_title, String content, String url) {
         this.id_sub_content_list = id_sub_content_list;
         this.sub_title = sub_title;
         this.content = content;

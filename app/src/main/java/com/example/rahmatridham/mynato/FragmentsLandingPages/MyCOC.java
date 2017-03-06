@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class MyCOC extends Fragment {
     ListView listViewHistory;
     CocHistAdapter adapter;
     ArrayList<CoC> cArrayList;
+    SwipeRefreshLayout refreshLayout;
 
     public MyCOC() {
         // Required empty public constructor
@@ -57,12 +59,33 @@ public class MyCOC extends Fragment {
         namaCoc = (TextView) view.findViewById(R.id.textHeader);
         tanggal = (TextView) view.findViewById(R.id.textViewTanggal);
         listViewHistory = (ListView) view.findViewById(R.id.listCocHistory);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.cocRefresh);
+        refreshLayout.setColorSchemeResources(
+                R.color.cardview_shadow_end_color,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark
+        );
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                cArrayList.clear();
+                getHistory();
+            }
+        });
 
         adapter = new CocHistAdapter(cArrayList, MyCOC.this.getContext());
         listViewHistory.setAdapter(adapter);
 
-        getHistory();
         adapter.notifyDataSetChanged();
+        refreshLayout.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        refreshLayout.setRefreshing(true);
+                                        cArrayList.clear();
+                                        getHistory();
+                                    }
+                                }
+        );
         return view;
     }
 
@@ -84,7 +107,7 @@ public class MyCOC extends Fragment {
                                     cArrayList.add(coC);
                                 }
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(MyCOC.this.getContext(), "Data berhasil di parse", Toast.LENGTH_SHORT).show();
+                                refreshLayout.setRefreshing(false);
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(MyCOC.this.getContext(), error, Toast.LENGTH_SHORT).show();
@@ -100,6 +123,8 @@ public class MyCOC extends Fragment {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(MyCOC.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        refreshLayout.setRefreshing(false);
+
                     }
                 }) {
             @Override

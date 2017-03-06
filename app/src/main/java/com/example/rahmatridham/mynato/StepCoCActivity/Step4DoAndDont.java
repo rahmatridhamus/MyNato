@@ -1,15 +1,20 @@
 package com.example.rahmatridham.mynato.StepCoCActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -19,9 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rahmatridham.mynato.Adapter.DoAndDontAdapter;
 import com.example.rahmatridham.mynato.Config;
 import com.example.rahmatridham.mynato.Model.DoAndDont;
-import com.example.rahmatridham.mynato.Model.TataNilai;
+import com.example.rahmatridham.mynato.Model.SubDoDont;
 import com.example.rahmatridham.mynato.R;
 
 import org.json.JSONArray;
@@ -29,30 +35,41 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Step4DoAndDont extends AppCompatActivity {
     Button lanjut;
     RelativeLayout screen;
-    CheckBox boxTataNilai;
+    ArrayList<DoAndDont> doandontArrayList = new ArrayList<>();
+    ExpandableListView listView;
+    DoAndDontAdapter listAdapter;
+    TextView descDodontBef, dipilihDodont;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
+    String doDontSel="",subDoDontSel="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step4_do_and_dont);
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
 
         screen = (RelativeLayout) findViewById(R.id.activity_step1_visi_misi);
-
         Toolbar mToolBar = (Toolbar) findViewById(R.id.my_toolbar);
-        boxTataNilai = (CheckBox) findViewById(R.id.checkBoxLanjutkanCoy);
+        listView = (ExpandableListView) findViewById(R.id.listDoandDont);
+        descDodontBef = (TextView) findViewById(R.id.strDodontSebelum);
+        dipilihDodont = (TextView) findViewById(R.id.textViewDipilihDodont);
 
         lanjut = (Button) findViewById(R.id.buttonLanjutkan);
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (boxTataNilai.isChecked()) {
-                    Intent intent = new Intent(Step4DoAndDont.this, Step5Thematik.class);
-                    startActivity(intent);
+                if (!subDoDontSel.equals("")) {
+                    SharedPreferences sharedPreferences = Step4DoAndDont.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    pushDoandDont(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
+
                 } else {
                     Toast.makeText(Step4DoAndDont.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
                 }
@@ -67,34 +84,79 @@ public class Step4DoAndDont extends AppCompatActivity {
             }
         });
 
-        getDoAndDont();
+        listAdapter = new DoAndDontAdapter(this, listDataHeader, listDataChild);
+        listView.setAdapter(listAdapter);
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
+
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                parent.setItemChecked(index, true);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                builder.setMessage("Do" + ": \n" + doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDost() + "\n\nDont: \n" + doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDont())
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                                dipilihDodont.setText("dipilih: "+listDataHeader.get(groupPosition)+", "+doandontArrayList.get(groupPosition).getSubtit().get(childPosition));
+                                doDontSel = doandontArrayList.get(groupPosition).getId_do_and_dont();
+                                subDoDontSel = doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getId_sub_do_and_dont();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                return false;
+            }
+        });
+        SharedPreferences sharedPreferences = Step4DoAndDont.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        getDoAndDont(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
+
     }
 
-    private void getDoAndDont() {
+    private void getDoAndDont(String idGroup) {
         //Creating a string request
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_and_Dont",
+        final ProgressDialog dialog = ProgressDialog.show(Step4DoAndDont.this, "", "Loading. Please wait...", true);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_and_Dont/get_data/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            ArrayList<DoAndDont> doandontArrayList = new ArrayList<>();
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
+                                JSONObject data = jsonObject.getJSONObject("data");
+
                                 //array of Do and Dont
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < data.length(); i++) {
-                                    JSONObject object = data.getJSONObject(i);
-                                    DoAndDont andDont = new DoAndDont(object.optString("id_do_and_dont", ""), object.optString("title", ""), object.optString("sub_title", ""), object.optString("do", ""), object.optString("dont", ""));
-                                    doandontArrayList.add(andDont);
+                                JSONArray list = data.getJSONArray("list");
+                                for (int i = 0; i < list.length(); i++) {
+                                    JSONObject object = list.getJSONObject(i);
+                                    JSONArray subtit = object.getJSONArray("subtitle");
+                                    ArrayList<SubDoDont> subtitleArrayList = new ArrayList<>();
+                                    if (!object.isNull("subtitle")) {
+                                        for (int j = 0; j < subtit.length(); j++) {
+                                            JSONObject objSubtit = subtit.getJSONObject(j);
+                                            subtitleArrayList.add(new SubDoDont(objSubtit.optString("id_sub_do_and_dont", ""), objSubtit.optString("sub_title", ""), objSubtit.optString("do", ""), objSubtit.optString("dont", "")));
+                                        }
+                                    }
+                                    DoAndDont dont = new DoAndDont(object.optString("id_do_and_dont", ""), object.optString("title", ""), subtitleArrayList);
+                                    doandontArrayList.add(dont);
                                 }
-                                Toast.makeText(Step4DoAndDont.this, "Data berhasil di parse", Toast.LENGTH_SHORT).show();
+                                prepare(doandontArrayList);
+
+                                JSONObject history = data.getJSONObject("history");
+                                descDodontBef.setText("Pertemuan Sebelumnya: \n" + history.optString("title","(kosong)"));
+                                dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step4DoAndDont.this, error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+
                             }
                         } catch (Exception e) {
                             Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
                         }
                     }
                 },
@@ -104,6 +166,7 @@ public class Step4DoAndDont extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 }) {
             @Override
@@ -124,9 +187,79 @@ public class Step4DoAndDont extends AppCompatActivity {
                 return params;
             }
         };
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    void prepare(ArrayList<DoAndDont> doAndDonts) {
+
+        for (int i = 0; i < doAndDonts.size(); i++) {
+            listDataHeader.add(doAndDonts.get(i).getTitle());
+        }
+        for (int i = 0; i < listDataHeader.size(); i++) {
+            listDataChild.put(listDataHeader.get(i), doAndDonts.get(i).getSubtit());
+        }
+        listAdapter.notifyDataSetChanged();
+    }
+
+    public void pushDoandDont(String idGroup) {
+        final ProgressDialog dialog = ProgressDialog.show(Step4DoAndDont.this, "", "Loading. Please wait...", true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_do_and_dont/set_group/" + idGroup,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                Intent intent = new Intent(Step4DoAndDont.this, Step5Thematik.class);
+                                startActivity(intent);
+                                dialog.dismiss();
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(Step4DoAndDont.this, "responseError\n"+error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Step4DoAndDont.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        error.printStackTrace();
+                        Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = Step4DoAndDont.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                    //Adding parameters to request
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    params.put("id_do_and_dont",doDontSel);
+                    params.put("id_sub_do_and_dont",subDoDontSel);
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+                    Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return params;
+            }
+        };
 
         //Adding the string request to the queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
 }

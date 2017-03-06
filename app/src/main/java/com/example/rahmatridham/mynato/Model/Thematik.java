@@ -1,6 +1,7 @@
 package com.example.rahmatridham.mynato.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rahmatridham on 2/21/2017.
@@ -8,12 +9,20 @@ import java.util.ArrayList;
 
 public class Thematik {
     String id_content_list,title;
-    ArrayList<Subtitle> subtitle;
+    ArrayList<SubtitleThematik> subtitle;
 
-    public Thematik(String id_content_list, String title, ArrayList<Subtitle> subtitle) {
+    public Thematik(String id_content_list, String title, ArrayList<SubtitleThematik> subtitle) {
         this.id_content_list = id_content_list;
         this.title = title;
         this.subtitle = subtitle;
+    }
+
+    public List<String> getSubtit(){
+        List<String> res = new ArrayList<String>();
+        for (int i = 0; i < subtitle.size(); i++) {
+            res.add(subtitle.get(i).getSub_title());
+        }
+        return res;
     }
 
     public String getId_content_list() {
@@ -32,11 +41,11 @@ public class Thematik {
         this.title = title;
     }
 
-    public ArrayList<Subtitle> getSubtitle() {
+    public ArrayList<SubtitleThematik> getSubtitle() {
         return subtitle;
     }
 
-    public void setSubtitle(ArrayList<Subtitle> subtitle) {
+    public void setSubtitle(ArrayList<SubtitleThematik> subtitle) {
         this.subtitle = subtitle;
     }
 

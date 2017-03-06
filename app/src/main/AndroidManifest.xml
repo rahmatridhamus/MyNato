@@ -2,14 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rahmatridham.mynato">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splashscreen"
+        <activity
+            android:name=".Splashscreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,11 +48,16 @@
         <activity android:name=".Pemberitahuan.pemberitahuanDetil" />
         <activity android:name=".StepCoCActivity.PrepareAddCoc" />
         <activity android:name=".StepCoCActivity.PakKadir" />
-        <activity android:name=".StepCoCActivity.Survey" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".StepCoCActivity.Survey" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".StepCoCActivity.DetailSurvey"></activity>
     </application>
 
 </manifest>
