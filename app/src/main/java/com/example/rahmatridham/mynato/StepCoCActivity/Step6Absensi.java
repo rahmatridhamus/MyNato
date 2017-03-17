@@ -99,6 +99,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
 //                startActivity(new Intent(Step6Absensi.this, LandingPage.class));
 
                 if (isAbsen && isPegawai && isVideo) {
+//                if (true) {
                     StringBuffer responseText = new StringBuffer();
                     responseText.append("The following were selected...\n");
                     pushDaftarAbsen = new ArrayList<String>();
@@ -113,7 +114,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                     }
 
 
-                    Toast.makeText(getApplicationContext(), "size = "+pushDaftarAbsen.size(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "size = " + pushDaftarAbsen.size(), Toast.LENGTH_LONG).show();
                     SharedPreferences sharedPreferences = Step6Absensi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                     pushAbsensi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
                 } else {
@@ -159,11 +160,13 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(Step6Absensi.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step6Absensi.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Step6Absensi.this, "errorMessage: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step6Absensi.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step6Absensi.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Step6Absensi.this, "error Response: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             }
@@ -174,6 +177,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step6Absensi.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Step6Absensi.this, "error getting response: \n"+ "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }) {
@@ -226,11 +230,13 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(Step6Absensi.this, "responseError\n" + error, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step6Absensi.this, "responseError\n" + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Step6Absensi.this, "responseError: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step6Absensi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step6Absensi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Step6Absensi.this, "errorJSON: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
             }
@@ -238,7 +244,8 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(Step6Absensi.this, "errorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Step6Absensi.this, "errorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Step6Absensi.this, "errorResponse" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
 
             }
@@ -368,9 +375,16 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    String s = "";
                     for (int i = 0; i < pushDaftarAbsen.size(); i++) {
-                        params.put("anggota[]", pushDaftarAbsen.get(i));
+                        if (s.equals("")) {
+                            s = pushDaftarAbsen.get(i);
+                        } else {
+                            s += ","+pushDaftarAbsen.get(i);
+                        }
                     }
+                    params.put("anggota",s);
+                    Log.d("daftarHadir", s);
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

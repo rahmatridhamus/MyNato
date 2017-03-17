@@ -1,7 +1,8 @@
-package com.example.rahmatridham.mynato.FragmentsLandingPages;
+package com.example.rahmatridham.mynato.LandingPageMenus;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rahmatridham.mynato.Adapter.CocHistAdapter;
 import com.example.rahmatridham.mynato.Config;
+import com.example.rahmatridham.mynato.DetailHistoryCoc;
+import com.example.rahmatridham.mynato.DetailHistoryCocInsidental;
 import com.example.rahmatridham.mynato.Model.CoC;
 import com.example.rahmatridham.mynato.R;
 
@@ -49,14 +53,37 @@ public class MyCOC extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_coc, container, false);
         cArrayList = new ArrayList<>();
         namaCoc = (TextView) view.findViewById(R.id.textHeader);
         tanggal = (TextView) view.findViewById(R.id.textViewTanggal);
+
         listViewHistory = (ListView) view.findViewById(R.id.listCocHistory);
+        listViewHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CoC dataCoc = cArrayList.get(position);
+                if (dataCoc.getKeterangan_coc().equals("COC THEMATIK")) {
+                    Intent intent = new Intent(MyCOC.this.getContext(), DetailHistoryCoc.class);
+                    intent.putExtra("id_coc_activity", dataCoc.getId_coc_activity());
+                    intent.putExtra("id_group_coc", dataCoc.getId_group_coc());
+                    intent.putExtra("keterangan_coc", "THEMATIK");
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MyCOC.this.getContext(), DetailHistoryCocInsidental.class);
+                    intent.putExtra("id_coc_activity", dataCoc.getId_coc_activity());
+                    intent.putExtra("id_group_coc", dataCoc.getId_group_coc());
+                    intent.putExtra("keterangan_coc", "INSIDENTAL");
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+
+
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.cocRefresh);
         refreshLayout.setColorSchemeResources(
                 R.color.cardview_shadow_end_color,
@@ -76,13 +103,13 @@ public class MyCOC extends Fragment {
 
         adapter.notifyDataSetChanged();
         refreshLayout.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        refreshLayout.setRefreshing(true);
-                                        cArrayList.clear();
-                                        getHistory();
-                                    }
-                                }
+                               @Override
+                               public void run() {
+                                   refreshLayout.setRefreshing(true);
+                                   cArrayList.clear();
+                                   getHistory();
+                               }
+                           }
         );
         return view;
     }

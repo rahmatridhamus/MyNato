@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rahmatridham.mynato.Model.CoC;
@@ -49,6 +50,13 @@ public class CocHistAdapter extends BaseAdapter {
 
         TextView judul = (TextView) v.findViewById(R.id.textHeader);
         TextView alamat = (TextView) v.findViewById(R.id.textViewTanggal);
+        ImageView view = (ImageView) v.findViewById(R.id.imageList);
+
+        if(coC.getKeterangan_coc().equals("COC INSIDENTAL")){
+           view.setImageResource(R.drawable.icon_coc_insidental);
+        }else {
+            view.setImageResource(R.drawable.icon_coc_jumat);
+        }
 
         judul.setText(coC.getKeterangan_coc());
         alamat.setText(coC.getDate());

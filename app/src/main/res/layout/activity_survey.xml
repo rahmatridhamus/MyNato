@@ -4,7 +4,7 @@
     android:id="@+id/activity_survey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.StepCoCActivity.Survey">
+    tools:context="com.example.rahmatridham.mynato.Survey.Survey">
 
     <ListView
         android:layout_width="match_parent"

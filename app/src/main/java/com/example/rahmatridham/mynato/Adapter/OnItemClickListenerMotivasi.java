@@ -1,4 +1,4 @@
-package com.example.rahmatridham.mynato;
+package com.example.rahmatridham.mynato.Adapter;
 
 import com.example.rahmatridham.mynato.Model.CeritaMotivasi;
 

@@ -17,18 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SeekBar;
 
-import com.example.rahmatridham.mynato.FragmentsLandingPages.Home;
-import com.example.rahmatridham.mynato.FragmentsLandingPages.MyCOC;
-import com.example.rahmatridham.mynato.FragmentsLandingPages.Profile;
+import com.example.rahmatridham.mynato.LandingPageMenus.Home;
+import com.example.rahmatridham.mynato.LandingPageMenus.MyCOC;
+import com.example.rahmatridham.mynato.LandingPageMenus.Profile;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointF;
@@ -41,9 +37,9 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {
-            R.drawable.icon_home_active,
-            R.drawable.icon_my_coc_active,
-            R.drawable.icon_profile_active
+            R.mipmap.home_menu,
+            R.mipmap.mycoc_menu,
+            R.mipmap.profile_menu
     };
 
     protected BarChart mChart;
@@ -77,17 +73,17 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     }
 
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]).setText("Home");
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]).setText("My CoC");
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]).setText("Profile");
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new Home(), "ONE");
-        adapter.addFrag(new MyCOC(), "TWO");
-        adapter.addFrag(new Profile(), "THREE");
+        adapter.addFrag(new Home(), "Home");
+        adapter.addFrag(new MyCOC(), "My CoC");
+        adapter.addFrag(new Profile(), "Profile");
         viewPager.setAdapter(adapter);
     }
 
@@ -144,7 +140,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return null;
+            return mFragmentTitleList.get(position);
         }
     }
 

@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         android:gravity="bottom">
 
-
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -24,10 +23,11 @@
             android:minHeight="?attr/actionBarSize"
             android:elevation="20dp"
             app:tabGravity="fill"
-            android:background="#ffffff"
             android:clickable="true"
+            android:background="#ffffff"
             app:tabIndicatorColor="@color/colorPrimary"
             android:backgroundTintMode="src_atop"
+            app:tabTextAppearance="?android:attr/textAppearanceSmall"
             android:layout_height="50dp"/>
     </RelativeLayout>
 

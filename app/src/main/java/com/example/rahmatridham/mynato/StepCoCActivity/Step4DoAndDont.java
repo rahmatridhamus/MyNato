@@ -47,6 +47,7 @@ public class Step4DoAndDont extends AppCompatActivity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     String doDontSel="",subDoDontSel="";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class Step4DoAndDont extends AppCompatActivity {
         setContentView(R.layout.activity_step4_do_and_dont);
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
+        sharedPreferences = Step4DoAndDont.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         Toolbar mToolBar = (Toolbar) findViewById(R.id.my_toolbar);
         listView = (ExpandableListView) findViewById(R.id.listDoandDont);
@@ -108,7 +110,6 @@ public class Step4DoAndDont extends AppCompatActivity {
                 return false;
             }
         });
-        SharedPreferences sharedPreferences = Step4DoAndDont.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         getDoAndDont(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
 
     }
@@ -204,16 +205,22 @@ public class Step4DoAndDont extends AppCompatActivity {
 
     public void pushDoandDont(String idGroup) {
         final ProgressDialog dialog = ProgressDialog.show(Step4DoAndDont.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_do_and_dont/set_group/" + idGroup,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_do_and_dont/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(Step4DoAndDont.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
-                                Intent intent = new Intent(Step4DoAndDont.this, Step5Thematik.class);
-                                startActivity(intent);
+                                if(sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF,"").equals("INSIDENTAL")){
+                                    Intent intent = new Intent(Step4DoAndDont.this, Step5Insidental.class);
+                                    startActivity(intent);
+                                }else {
+                                    Intent intent = new Intent(Step4DoAndDont.this, Step5Thematik.class);
+                                    startActivity(intent);
+                                }
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");

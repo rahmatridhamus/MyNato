@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -39,14 +40,25 @@ public class CocVerified extends AppCompatActivity {
     ArrayList<GroupCoc> groupCocs = new ArrayList<>();
     GroupCoc groupCoc;
     boolean isCheck = false;
+    TextView judul;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coc_verified);
+        sharedPreferences = CocVerified.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         next = (Button) findViewById(R.id.buttonSelanjutnya);
         group = (RadioGroup) findViewById(R.id.radioTipecoc);
+        judul = (TextView) findViewById(R.id.kontenCocHari);
+        if(sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF,"").equals("INSIDENTAL")){
+            judul.setText("CoC Insidental");
+        }else {
+            judul.setText("CoC Thematik");
+        }
+
+
         next.setEnabled(isCheck);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +66,6 @@ public class CocVerified extends AppCompatActivity {
                 Intent intent = new Intent(CocVerified.this, PrepareAddCoc.class);
 
                 //Creating a shared preference
-                SharedPreferences sharedPreferences = CocVerified.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 //Creating editor to store values to shared preferences
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(Config.IDGROUPCOC_SHARED_PREF, groupCoc.getId_group_coc());
@@ -71,7 +82,6 @@ public class CocVerified extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
                 groupCoc = groupCocs.get(checkedId);
-
                 isCheck = true;
                 next.setEnabled(isCheck);
                 next.setClickable(isCheck);
@@ -94,12 +104,13 @@ public class CocVerified extends AppCompatActivity {
                 RadioButton rdbtn = new RadioButton(this, null, R.attr.radioButtonStyle);
                 rdbtn.setBackgroundResource(R.drawable.border_radio);
                 ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-                int margin = (int)(6*density);
+                int margin = (int) (6 * density);
                 params.setMargins(0, margin, 0, margin);
                 rdbtn.setLayoutParams(params);
                 rdbtn.setId((row * 2) + (i - 1));
                 rdbtn.setText(groupCocs.get((i - 1)).getNama_group_coc());
                 rdbtn.setTextSize(18);
+                rdbtn.setHighlightColor(getResources().getColor(R.color.colorPrimary));
                 group.addView(rdbtn);
             }
         }

@@ -2,10 +2,13 @@ package com.example.rahmatridham.mynato.StepCoCActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -15,62 +18,58 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.rahmatridham.mynato.Adapter.SurveyAdapter;
 import com.example.rahmatridham.mynato.Config;
-import com.example.rahmatridham.mynato.Model.AbsensiModel;
-import com.example.rahmatridham.mynato.Model.SurveyModel;
 import com.example.rahmatridham.mynato.R;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Survey extends AppCompatActivity {
-    ArrayList<SurveyModel> modelArrayList;
-    ListView listView;
-    SurveyAdapter adapter;
+public class Step5Insidental extends AppCompatActivity {
+    EditText insidentalTxtArea;
+    Button lanjutkan;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
+        setContentView(R.layout.activity_step5_insidental);
 
-        modelArrayList = new ArrayList<>();
-        listView =(ListView) findViewById(R.id.listSurvey);
-        adapter = new SurveyAdapter(Survey.this,modelArrayList);
-        listView.setAdapter(adapter);
+        sharedPreferences = Step5Insidental.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        getSurvey();
-        adapter.notifyDataSetChanged();
+        insidentalTxtArea = (EditText) findViewById(R.id.editTextInsidental);
+        lanjutkan = (Button) findViewById(R.id.buttonLanjutkan);
+        lanjutkan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pushInsidental(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+            }
+        });
     }
 
-    public void getSurvey() {
-        final ProgressDialog dialog = ProgressDialog.show(Survey.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Survey_Pemahaman",
+    public void pushInsidental(String idGroup) {
+        final ProgressDialog dialog = ProgressDialog.show(Step5Insidental.this, "", "Loading. Please wait...", true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_insidental/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Toast.makeText(Step5Insidental.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i < data.length(); i++) {
-                                    JSONObject object = data.getJSONObject(i);
-                                    SurveyModel model = new SurveyModel(object.optString("id_survey",""),object.optString("nama_ujian",""),object.optString("tanggal_mulai",""),object.optString("tanggal_berakhir",""),object.optString("keterangan",""));
-                                    modelArrayList.add(model);
-                                }
-                                adapter.notifyDataSetChanged();
+
+                                Intent intent = new Intent(Step5Insidental.this, Step6Absensi.class);
+                                startActivity(intent);
+
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Survey.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Step5Insidental.this, error, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Survey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
                     }
@@ -80,7 +79,7 @@ public class Survey extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Survey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Step5Insidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }) {
@@ -90,21 +89,22 @@ public class Survey extends AppCompatActivity {
 
                 try {
                     //Creating a shared preference
-                    SharedPreferences sharedPreferences = Survey.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = Step5Insidental.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    params.put("insidental", insidentalTxtArea.getText().toString());
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Survey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }
         };
 
         //Adding the string request to the queue
-        RequestQueue requestQueue = Volley.newRequestQueue(Survey.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 }

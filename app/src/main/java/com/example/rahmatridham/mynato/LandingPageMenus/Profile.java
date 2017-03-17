@@ -1,4 +1,4 @@
-package com.example.rahmatridham.mynato.FragmentsLandingPages;
+package com.example.rahmatridham.mynato.LandingPageMenus;
 
 
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.rahmatridham.mynato.Config;
 import com.example.rahmatridham.mynato.R;
-import com.example.rahmatridham.mynato.StepCoCActivity.Step1VisiMisi;
 
 
 /**

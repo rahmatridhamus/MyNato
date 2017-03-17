@@ -1,4 +1,4 @@
-package com.example.rahmatridham.mynato.FragmentsLandingPages;
+package com.example.rahmatridham.mynato.LandingPageMenus;
 
 
 import android.content.Context;
@@ -17,7 +17,7 @@ import com.example.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import com.example.rahmatridham.mynato.R;
 import com.example.rahmatridham.mynato.StepCoCActivity.CocVerified;
 import com.example.rahmatridham.mynato.StepCoCActivity.PakKadir;
-import com.example.rahmatridham.mynato.StepCoCActivity.Survey;
+import com.example.rahmatridham.mynato.Survey.Survey;
 
 
 /**

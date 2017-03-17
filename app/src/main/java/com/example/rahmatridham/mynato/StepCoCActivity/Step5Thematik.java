@@ -45,13 +45,13 @@ import java.util.Map;
 
 public class Step5Thematik extends AppCompatActivity {
     Button lanjut;
-    TextView descThemBef,dipilihThematik;
+    TextView descThemBef, dipilihThematik;
     ArrayList<Thematik> thematikArrayList = new ArrayList<>();
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
     ExpandableListView listView;
     ThematikAdapter adapter;
-    String themSel,subThemSel;
+    String themSel, subThemSel;
 
 
     @Override
@@ -88,15 +88,13 @@ public class Step5Thematik extends AppCompatActivity {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 themSel = thematikArrayList.get(groupPosition).getId_content_list();
                 subThemSel = thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getId_sub_content_list();
-                dipilihThematik.setText("dipilih: "+thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getSub_title());
+                dipilihThematik.setText("dipilih: " + thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getSub_title());
                 dipilihThematik.setTextColor(getResources().getColor(R.color.holo_green));
                 final Dialog dialog = new Dialog(parent.getContext());
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.thematik_weburl);
 
-                WebView wv = (WebView) dialog
-                        .findViewById(R.id.webthematik);
-
+                WebView wv = (WebView) dialog.findViewById(R.id.webthematik);
 //                wv.loadUrl("http://stackoverflow.com/questions/26030885/android-how-can-i-open-a-webview-in-a-popup-window");
                 wv.loadUrl(thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getUrl());
                 wv.setWebViewClient(new WebViewClient() {
@@ -108,7 +106,7 @@ public class Step5Thematik extends AppCompatActivity {
                     }
                 });
 
-                dialog.setOnKeyListener(new  DialogInterface.OnKeyListener() {
+                dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
                     @Override
                     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -127,7 +125,7 @@ public class Step5Thematik extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = Step5Thematik.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         getThematik(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
-        adapter = new ThematikAdapter(this,listDataHeader,listDataChild);
+        adapter = new ThematikAdapter(this, listDataHeader, listDataChild);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -146,7 +144,6 @@ public class Step5Thematik extends AppCompatActivity {
     private void getThematik(String idGroup) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Step5Thematik.this, "", "Loading. Please wait...", true);
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Thematik/get_data/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
@@ -220,7 +217,7 @@ public class Step5Thematik extends AppCompatActivity {
 
     public void pushThematik(String idGroup) {
         final ProgressDialog dialog = ProgressDialog.show(Step5Thematik.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_thematik/set_group/" + idGroup,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_thematik/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -261,8 +258,8 @@ public class Step5Thematik extends AppCompatActivity {
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
-                    params.put("id_content_thematik",themSel);
-                    params.put("id_sub_content_thematik",subThemSel);
+                    params.put("id_content_thematik", themSel);
+                    params.put("id_sub_content_thematik", subThemSel);
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

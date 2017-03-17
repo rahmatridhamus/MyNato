@@ -11,11 +11,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +28,8 @@ import com.example.rahmatridham.mynato.Adapter.MotivasiAdapter;
 import com.example.rahmatridham.mynato.Config;
 import com.example.rahmatridham.mynato.Model.CeritaMotivasi;
 import com.example.rahmatridham.mynato.Model.Games;
-import com.example.rahmatridham.mynato.OnClickListenerGames;
-import com.example.rahmatridham.mynato.OnItemClickListenerMotivasi;
+import com.example.rahmatridham.mynato.Adapter.OnClickListenerGames;
+import com.example.rahmatridham.mynato.Adapter.OnItemClickListenerMotivasi;
 import com.example.rahmatridham.mynato.R;
 
 import org.json.JSONArray;
@@ -232,7 +229,7 @@ public class Step2Motivasi extends AppCompatActivity {
 
     public void pushCeritaMotivasi(String idGroup) {
         final ProgressDialog dialog = ProgressDialog.show(Step2Motivasi.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_cerita_motivasi/set_group/" + idGroup,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_cerita_motivasi/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

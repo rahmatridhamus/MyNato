@@ -85,7 +85,7 @@ public class Step3TataNilai extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                Toast.makeText(Step3TataNilai.this, "id: " + checkedId, Toast.LENGTH_SHORT).show();
                 tataNilais = tataNilaiArrayList.get(checkedId);
-
+                tanilSel = tataNilais.getId_tata_nilai();
                 isCheck = true;
                 lanjut.setEnabled(isCheck);
                 lanjut.setClickable(isCheck);
@@ -203,7 +203,7 @@ public class Step3TataNilai extends AppCompatActivity {
 
     public void pushTataNilai(String idGroup){
         final ProgressDialog dialog = ProgressDialog.show(Step3TataNilai.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_tata_nilai/set_group/" + idGroup,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_tata_nilai/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

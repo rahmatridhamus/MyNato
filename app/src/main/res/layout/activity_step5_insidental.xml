@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_step5_thematik"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/stepbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp"
+        android:background="@drawable/stepfive"
+        android:layout_height="40dp">
+
+    </RelativeLayout>
+
+    <Button
+        android:text="Lanjutkan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLanjutkan"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="5dp"
+        android:background="@color/greenButton"
+        android:textStyle="normal|bold"
+        android:textColor="@color/cardview_light_background" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/bodyThematik"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/stepbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonLanjutkan">
+
+        <RelativeLayout
+            android:id="@+id/relTanil"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:background="@android:color/darker_gray"
+            android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="CoC Insidental"
+                android:textSize="14sp"
+                android:textStyle="normal|bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relayPertSebelum"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/relTanil">
+
+            <RelativeLayout
+                android:id="@+id/relayInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_notifbefore">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="18dp"
+                    app:srcCompat="@mipmap/check" />
+
+                <TextView
+                    android:id="@+id/strThematikSebelum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageView4"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:text="Tuliskan materi yang akan dibahas untuk CoC"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relayPertSebelum"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="Konten Materi: " />
+
+        <EditText
+            android:id="@+id/editTextInsidental"
+            style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView5"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="masukkan data insidental"
+            android:inputType="textMultiLine"
+            android:selectAllOnFocus="false"
+            android:singleLine="false" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

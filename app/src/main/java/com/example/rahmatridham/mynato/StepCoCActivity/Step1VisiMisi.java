@@ -81,6 +81,7 @@ public class Step1VisiMisi extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Toast.makeText(Step1VisiMisi.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();

@@ -30,28 +30,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PrepareAddCoc extends AppCompatActivity {
-    TextView kontenCOChari, itemRapat;
+    TextView kontenCOChari;
     CardView adminInput, AnggotaCoc;
-
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prepare_add_coc);
+        sharedPreferences = PrepareAddCoc.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        kontenCOChari = (TextView) findViewById(R.id.kontenCocHari);
-//        itemRapat = (TextView) findViewById(R.id.kontenCocHari);
         adminInput = (CardView) findViewById(R.id.adminInput);
         AnggotaCoc = (CardView) findViewById(R.id.anggotaCoc);
-
-        Intent iin = getIntent();
-        Bundle b = iin.getExtras();
-        if (b != null) {
-            String day = (String) b.get("menuClicked");
-            kontenCOChari.setText("Konten CoC " + day);
+        kontenCOChari = (TextView) findViewById(R.id.kontenCocHari);
+        if(sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF,"").equals("INSIDENTAL")){
+            kontenCOChari.setText("CoC Insidental");
+        }else {
+            kontenCOChari.setText("CoC Thematik");
         }
 
+//        Intent iin = getIntent();
+//        Bundle b = iin.getExtras();
+//        if (b != null) {
+//            String day = (String) b.get("menuClicked");
+//            kontenCOChari.setText("Konten CoC " + day);
+//        }
+
         //Creating a shared preference
-        SharedPreferences sharedPreferences = PrepareAddCoc.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         final String idGroup = sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, "");
 
@@ -80,12 +84,41 @@ public class PrepareAddCoc extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_group/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
                     if (status.equals(String.valueOf(1))) {
                         dialog.dismiss();
-                        startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
+                        Toast.makeText(PrepareAddCoc.this, "Anda masih memiliki data CoC yang belum selesai", Toast.LENGTH_SHORT).show();
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        JSONObject exist = data.getJSONObject("page_eksisting");
+                        int i = exist.optInt("id", 0);
+                        switch (i) {
+                            case 1:
+                                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
+                                break;
+                            case 2:
+                                startActivity(new Intent(PrepareAddCoc.this, Step2Motivasi.class));
+                                break;
+                            case 3:
+                                startActivity(new Intent(PrepareAddCoc.this, Step3TataNilai.class));
+                                break;
+                            case 4:
+                                startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDont.class));
+                                break;
+                            case 5:
+                                startActivity(new Intent(PrepareAddCoc.this, Step5Thematik.class));
+                                break;
+                            case 6:
+                                startActivity(new Intent(PrepareAddCoc.this, Step6Absensi.class));
+                                break;
+                            default:
+                                Toast.makeText(PrepareAddCoc.this, "ID didn't match", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
+
                     } else {
                         String error = jsonObject.optString("message");
                         Toast.makeText(PrepareAddCoc.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();

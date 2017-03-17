@@ -28,12 +28,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/body"
+        android:id="@+id/bodyThematik"
         android:layout_height="match_parent"
         android:layout_below="@+id/stepbar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/checkBoxLanjutkanTataNilai">
+        android:layout_alignParentStart="true">
 
 
 
@@ -64,33 +63,36 @@
             android:layout_height="40dp">
 
             <RelativeLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/border_notifbefore"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="3dp">
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/border_notifbefore">
 
                 <ImageView
+                    android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@mipmap/check"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
                     android:layout_marginStart="18dp"
-                    android:id="@+id/imageView4"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    app:srcCompat="@mipmap/check" />
 
                 <TextView
-                    android:text="Pertemuan Sebelumnya: blablabla"
+                    android:id="@+id/strTanilSebelum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/strTanilSebelum"
-                    android:textSize="10sp"
                     android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageView4"
                     android:layout_toRightOf="@+id/imageView4"
-                    android:layout_toEndOf="@+id/imageView4" />
+                    android:text="Pertemuan Sebelumnya: blablabla"
+                    android:textSize="10sp" />
             </RelativeLayout>
 
         </RelativeLayout>
