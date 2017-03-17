@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splashscreen"
+            android:name="my.mynato.rahmatridham.mynato.Splashscreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,33 +22,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="my.mynato.rahmatridham.mynato.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".LandingPage" />
+        <activity android:name="my.mynato.rahmatridham.mynato.LandingPage" />
         <activity
-            android:name=".StepCoCActivity.Step1VisiMisi"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".StepCoCActivity.Step2Motivasi"
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step1VisiMisi"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".StepCoCActivity.Step3TataNilai"
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step2Motivasi"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".StepCoCActivity.Step4DoAndDont"
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step3TataNilai"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".StepCoCActivity.Step5Thematik"
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step4DoAndDont"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".StepCoCActivity.Step6Absensi"
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step5Thematik"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".StepCoCActivity.CocVerified" />
-        <activity android:name=".Pemberitahuan.Pemberitahuan" />
-        <activity android:name=".Pemberitahuan.pemberitahuanDetil" />
-        <activity android:name=".StepCoCActivity.PrepareAddCoc" />
-        <activity android:name=".StepCoCActivity.PakKadir" />
-        <activity android:name=".Survey.Survey" />
+        <activity
+            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step6Absensi"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified" />
+        <activity android:name="my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan" />
+        <activity android:name="my.mynato.rahmatridham.mynato.Pemberitahuan.pemberitahuanDetil" />
+        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.PrepareAddCoc" />
+        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.PakKadir" />
+        <activity android:name="my.mynato.rahmatridham.mynato.Survey.Survey" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -57,13 +57,13 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Survey.DetailSurvey" />
-        <activity android:name=".DetailHistoryCoc"
+        <activity android:name="my.mynato.rahmatridham.mynato.Survey.DetailSurvey" />
+        <activity android:name="my.mynato.rahmatridham.mynato.DetailHistoryCoc"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".DetailHistoryCocInsidental"
+        <activity android:name="my.mynato.rahmatridham.mynato.DetailHistoryCocInsidental"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".StepCoCActivity.Step5Insidental" />
-        <activity android:name=".Survey.DoSurvey"></activity>
+        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step5Insidental" />
+        <activity android:name="my.mynato.rahmatridham.mynato.Survey.DoSurvey"></activity>
     </application>
 
 </manifest>

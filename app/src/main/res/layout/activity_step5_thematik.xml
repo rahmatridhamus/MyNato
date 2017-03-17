@@ -5,7 +5,7 @@
     android:id="@+id/activity_step5_thematik"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
+    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

@@ -4,7 +4,7 @@
     android:id="@+id/activity_pemberitahuan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.Pemberitahuan.Pemberitahuan">
+    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.Pemberitahuan.Pemberitahuan">
 
     <ListView
         android:layout_width="match_parent"

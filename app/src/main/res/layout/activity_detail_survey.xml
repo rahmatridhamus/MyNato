@@ -4,7 +4,7 @@
     android:id="@+id/activity_detail_survey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.Survey.DetailSurvey">
+    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.Survey.DetailSurvey">
 
     <TextView
         android:text="Survey Pemahaman 1"
