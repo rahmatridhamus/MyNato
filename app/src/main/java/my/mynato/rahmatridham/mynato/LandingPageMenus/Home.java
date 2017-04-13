@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
+import my.mynato.rahmatridham.mynato.R;
 import my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified;
-import my.mynato.rahmatridham.mynato.StepCoCActivity.PakKadir;
+import my.mynato.rahmatridham.mynato.PakKadir.PakKadir;
 import my.mynato.rahmatridham.mynato.Survey.Survey;
 
 
@@ -36,13 +37,13 @@ public class Home extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(my.mynato.rahmatridham.mynato.R.layout.fragment_home, container, false);
-        cocThematik = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.cocThematik);
-        cocinsidental = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.insidental);
-        absensi = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.absensi);
-        pemberitahuan = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.pemberitahuan);
-        survey = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.survey);
-        pakKadirun = (CardView) view.findViewById(my.mynato.rahmatridham.mynato.R.id.pakKadir);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        cocThematik = (CardView) view.findViewById(R.id.cocThematik);
+        cocinsidental = (CardView) view.findViewById(R.id.insidental);
+        absensi = (CardView) view.findViewById(R.id.absensi);
+        pemberitahuan = (CardView) view.findViewById(R.id.pemberitahuan);
+        survey = (CardView) view.findViewById(R.id.survey);
+        pakKadirun = (CardView) view.findViewById(R.id.pakKadir);
 
         cocThematik.setOnClickListener(this);
         cocinsidental.setOnClickListener(this);

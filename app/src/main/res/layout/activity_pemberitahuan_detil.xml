@@ -1,29 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_pemberitahuan_detil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.Pemberitahuan.pemberitahuanDetil">
+    tools:context="my.mynato.rahmatridham.mynato.Pemberitahuan.pemberitahuanDetil">
 
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbars"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/header"
-        android:gravity="center_vertical"
-        android:layout_height="80dp">
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
 
         <TextView
-            android:text="Judul Pemberitahuan"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Detail Pemberitahuan"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/butForward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@mipmap/ic_forward" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/toolbars"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/judulpemberitahuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/judulpemberitahuan"
-            android:textStyle="normal|bold"
+            android:foregroundGravity="center"
+            android:text="Judul Pemberitahuan"
             android:textSize="18sp"
-            android:foregroundGravity="center" />
+            android:textStyle="normal|bold" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -33,39 +65,58 @@
         android:layout_alignParentStart="true"
         android:layout_height="match_parent"
         android:padding="5dp"
-        android:layout_below="@+id/header"
-        android:layout_above="@+id/footer">
-
-        <Button
-            android:text="Lihat Lampiran"
-            android:layout_width="wrap_content"
-            android:id="@+id/button2"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="10sp"
-            android:layout_height="35dp" />
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/header">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:padding="10dp"
             android:layout_height="250dp"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:layout_above="@+id/linearLayoutDoc">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="TextView"
+                    android:id="@+id/contentDetilPemb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/contentDetilPemb" />
+                    android:text="TextView" />
 
             </LinearLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutDoc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.02"
+                app:srcCompat="@mipmap/check_circle" />
+
+            <TextView
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:text="document.pdf"
+                android:textColor="@color/darker_grayText"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -78,25 +129,28 @@
         android:layout_alignParentStart="true">
 
         <CheckBox
-            android:text="Saya Mengerti"
+            android:id="@+id/mengertiBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/mengertiBox"
-            android:textSize="18sp" />
+            android:layout_alignParentTop="true"
+            android:text="Saya Mengerti"
+            android:textSize="14sp" />
 
         <Button
-            android:text="Submit"
+            android:id="@+id/butSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/butSubmit"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="8dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/greenButton"
+            android:text="Submit"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>

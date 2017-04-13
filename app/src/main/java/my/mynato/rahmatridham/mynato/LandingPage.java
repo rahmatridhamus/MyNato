@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
 
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Home;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.MyCOC;
@@ -50,6 +55,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
+
 //        mChart = (BarChart) findViewById(R.id.chart1);
 //        mChart.setOnChartValueSelectedListener(this);
 //        mChart.setDrawBarShadow(false);
@@ -69,6 +75,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
         setupTabIcons();
     }
 

@@ -18,7 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.R;
 
 import org.json.JSONObject;
 
@@ -28,11 +30,17 @@ import java.util.Map;
 public class DetailSurvey extends AppCompatActivity {
     TextView judul, tanggal, waktuPengerjaan, nilai;
     Button doIt;
+    String id_survey, ket_survey;
+    int durasiSurvey = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(my.mynato.rahmatridham.mynato.R.layout.activity_detail_survey);
+
+        Intent intent = getIntent();
+        id_survey = intent.getStringExtra("id_survey");
+        ket_survey = intent.getStringExtra("keterangan_survey");
 
         judul = (TextView) findViewById(my.mynato.rahmatridham.mynato.R.id.detSurJudul);
         tanggal = (TextView) findViewById(my.mynato.rahmatridham.mynato.R.id.detSurTanggal);
@@ -42,15 +50,31 @@ public class DetailSurvey extends AppCompatActivity {
         doIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailSurvey.this,DoSurvey.class);
-                intent.putExtra("nama_ujian",judul.getText().toString());
-                startActivity(intent);
+                if (ket_survey.equals("Closed")) {
+                    startActivity(new Intent(DetailSurvey.this, Survey.class));
+                    finish();
+                } else {
+                    Intent intent = new Intent(DetailSurvey.this, DoSurvey.class);
+                    intent.putExtra("nama_ujian", judul.getText().toString());
+                    intent.putExtra("durasiSurvey", durasiSurvey);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 
-        Intent intent = getIntent();
-        String id_survey = intent.getStringExtra("id_survey");
 
+
+        Toast.makeText(this, ket_survey, Toast.LENGTH_SHORT).show();
+        if(ket_survey.equals("Open")){
+            doIt.setText("Kerjakan Survey");
+            doIt.setBackgroundResource(R.color.greenButton);
+        }else {
+            doIt.setText("Closed");
+            doIt.setBackgroundResource(R.color.red);
+
+        }
         getDetSurvey(id_survey);
     }
 
@@ -67,27 +91,28 @@ public class DetailSurvey extends AppCompatActivity {
                                 JSONObject object = jsonObject.getJSONObject("data");
                                 judul.setText(object.optString("nama_ujian", ""));
                                 tanggal.setText(object.optString("tanggal_mulai", "") + " s/d " + object.optString("tanggal_berakhir", ""));
-                                waktuPengerjaan.setText(object.optString("waktu_pengerjaan", "")+" Menit");
+                                waktuPengerjaan.setText(object.optString("waktu_pengerjaan", "") + " Menit");
+                                durasiSurvey = Integer.valueOf(object.optString("waktu_pengerjaan", ""));
                                 nilai.setText(object.optString("nilai", ""));
-                                if (object.optString("hasil", "").equals("BELUM DILAKUKAN SURVEY")) {
-                                    doIt.setText("Kerjakan Survey");
-                                    doIt.setBackgroundResource(my.mynato.rahmatridham.mynato.R.color.holo_green);
-                                } else {
-                                    doIt.setText("Closed");
-                                    doIt.setBackgroundResource(my.mynato.rahmatridham.mynato.R.color.red);
-                                }
+//                                if (object.optString("hasil", "").equals("BELUM DILAKUKAN SURVEY")) {
+//                                    doIt.setText("Kerjakan Survey");
+//                                    doIt.setBackgroundResource(R.color.greenButton);
+//                                } else {
+//                                    doIt.setText("Closed");
+//                                    doIt.setBackgroundResource(my.mynato.rahmatridham.mynato.R.color.red);
+//                                }
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(DetailSurvey.this, error, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
-                                startActivity(new Intent(DetailSurvey.this,Survey.class));
+                                startActivity(new Intent(DetailSurvey.this, Survey.class));
                                 finish();
                             }
                         } catch (Exception e) {
                             Toast.makeText(DetailSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                            startActivity(new Intent(DetailSurvey.this,Survey.class));
+                            startActivity(new Intent(DetailSurvey.this, Survey.class));
                             finish();
                         }
                     }

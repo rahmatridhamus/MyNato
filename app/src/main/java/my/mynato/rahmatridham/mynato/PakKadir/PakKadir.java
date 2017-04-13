@@ -1,10 +1,13 @@
-package my.mynato.rahmatridham.mynato.StepCoCActivity;
+package my.mynato.rahmatridham.mynato.PakKadir;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +41,18 @@ public class PakKadir extends AppCompatActivity {
         pakKadirArrayList = new ArrayList<>();
 
         listPakKadir = (ListView) findViewById(my.mynato.rahmatridham.mynato.R.id.listPakkadir);
+        listPakKadir.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PakKadirModel model = pakKadirArrayList.get(position);
+                Intent intent = new Intent(PakKadir.this,DetailPakKadir.class);
+                intent.putExtra("getId_pak_kadir",model.getId_pak_kadir());
+                intent.putExtra("getContent",model.getContent());
+                intent.putExtra("getTitle",model.getTitle());
+                startActivity(intent);
+                finish();
+            }
+        });
         adapter = new PakKadirAdapter(pakKadirArrayList, this);
         listPakKadir.setAdapter(adapter);
         getPakKadir();

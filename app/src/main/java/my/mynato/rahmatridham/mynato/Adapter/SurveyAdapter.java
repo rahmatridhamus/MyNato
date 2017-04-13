@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import my.mynato.rahmatridham.mynato.Model.SurveyModel;
+import my.mynato.rahmatridham.mynato.R;
 import my.mynato.rahmatridham.mynato.Survey.DetailSurvey;
 
 import java.util.ArrayList;
@@ -52,21 +54,24 @@ public class SurveyAdapter extends BaseAdapter {
         TextView judul = (TextView) v.findViewById(my.mynato.rahmatridham.mynato.R.id.JudulSurvey);
         TextView tanggal = (TextView) v.findViewById(my.mynato.rahmatridham.mynato.R.id.tanggalSurvey);
         TextView status = (TextView) v.findViewById(my.mynato.rahmatridham.mynato.R.id.kerjakanSurvey);
+        RelativeLayout relayClickSurvey = (RelativeLayout) v.findViewById(my.mynato.rahmatridham.mynato.R.id.relayClickSurvey);
         Button button = (Button) v.findViewById(my.mynato.rahmatridham.mynato.R.id.butOpenSurvey);
-
         judul.setText("Survey Pemahaman " + position);
         tanggal.setText(model.getTanggal_mulai());
         if (model.getKeterangan().equals("Open")) {
             status.setText("Kerjakan Survey");
         } else {
+            button.setBackgroundColor(v.getResources().getColor(R.color.warnamerah));
+            button.setText("Closed");
             status.setText("Lihat Hasil Pengerjaan");
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
+        relayClickSurvey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailSurvey.class);
                 intent.putExtra("id_survey",model.getId_survey());
+                intent.putExtra("keterangan_survey",model.getKeterangan());
                 context.startActivity(intent);
             }
         });

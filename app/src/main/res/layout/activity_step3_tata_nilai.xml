@@ -5,7 +5,7 @@
     android:id="@+id/activity_step3_tata_nilai"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
+    tools:context="my.mynato.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -34,24 +34,23 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-
-
         <RelativeLayout
             android:id="@+id/relTanil"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray"
-            android:layout_alignParentTop="true"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_height="35dp">
+            android:layout_alignParentTop="true"
+            android:background="@color/lighter_gray"
+            android:gravity="center_vertical">
+
             <TextView
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="Tata Nilai"
-                android:textStyle="normal|bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="normal|bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -82,7 +81,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
                     android:layout_marginStart="18dp"
-                    app:srcCompat="@mipmap/check" />
+                    app:srcCompat="@mipmap/check_circle" />
 
                 <TextView
                     android:id="@+id/strTanilSebelum"

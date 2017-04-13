@@ -1,4 +1,4 @@
-package my.mynato.rahmatridham.mynato;
+package my.mynato.rahmatridham.mynato.LandingPageMenus;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,9 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailDodontAdapter;
 import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailTanilAdapter;
-import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailThematikInsidentalAdapter;
+import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailThematikAdapter;
+import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.R;
 
 import org.json.JSONObject;
 
@@ -34,10 +37,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DetailHistoryCocInsidental extends AppCompatActivity {
+public class DetailHistoryCoc extends AppCompatActivity {
     Button showMotivasi, showGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
-    TextView nmMotivasi, nmGames, subDivisi, tanggal;
+    TextView nmMotivasi, nmGames, tiltle, tanggal;
 
     ArrayList<String> tataNilaiArrayList;
     ArrayList<String> doAndDontArrayList;
@@ -59,12 +62,12 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
     DetailTanilAdapter tanilAdapter;
     DetailDodontAdapter dodontAdapter;
-    DetailThematikInsidentalAdapter thematikAdapter;
+    DetailThematikAdapter thematikAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_history_coc_insidental);
+        setContentView(R.layout.activity_detail_history_coc);
 
         tataNilaiArrayList = new ArrayList<>();
         doAndDontArrayList = new ArrayList<>();
@@ -83,7 +86,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
         nmMotivasi = (TextView) findViewById(R.id.textViewNamot);
         nmGames = (TextView) findViewById(R.id.textVNagem);
-        subDivisi = (TextView) findViewById(R.id.toolbar_subBidang);
+        tiltle = (TextView) findViewById(R.id.toolbar_title);
         tanggal = (TextView) findViewById(R.id.toolbar_tanggal);
 
         Intent iin = getIntent();
@@ -94,9 +97,9 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
         tanilAdapter = new DetailTanilAdapter(this, tataNilaiArrayList, mapTanil);
         dodontAdapter = new DetailDodontAdapter(this, doAndDontArrayList, mapDoDont);
-        thematikAdapter = new DetailThematikInsidentalAdapter(this, thematikArrayList, mapThematik);
+        thematikAdapter = new DetailThematikAdapter(this, thematikArrayList, mapThematik);
 
-        getDetailInsidentalHistory(id_coc_activity);
+        getDetailHistory(id_coc_activity);
 
         listTataNilai = (ExpandableListView) findViewById(R.id.listTanil);
         listTataNilai.setAdapter(tanilAdapter);
@@ -133,6 +136,8 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
         tanilAdapter.notifyDataSetChanged();
         dodontAdapter.notifyDataSetChanged();
         thematikAdapter.notifyDataSetChanged();
+
+
     }
 
     void prepare() {
@@ -150,8 +155,8 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
     }
 
-    private void getDetailInsidentalHistory(final String id_coc_activity) {
-        final ProgressDialog dialog = ProgressDialog.show(DetailHistoryCocInsidental.this, "", "Loading. Please wait...", true);
+    private void getDetailHistory(final String id_coc_activity) {
+        final ProgressDialog dialog = ProgressDialog.show(DetailHistoryCoc.this, "", "Loading. Please wait...", true);
 
         //Creating a string request
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "History/detail_history/" + id_coc_activity,
@@ -166,30 +171,30 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                                 //array of Do and Dont
                                 JSONObject data = jsonObject.getJSONObject("data");
 
-                                tanggal.setText(data.optString("date","null"));
-                                subDivisi.setText(data.optString("nama_group","null"));
+                                tanggal.setText(data.optString("date", "null"));
 
+                                nmMotivasi.setText(data.optString("cerita_motivasi", "null"));
+                                nmGames.setText(data.optString("games", "null"));
 
-                                nmMotivasi.setText(data.optString("cerita_motivasi", ""));
-                                nmGames.setText(data.optString("games", ""));
+                                strTanil = data.optString("tata_nilai", "null");
+                                strDoDont = data.optString("title_do_and_dont", "null");
+                                strThematik = data.optString("title_thematik", "null");
 
-                                strTanil = data.optString("tata_nilai", "");
-                                strDoDont = data.optString("title_do_and_dont", "");
-                                strThematik = data.optString("title_thematik", "");
-
-                                itemTanil.add(data.optString("content_tata_nilai", "bla"));
-                                itemDodont.add(data.optString("content_do", "") + '\n' + data.optString("content_dont", "bla"));
-                                itemThematik.add(data.optString("content_thematik", "bla"));
+                                itemTanil.add(data.optString("content_tata_nilai", "null"));
+                                itemDodont.add("Do:\n" + data.optString("content_do", "null") + "\n\n" + "Don't:\n" + data.optString("content_dont", "null"));
+                                itemThematik.add(data.optString("content_thematik", "null"));
 
                                 prepare();
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DetailHistoryCocInsidental.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DetailHistoryCoc.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailHistoryCocInsidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DetailHistoryCoc.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
                     }
@@ -199,7 +204,10 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailHistoryCocInsidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DetailHistoryCoc.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+
                     }
                 }) {
             @Override
@@ -208,7 +216,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
                 try {
                     //Creating a shared preference
-                    SharedPreferences sharedPreferences = DetailHistoryCocInsidental.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = DetailHistoryCoc.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
@@ -216,13 +224,13 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(DetailHistoryCocInsidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailHistoryCoc.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }
         };
         //Adding the string request to the queue
-        RequestQueue requestQueue = Volley.newRequestQueue(DetailHistoryCocInsidental.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailHistoryCoc.this);
         requestQueue.add(stringRequest);
 
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.DetailHistoryCoc">
+    tools:context="my.mynato.rahmatridham.mynato.LandingPageMenus.DetailHistoryCoc">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,6 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         tools:layout_editor_absoluteX="8dp"
+        android:elevation="7dp"
         tools:layout_editor_absoluteY="-22dp">
 
         <RelativeLayout
@@ -34,7 +35,7 @@
                 android:gravity="start|center"
                 android:singleLine="true"
                 android:text="CoC Insidental"
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_title"
                 android:text="Sub Bidang SDM"
+                android:textColor="@color/white"
                 android:textSize="15sp" />
 
             <TextView
@@ -54,7 +56,7 @@
                 android:layout_gravity="center"
                 android:gravity="end|center"
                 android:singleLine="true"
-                android:textColor="@color/common_google_signin_btn_text_light_focused"
+                android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -62,7 +64,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="5dp">
 
         <RelativeLayout
             android:id="@+id/all"
@@ -78,7 +84,8 @@
                 <RelativeLayout
                     android:id="@+id/judulceritaMotivasi"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/birudetil">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -87,8 +94,10 @@
                         android:layout_centerHorizontal="false"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:padding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Cerita Motivasi"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -130,7 +139,8 @@
                 <RelativeLayout
                     android:id="@+id/judulGem"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/birudetil">
 
                     <TextView
                         android:id="@+id/textViewJudul"
@@ -139,8 +149,10 @@
                         android:layout_centerHorizontal="false"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:padding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Games"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -180,7 +192,8 @@
                 <RelativeLayout
                     android:id="@+id/judulTanil"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/birudetil">
 
                     <TextView
                         android:id="@+id/textView2cuy"
@@ -189,8 +202,10 @@
                         android:layout_centerHorizontal="false"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:padding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Tata Nilai"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -217,7 +232,8 @@
                 <RelativeLayout
                     android:id="@+id/judulDoAndDont"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/birudetil">
 
                     <TextView
                         android:id="@+id/textView2cuyDoAndDont"
@@ -226,8 +242,10 @@
                         android:layout_centerHorizontal="false"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:padding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Do and Don't"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -254,7 +272,8 @@
                 <RelativeLayout
                     android:id="@+id/judulThematik"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/birudetil">
 
                     <TextView
                         android:id="@+id/textView2cuyThematik"
@@ -263,8 +282,10 @@
                         android:layout_centerHorizontal="false"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:padding="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
                         android:text="Content Insidental"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 </RelativeLayout>

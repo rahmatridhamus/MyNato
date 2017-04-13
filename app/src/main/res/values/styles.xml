@@ -3,9 +3,34 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <item name="colorPrimary">@color/warnabiruheader</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/warnaijo</item>
+        <item name="android:colorForeground">@color/darker_grayText</item>
+        <item name="android:textColorPrimary">@color/darker_grayText</item>
+        <item name="android:textColorPrimaryInverse">@color/darker_grayText</item>
+        <item name="android:textColorSecondaryInverse">@color/cardview_shadow_end_color</item>
+        <item name="android:textViewStyle">@style/OpenSansRegular</item>
     </style>
 
+
+    <!-- Base application theme. -->
+    <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/warnabiruheader</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/warnaijo</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/darker_grayText</item>
+        <item name="android:textColorSecondaryInverse">@color/cardview_shadow_end_color</item>
+    </style>
+
+    <style name="OpenSansRegular" parent="android:Widget.TextView">
+        <item name="android:fontFamily">OpenSansRegular</item>
+    </style>
+
+    <!--<style name="OpenSansSemibold" parent="android:Widget.TextView">-->
+        <!--<item name="android:typeface">@ass</item>-->
+    <!--</style>-->
 </resources>

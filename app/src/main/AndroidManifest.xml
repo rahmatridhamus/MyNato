@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rahmatridham.mynato">
+    package="my.mynato.rahmatridham.mynato">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
     <application
         android:allowBackup="true"
@@ -13,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="my.mynato.rahmatridham.mynato.Splashscreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".Splashscreen"
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,33 +24,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="my.mynato.rahmatridham.mynato.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name="my.mynato.rahmatridham.mynato.LandingPage" />
+            android:name=".LoginActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".LandingPage" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step1VisiMisi"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".StepCoCActivity.Step1VisiMisi"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step2Motivasi"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".StepCoCActivity.Step2Motivasi"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step3TataNilai"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".StepCoCActivity.Step3TataNilai"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step4DoAndDont"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".StepCoCActivity.Step4DoAndDont"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step5Thematik"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".StepCoCActivity.Step5Thematik"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step6Absensi"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified" />
-        <activity android:name="my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan" />
-        <activity android:name="my.mynato.rahmatridham.mynato.Pemberitahuan.pemberitahuanDetil" />
-        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.PrepareAddCoc" />
-        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.PakKadir" />
-        <activity android:name="my.mynato.rahmatridham.mynato.Survey.Survey" />
+            android:name=".StepCoCActivity.Step6Absensi"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".StepCoCActivity.CocVerified" />
+        <activity android:name=".Pemberitahuan.Pemberitahuan" />
+        <activity
+            android:name=".Pemberitahuan.pemberitahuanDetil"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".StepCoCActivity.PrepareAddCoc" />
+        <activity android:name=".PakKadir.PakKadir" />
+        <activity android:name=".Survey.Survey" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -57,13 +61,29 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="my.mynato.rahmatridham.mynato.Survey.DetailSurvey" />
-        <activity android:name="my.mynato.rahmatridham.mynato.DetailHistoryCoc"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name="my.mynato.rahmatridham.mynato.DetailHistoryCocInsidental"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name="my.mynato.rahmatridham.mynato.StepCoCActivity.Step5Insidental" />
-        <activity android:name="my.mynato.rahmatridham.mynato.Survey.DoSurvey"></activity>
+        <service android:name=".FirebaseConsole.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".FirebaseConsole.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Survey.DetailSurvey" />
+        <activity
+            android:name=".LandingPageMenus.DetailHistoryCoc"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".LandingPageMenus.DetailHistoryCocInsidental"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".StepCoCActivity.Step5Insidental" />
+        <activity android:name=".Survey.DoSurvey" />
+        <activity android:name=".PakKadir.DetailPakKadir" />
+        <activity android:name=".Pemberitahuan.ForwardPemberitahuan"></activity>
+
     </application>
 
 </manifest>

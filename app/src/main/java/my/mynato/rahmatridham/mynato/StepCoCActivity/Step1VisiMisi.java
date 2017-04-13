@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.R;
 
@@ -54,7 +56,27 @@ public class Step1VisiMisi extends AppCompatActivity {
 
         screen = (RelativeLayout) findViewById(R.id.activity_step1_visi_misi);
         cbVisi = (CheckBox) findViewById(R.id.checkBoxMotivasi);
+        cbVisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbVisi.isChecked()) {
+                    cbVisi.setTextColor(getResources().getColor(R.color.warnaijo));
+                } else {
+                    cbVisi.setTextColor(getResources().getColor(R.color.darker_grayText));
+                }
+            }
+        });
         cbMisi = (CheckBox) findViewById(R.id.checkBoxMisi);
+        cbMisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cbMisi.isChecked()) {
+                    cbMisi.setTextColor(getResources().getColor(R.color.warnaijo));
+                } else {
+                    cbMisi.setTextColor(getResources().getColor(R.color.darker_grayText));
+                }
+            }
+        });
         txtVisi = (TextView) findViewById(R.id.descVisi);
         txtMisi = (TextView) findViewById(R.id.descMisi);
 
@@ -67,6 +89,8 @@ public class Step1VisiMisi extends AppCompatActivity {
                     pushVisiMisi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
                 } else {
                     Toast.makeText(Step1VisiMisi.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Checklist untuk melanjutkan", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });
@@ -94,11 +118,18 @@ public class Step1VisiMisi extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi.", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data, mohon ulangi.", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -108,7 +139,9 @@ public class Step1VisiMisi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -125,7 +158,9 @@ public class Step1VisiMisi extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }
@@ -152,10 +187,14 @@ public class Step1VisiMisi extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
                             Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -166,6 +205,8 @@ public class Step1VisiMisi extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -184,7 +225,9 @@ public class Step1VisiMisi extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }

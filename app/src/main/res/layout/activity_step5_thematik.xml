@@ -5,7 +5,7 @@
     android:id="@+id/activity_step5_thematik"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
+    tools:context="my.mynato.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -53,30 +53,30 @@
         <RelativeLayout
             android:id="@+id/relTanil"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:background="@color/lighter_gray"
+            android:gravity="center_vertical">
 
             <TextView
-                android:text="dipilih: Kosong"
+                android:id="@+id/textViewDipilihThematik"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewDipilihThematik"
-                android:layout_marginRight="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="Belum dipilih"
                 android:textAlignment="textEnd"
                 android:textColor="@color/red" />
 
             <TextView
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="Static Content Thematik"
-                android:textStyle="normal|bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="normal|bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -105,7 +105,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
                     android:layout_marginStart="18dp"
-                    app:srcCompat="@mipmap/check" />
+                    app:srcCompat="@mipmap/check_circle" />
 
                 <TextView
                     android:id="@+id/strThematikSebelum"

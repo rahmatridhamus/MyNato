@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import my.mynato.rahmatridham.mynato.Model.PakKadirModel;
@@ -49,6 +50,13 @@ public class PakKadirAdapter extends BaseAdapter {
 
         TextView title = (TextView) v.findViewById(R.id.txtTitlePakkadir);
         TextView tgl = (TextView) v.findViewById(R.id.txtTanggalPakkadir);
+        ImageView isRead = (ImageView) v.findViewById(R.id.isReadPemberitahuan);
+
+        if(pakKadirModel.getStatus().equals("SENT")){
+            isRead.setVisibility(View.VISIBLE);
+        }else {
+            isRead.setVisibility(View.GONE);
+        }
 
         title.setText(pakKadirModel.getTitle());
         tgl.setText(pakKadirModel.getReceived_date());

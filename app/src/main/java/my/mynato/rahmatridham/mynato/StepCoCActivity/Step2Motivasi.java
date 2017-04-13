@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -107,6 +108,9 @@ public class Step2Motivasi extends AppCompatActivity {
                     pushCeritaMotivasi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
                 } else {
                     Toast.makeText(Step2Motivasi.this, "Lengkapi pilihan Motivasi ataupun Games Anda", Toast.LENGTH_SHORT).show();
+
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });
@@ -175,10 +179,14 @@ public class Step2Motivasi extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
                             Toast.makeText(Step2Motivasi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -189,6 +197,8 @@ public class Step2Motivasi extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step2Motivasi.this, "errorResponse: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -216,7 +226,9 @@ public class Step2Motivasi extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step2Motivasi.this, "errorParam: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step2Motivasi.this, "errorParam: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "errorParam: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }
@@ -246,10 +258,14 @@ public class Step2Motivasi extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
                             Toast.makeText(Step2Motivasi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -260,6 +276,8 @@ public class Step2Motivasi extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(Step2Motivasi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data. Periksa kembali internet", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -278,7 +296,9 @@ public class Step2Motivasi extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step2Motivasi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step2Motivasi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }

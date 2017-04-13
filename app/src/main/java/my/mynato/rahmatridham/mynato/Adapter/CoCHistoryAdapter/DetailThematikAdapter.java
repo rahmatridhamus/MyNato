@@ -71,6 +71,7 @@ public class DetailThematikAdapter extends BaseExpandableListAdapter {
         }
 
         TextView title = (TextView) convertView.findViewById(R.id.titleExpandable);
+        title.setTextSize(14);
         title.setText(headerTitle);
         return convertView;
     }
@@ -84,6 +85,7 @@ public class DetailThematikAdapter extends BaseExpandableListAdapter {
         }
 
         TextView subtitle = (TextView) convertView.findViewById(R.id.subtitExpandable);
+        subtitle.setTextSize(14);
         subtitle.setText(childText);
         return convertView;
     }

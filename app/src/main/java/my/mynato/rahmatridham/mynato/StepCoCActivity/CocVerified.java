@@ -4,10 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -22,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.GroupCoc;
 import my.mynato.rahmatridham.mynato.R;
@@ -51,9 +56,9 @@ public class CocVerified extends AppCompatActivity {
         next = (Button) findViewById(R.id.buttonSelanjutnya);
         group = (RadioGroup) findViewById(R.id.radioTipecoc);
         judul = (TextView) findViewById(R.id.kontenCocHari);
-        if(sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF,"").equals("INSIDENTAL")){
+        if (sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF, "").equals("INSIDENTAL")) {
             judul.setText("CoC Insidental");
-        }else {
+        } else {
             judul.setText("CoC Thematik");
         }
 
@@ -79,7 +84,7 @@ public class CocVerified extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
                 groupCoc = groupCocs.get(checkedId);
                 isCheck = true;
                 next.setEnabled(isCheck);
@@ -93,6 +98,23 @@ public class CocVerified extends AppCompatActivity {
     }
 
     public void addRadioButtons(ArrayList<GroupCoc> groupCocs) {
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] { -android.R.attr.state_checked }, // unchecked
+                        new int[] {  android.R.attr.state_checked }  // checked
+                },
+                new int[] {
+                        getResources().getColor(R.color.greyBorder),
+                        getResources().getColor(R.color.warnaijo)
+                }
+        );
+
+        ColorStateList colorStateListbg = new ColorStateList(
+                new int[][]{
+                        new int[]{android.R.attr.state_enabled} //enabled
+                },
+                new int[] {getResources().getColor(R.color.colorPrimary) }
+        );
 
         for (int row = 0; row < 1; row++) {
             group.setOrientation(LinearLayout.VERTICAL);
@@ -100,8 +122,11 @@ public class CocVerified extends AppCompatActivity {
             float density = getResources().getDisplayMetrics().density;
 
             for (int i = 1; i <= groupCocs.size(); i++) {
-                RadioButton rdbtn = new RadioButton(this, null, R.attr.radioButtonStyle);
+                AppCompatRadioButton rdbtn = new AppCompatRadioButton(this);
                 rdbtn.setBackgroundResource(R.drawable.border_radio);
+//                rdbtn.setHighlightColor(getResources().getColor(R.color.warnaijo));
+//                rdbtn.setBackgroundTintList(colorStateListbg);
+//                rdbtn.setSupportButtonTintList(colorStateList);
                 ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
                 int margin = (int) (6 * density);
                 params.setMargins(0, margin, 0, margin);
@@ -109,7 +134,6 @@ public class CocVerified extends AppCompatActivity {
                 rdbtn.setId((row * 2) + (i - 1));
                 rdbtn.setText(groupCocs.get((i - 1)).getNama_group_coc());
                 rdbtn.setTextSize(18);
-                rdbtn.setHighlightColor(getResources().getColor(R.color.colorPrimary));
                 group.addView(rdbtn);
             }
         }
@@ -137,10 +161,14 @@ public class CocVerified extends AppCompatActivity {
                     } else {
                         String error = jsonObject.optString("message");
                         Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data", Snackbar.LENGTH_LONG);
+                        snackbars.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
                     Toast.makeText(CocVerified.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     dialog.dismiss();
                 }
             }
@@ -150,7 +178,9 @@ public class CocVerified extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error getting response: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -169,7 +199,9 @@ public class CocVerified extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(CocVerified.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CocVerified.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error param: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     dialog.dismiss();
                     return params;
                 }

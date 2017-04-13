@@ -24,8 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import my.mynato.rahmatridham.mynato.Adapter.CocHistAdapter;
 import my.mynato.rahmatridham.mynato.Config;
-import my.mynato.rahmatridham.mynato.DetailHistoryCoc;
-import my.mynato.rahmatridham.mynato.DetailHistoryCocInsidental;
 import my.mynato.rahmatridham.mynato.Model.CoC;
 import my.mynato.rahmatridham.mynato.R;
 
@@ -86,8 +84,8 @@ public class MyCOC extends Fragment {
 
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.cocRefresh);
         refreshLayout.setColorSchemeResources(
-                R.color.cardview_shadow_end_color,
-                R.color.colorPrimary,
+                R.color.greenButton,
+                R.color.mynatoBlue,
                 R.color.colorPrimaryDarkBlue
         );
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

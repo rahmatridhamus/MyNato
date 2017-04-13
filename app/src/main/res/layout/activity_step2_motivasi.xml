@@ -5,7 +5,7 @@
     android:id="@+id/activity_step2_motivasi"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
+    tools:context="my.mynato.rahmatridham.mynato.StepCoCActivity.Step2Motivasi">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -43,7 +43,7 @@
                 android:id="@+id/relvisi"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/lighter_gray"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -64,9 +64,10 @@
                     android:layout_marginRight="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="dipilih: Kosong"
+                    android:text="Belum dipilih"
                     android:textAlignment="textEnd"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/red" />
             </RelativeLayout>
 
 
@@ -99,7 +100,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="7dp"
                         android:layout_marginStart="7dp"
-                        app:srcCompat="@mipmap/check" />
+                        app:srcCompat="@mipmap/check_circle" />
 
                     <TextView
                         android:id="@+id/strMotivSebelum"
@@ -135,7 +136,7 @@
                 android:id="@+id/kolomGames"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/lighter_gray"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -145,8 +146,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5dp"
                     android:ellipsize="end"
-                    android:text="dipilih: Kosong"
-                    android:textAlignment="textEnd" />
+                    android:text="Belum dipilih"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/red" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -184,7 +186,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="7dp"
                         android:layout_marginStart="7dp"
-                        app:srcCompat="@mipmap/check" />
+                        app:srcCompat="@mipmap/check_circle" />
 
                     <TextView
                         android:id="@+id/strGamesSebelum"

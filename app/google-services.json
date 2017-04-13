@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1080267490715",
+    "firebase_url": "https://mynato-80248.firebaseio.com",
+    "project_id": "mynato-80248",
+    "storage_bucket": "mynato-80248.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080267490715:android:b80aae645c8445ad",
+        "android_client_info": {
+          "package_name": "my.mynato.rahmatridham.mynato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080267490715-gpv5kkkrf0sbu5u78l0ma0fkocbsd8mu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7NuKvrgv60RMuMu7QK5q2khKoozVxPN4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

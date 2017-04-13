@@ -1,6 +1,7 @@
 package my.mynato.rahmatridham.mynato.LandingPageMenus;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,8 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.Model.PemberitahuanModel;
+import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import my.mynato.rahmatridham.mynato.R;
 
 
@@ -35,12 +53,69 @@ public class Profile extends Fragment {
         jabatan = (TextView) view.findViewById(R.id.JabatanProfil);
         lokasi = (TextView) view.findViewById(R.id.kantorProfil);
 
-        SharedPreferences sharedPreferences = Profile.this.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        nama.setText(sharedPreferences.getString(Config.NAMA_SHARED_PREF,"null"));
-        jabatan.setText(sharedPreferences.getString(Config.JABATAN_SHARED_PREF,"null"));
-        lokasi.setText(sharedPreferences.getString(Config.KODEPOSISI_SHARED_PREF,"null"));
-
+        getPemberitahuan();
         return view;
+    }
+
+    private void getPemberitahuan() {
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Profile",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                JSONArray data = jsonObject.getJSONArray("data");
+                                JSONObject object = data.getJSONObject(0);
+
+                                nama.setText(object.optString("nama",""));
+                                jabatan.setText(object.optString("nama_jabatan",""));
+                                lokasi.setText(object.optString("nama_kantor",""));
+
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Profile.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        error.printStackTrace();
+                        Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = Profile.this.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    //Adding parameters to request
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+//                    Toast.makeText(Profile.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+
+                }
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(Profile.this.getContext());
+        requestQueue.add(stringRequest);
     }
 
 }

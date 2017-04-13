@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public class PrepareAddCoc extends AppCompatActivity {
     TextView kontenCOChari;
     CardView adminInput, AnggotaCoc;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,9 @@ public class PrepareAddCoc extends AppCompatActivity {
         adminInput = (CardView) findViewById(my.mynato.rahmatridham.mynato.R.id.adminInput);
         AnggotaCoc = (CardView) findViewById(my.mynato.rahmatridham.mynato.R.id.anggotaCoc);
         kontenCOChari = (TextView) findViewById(my.mynato.rahmatridham.mynato.R.id.kontenCocHari);
-        if(sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF,"").equals("INSIDENTAL")){
+        if (sharedPreferences.getString(Config.KETERANGAN_SHARED_PREF, "").equals("INSIDENTAL")) {
             kontenCOChari.setText("CoC Insidental");
-        }else {
+        } else {
             kontenCOChari.setText("CoC Thematik");
         }
 
@@ -60,37 +63,43 @@ public class PrepareAddCoc extends AppCompatActivity {
             public void onClick(View v) {
 //                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
 
-                postDataBeforeStep1("ADMIN", idGroup);
+                postDataBeforeStep1("ADMIN", idGroup, v);
             }
         });
 
         AnggotaCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postDataBeforeStep1("ANGGOTA", idGroup);
+                postDataBeforeStep1("ANGGOTA", idGroup, v);
 //                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
 
             }
         });
     }
 
-    private void postDataBeforeStep1(final String role, String idGroup) {
+    private void postDataBeforeStep1(final String role, String idGroup, final View view) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(PrepareAddCoc.this, "", "Loading. Please wait...", true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_group/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
                     if (status.equals(String.valueOf(1))) {
                         dialog.dismiss();
                         Toast.makeText(PrepareAddCoc.this, "Anda masih memiliki data CoC yang belum selesai", Toast.LENGTH_SHORT).show();
+//                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Anda masih memiliki data CoC yang belum selesai", Snackbar.LENGTH_LONG);
+//                        snackbars.show();
                         JSONObject data = jsonObject.getJSONObject("data");
                         JSONObject exist = data.getJSONObject("page_eksisting");
                         int i = exist.optInt("id", 0);
                         switch (i) {
+                            case 0:
+//                                Toast.makeText(PrepareAddCoc.this, "CoC sudah dilakukan", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "CoC sudah dilakukan", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                             case 1:
                                 startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
                                 break;
@@ -118,10 +127,17 @@ public class PrepareAddCoc extends AppCompatActivity {
                     } else {
                         String error = jsonObject.optString("message");
                         Toast.makeText(PrepareAddCoc.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
                     Toast.makeText(PrepareAddCoc.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
+//                    Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+
                     dialog.dismiss();
                 }
             }
@@ -132,6 +148,9 @@ public class PrepareAddCoc extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
                         Toast.makeText(PrepareAddCoc.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
+//                        Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }) {
@@ -163,7 +182,10 @@ public class PrepareAddCoc extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(PrepareAddCoc.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+// Toast.makeText(PrepareAddCoc.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     return params;
                 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public class Step5Insidental extends AppCompatActivity {
     EditText insidentalTxtArea;
     Button lanjutkan;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class Step5Insidental extends AppCompatActivity {
         lanjutkan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pushInsidental(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+                pushInsidental(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
             }
         });
     }
@@ -65,10 +68,14 @@ public class Step5Insidental extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step5Insidental.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -78,7 +85,9 @@ public class Step5Insidental extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step5Insidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step5Insidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -96,7 +105,9 @@ public class Step5Insidental extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }

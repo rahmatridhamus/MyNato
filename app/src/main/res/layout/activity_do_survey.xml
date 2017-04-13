@@ -71,13 +71,15 @@
                 android:id="@+id/textViewSoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <RadioGroup
             android:id="@+id/listJawaban"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/footer"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/Soal"
@@ -90,7 +92,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/footer"
-            android:text="Next" />
+            android:background="@color/greenButton"
+            android:text="Next"
+            android:textColor="@color/white" />
 
         <RelativeLayout
             android:id="@+id/footer"

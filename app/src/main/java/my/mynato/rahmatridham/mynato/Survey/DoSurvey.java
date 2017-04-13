@@ -56,7 +56,7 @@ public class DoSurvey extends AppCompatActivity {
     String jsonStringAnswer = "";
 
     int index = 0;
-
+    int timer = 15;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +72,7 @@ public class DoSurvey extends AppCompatActivity {
         Bundle b = iin.getExtras();
         if (b != null) {
             String nameExam = (String) b.get("nama_ujian");
+            timer = (Integer) b.getInt("durasiSurvey");
             namaUjian.setText(nameExam);
         }
 
@@ -93,7 +94,8 @@ public class DoSurvey extends AppCompatActivity {
                             submitAnswerArrayList.add(new submitAnswerModel(soalModelArrayList.get(index - 1).getId_pertanyaan(), soalModelArrayList.get(index - 1).getJawabanModelArrayList().get(optJawaban.getCheckedRadioButtonId()).getId_jawaban()));
                         }
                         next.setText("Submit");
-                        Toast.makeText(v.getContext(), "FINISH!!!", Toast.LENGTH_SHORT).show();
+                        next.setBackgroundColor(getResources().getColor(R.color.deepGreenButton));
+//                        Toast.makeText(v.getContext(), "FINISH!!!", Toast.LENGTH_SHORT).show();
 
 //                        String s = "";
 //                        for (int i = 0; i < submitAnswerArrayList.size(); i++) {
@@ -104,7 +106,7 @@ public class DoSurvey extends AppCompatActivity {
                         JsonArray arrayAns = gson.toJsonTree(submitAnswerArrayList).getAsJsonArray();
                         JsonObject object = new JsonObject();
                         object.add("data_jawaban", arrayAns);
-                        Toast.makeText(v.getContext(), object.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(v.getContext(), object.toString(), Toast.LENGTH_SHORT).show();
                         jsonStringAnswer = object.toString();
 
                         pushJawabanSurvey(id_data_survey, id_aktivasi_ujian, jsonStringAnswer);
@@ -170,16 +172,23 @@ public class DoSurvey extends AppCompatActivity {
                                 }
                                 dialog.dismiss();
                                 itemRemain.setText("1 OF " + soalModelArrayList.size());
-                                startTimer(15);
+                                startTimer(timer);
                                 doSurvey(soalModelArrayList.get(index));
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi.", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+                                startActivity(new Intent(DoSurvey.this,Survey.class));
+                                finish();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
+                            startActivity(new Intent(DoSurvey.this,Survey.class));
+                            finish();
+
                         }
                     }
                 },
@@ -188,8 +197,11 @@ public class DoSurvey extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DoSurvey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DoSurvey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
+                        startActivity(new Intent(DoSurvey.this,Survey.class));
+                        finish();
                     }
                 }) {
             @Override
@@ -224,7 +236,7 @@ public class DoSurvey extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(DoSurvey.this, response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DoSurvey.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
@@ -238,11 +250,14 @@ public class DoSurvey extends AppCompatActivity {
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DoSurvey.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
+
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DoSurvey.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
                     }
@@ -299,14 +314,15 @@ public class DoSurvey extends AppCompatActivity {
 
             for (int i = 1; i <= optionAnswer.size(); i++) {
                 RadioButton rdbtn = new RadioButton(this, null, R.attr.radioButtonStyle);
-                rdbtn.setBackgroundResource(R.drawable.border_radio);
+//                rdbtn.setBackgroundResource(R.drawable.border_radio);
                 ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
                 int margin = (int) (6 * density);
                 params.setMargins(0, margin, 0, margin);
                 rdbtn.setLayoutParams(params);
                 rdbtn.setId((row * 2) + (i - 1));
                 rdbtn.setText(optionAnswer.get((i - 1)).getNama_jawaban());
-                rdbtn.setTextSize(18);
+                rdbtn.setTextColor(getResources().getColor(R.color.darker_grayText));
+                rdbtn.setTextSize(14);
                 rdbtn.setHighlightColor(getResources().getColor(R.color.colorPrimary));
                 optJawaban.addView(rdbtn);
             }

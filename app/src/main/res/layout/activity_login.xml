@@ -37,22 +37,24 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="username"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/darker_grayText" />
 
     <EditText
         android:id="@+id/editTextpassword"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextUsername"
+        android:layout_alignStart="@+id/editTextUsername"
+        android:layout_below="@+id/editTextUsername"
+        android:layout_marginTop="9dp"
         android:background="@drawable/border"
         android:drawableLeft="@drawable/lock"
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_alignLeft="@+id/editTextUsername"
-        android:layout_alignStart="@+id/editTextUsername"
-        android:layout_marginTop="9dp" />
+        android:textColor="@color/darker_grayText" />
 
     <Button
         android:id="@+id/buttonSignIn"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,6 +71,8 @@ public class Step4DoAndDont extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(Step4DoAndDont.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });
@@ -148,12 +151,16 @@ public class Step4DoAndDont extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step4DoAndDont.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step4DoAndDont.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
 
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -163,7 +170,9 @@ public class Step4DoAndDont extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -180,7 +189,9 @@ public class Step4DoAndDont extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }
@@ -207,7 +218,7 @@ public class Step4DoAndDont extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Step4DoAndDont.this, response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step4DoAndDont.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
@@ -222,11 +233,15 @@ public class Step4DoAndDont extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step4DoAndDont.this, "responseError\n"+error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step4DoAndDont.this, "responseError\n"+error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "responseError\n"+error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step4DoAndDont.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step4DoAndDont.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "errorJSON: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -236,7 +251,9 @@ public class Step4DoAndDont extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step4DoAndDont.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -255,7 +272,9 @@ public class Step4DoAndDont extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step4DoAndDont.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
                 return params;
             }

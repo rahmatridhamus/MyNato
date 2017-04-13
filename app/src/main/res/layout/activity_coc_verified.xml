@@ -4,7 +4,7 @@
     android:id="@+id/activity_coc_senin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rahmatridham.mynato.my.example.rahmatridham.mynato.StepCoCActivity.CocVerified">
+    tools:context="my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified">
 
     <RelativeLayout
         android:id="@+id/relaycoc"
@@ -48,7 +48,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="5dp"
-        android:background="@color/colorPrimaryDarkBlue"
+        android:background="@color/biruButton"
         android:text="selanjutnya"
         android:textColor="@color/cardview_light_background" />
 

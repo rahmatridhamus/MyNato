@@ -53,9 +53,9 @@
         <RelativeLayout
             android:id="@+id/relTanil"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:background="@color/lighter_gray"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="18dp"
                     android:layout_marginStart="18dp"
-                    app:srcCompat="@mipmap/check" />
+                    app:srcCompat="@mipmap/check_circle" />
 
                 <TextView
                     android:id="@+id/strThematikSebelum"

@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#96a4f2</color>
-    <color name="colorPrimaryDarkBlue">#3d4cab</color>
+    <color name="colorPrimaryDarkBlue">#00525e</color>
     <color name="colorAccent">#FF4081</color>
     <color name="holo_green">#99cc00</color>
     <color name="red">#d91e18</color>
     <color name="white">#ffffff</color>
-    <color name="greenButton">#2ecc71</color>
-    <color name="greyBorder">#95A5A6</color>
+
+    <color name="birudetilchoose">#1893D9</color>
+    <color name="birudetil">#1BA0E3</color>
+
+
+    <color name="mynatoBlue">#00a1ba</color>
+    <color name="warnaijo">#009688</color>
+    <color name="warnamerah">#f92a39</color>
+    <color name="warnabiruheader">#016a7a</color>
+    <color name="biruButton">#387EF5</color>
+    <color name="greenButton">#33cd5f</color>
+    <color name="deepGreenButton">#FF089230</color>
+    <color name="greyBorder">#95a5a6</color>
+    <color name="darker_grayText">#4e4e4e</color>
+    <color name="lighter_gray">#f9f9f9</color>
+    <color name="foreground_material_light">#ffffff</color>
+    <color name="primary_text_material_light">#deffffff</color>
+    <color name="primary_text_material_dark">#b2b0b0</color>
+
 </resources>

@@ -36,16 +36,17 @@
         <RelativeLayout
             android:id="@+id/relDatdir"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:background="@color/lighter_gray"
+            android:gravity="center_vertical">
+
             <TextView
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="Data Kehadiran"
-                android:textStyle="normal|bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="normal|bold" />
         </RelativeLayout>
 
         <ListView
@@ -91,16 +92,17 @@
         <RelativeLayout
             android:id="@+id/relTanil"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:background="@android:color/darker_gray"
-            android:layout_height="35dp">
+            android:layout_height="35dp"
+            android:background="@color/lighter_gray"
+            android:gravity="center_vertical">
+
             <TextView
-                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:text="Dokumentasi Kehadiran"
-                android:textStyle="normal|bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="normal|bold" />
 
         </RelativeLayout>
 

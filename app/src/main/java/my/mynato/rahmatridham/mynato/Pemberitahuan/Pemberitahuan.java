@@ -42,8 +42,9 @@ public class Pemberitahuan extends AppCompatActivity {
         setContentView(R.layout.activity_pemberitahuan);
 
         pemberitahuanModelArrayList = new ArrayList<>();
-        listView = (ListView) findViewById(R.id.listPemberitahuan);
         adapter = new PemberitahuanAdapter(this, pemberitahuanModelArrayList);
+
+        listView = (ListView) findViewById(R.id.listPemberitahuan);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
