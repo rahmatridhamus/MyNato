@@ -33,4 +33,6 @@ public class Config {
     public static final String KETERANGAN_SHARED_PREF = "keterangan_coc";
     public static final String IDGROUPCOC_SHARED_PREF = "id_group_coc ";
 
+    public static boolean isAnggota;
+
 }

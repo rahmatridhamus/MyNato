@@ -21,6 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota.Step1VisiMisiAnggota;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota.Step2MotivasiAnggota;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota.Step3TataNilaiAnggota;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota.Step4DoAndDontAnggota;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota;
 
 import org.json.JSONObject;
 
@@ -63,6 +68,7 @@ public class PrepareAddCoc extends AppCompatActivity {
             public void onClick(View v) {
 //                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
 
+                Config.isAnggota = false;
                 postDataBeforeStep1("ADMIN", idGroup, v);
             }
         });
@@ -70,6 +76,7 @@ public class PrepareAddCoc extends AppCompatActivity {
         AnggotaCoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Config.isAnggota = true;
                 postDataBeforeStep1("ANGGOTA", idGroup, v);
 //                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
 
@@ -83,7 +90,7 @@ public class PrepareAddCoc extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_group/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-//                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
@@ -93,7 +100,7 @@ public class PrepareAddCoc extends AppCompatActivity {
 //                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Anda masih memiliki data CoC yang belum selesai", Snackbar.LENGTH_LONG);
 //                        snackbars.show();
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject exist = data.getJSONObject("page_eksisting");
+                        JSONObject exist = jsonObject.getJSONObject("page_eksisting");
                         int i = exist.optInt("id", 0);
                         switch (i) {
                             case 0:
@@ -101,22 +108,50 @@ public class PrepareAddCoc extends AppCompatActivity {
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "CoC sudah dilakukan", Snackbar.LENGTH_LONG);
                                 snackbar.show();
                             case 1:
-                                startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
+                                if (Config.isAnggota) {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
+
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisi.class));
+                                }
                                 break;
                             case 2:
-                                startActivity(new Intent(PrepareAddCoc.this, Step2Motivasi.class));
+                                if (Config.isAnggota) {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step2MotivasiAnggota.class));
+
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step2Motivasi.class));
+                                }
                                 break;
                             case 3:
-                                startActivity(new Intent(PrepareAddCoc.this, Step3TataNilai.class));
+                                if (Config.isAnggota) {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step3TataNilaiAnggota.class));
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step3TataNilai.class));
+                                }
                                 break;
                             case 4:
-                                startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDont.class));
+                                if (Config.isAnggota) {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDontAnggota.class));
+
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDont.class));
+                                }
                                 break;
                             case 5:
-                                startActivity(new Intent(PrepareAddCoc.this, Step5Thematik.class));
+                                if (Config.isAnggota) {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step5ThematikAnggota.class));
+
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step5Thematik.class));
+                                }
                                 break;
                             case 6:
-                                startActivity(new Intent(PrepareAddCoc.this, Step6Absensi.class));
+                                if (Config.isAnggota) {
+                                    Toast.makeText(PrepareAddCoc.this, "ID didn't match", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    startActivity(new Intent(PrepareAddCoc.this, Step6Absensi.class));
+                                }
                                 break;
                             default:
                                 Toast.makeText(PrepareAddCoc.this, "ID didn't match", Toast.LENGTH_SHORT).show();
@@ -126,8 +161,8 @@ public class PrepareAddCoc extends AppCompatActivity {
 
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(PrepareAddCoc.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+//                        Toast.makeText(PrepareAddCoc.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbar.show();
 //                        Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();

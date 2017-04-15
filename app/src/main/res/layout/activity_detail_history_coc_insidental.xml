@@ -84,7 +84,7 @@
                 <RelativeLayout
                     android:id="@+id/judulceritaMotivasi"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:background="@color/birudetil">
 
                     <TextView
@@ -105,94 +105,81 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_below="@+id/judulceritaMotivasi">
 
-                    <Button
+                    <TextView
+                        android:id="@+id/buttonOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Details"
+                        android:textAllCaps="true"
+                        android:textColor="@color/birudetilchoose"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
                         android:id="@+id/buttonOpened"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:text="Button" />
+                        android:layout_below="@+id/buttonOpen"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="40dp"
+                        android:text="Details"
+                        android:textAllCaps="true"
+                        android:textColor="@color/birudetilchoose"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textViewNamot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_alignTop="@+id/buttonOpen"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@+id/buttonOpened"
-                        android:layout_toStartOf="@+id/buttonOpened"
+                        android:layout_toLeftOf="@+id/buttonOpen"
+                        android:layout_toStartOf="@+id/buttonOpen"
+                        android:paddingRight="10dp"
                         android:text="Nama Motivasi"
-                        android:textSize="18sp" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/Games"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/ceritaMotivasi">
-
-
-                <RelativeLayout
-                    android:id="@+id/judulGem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/birudetil">
-
-                    <TextView
-                        android:id="@+id/textViewJudul"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="false"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-                        android:text="Games"
-                        android:textColor="@android:color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/judulGem">
-
-                    <Button
-                        android:id="@+id/buttonOpen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:text="Button" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/textVNagem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_alignTop="@+id/buttonOpened"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@+id/buttonOpen"
-                        android:layout_toStartOf="@+id/buttonOpen"
-                        android:text="Nama Motivasi"
-                        android:textSize="18sp" />
+                        android:layout_toLeftOf="@+id/buttonOpened"
+                        android:layout_toStartOf="@+id/buttonOpened"
+                        android:paddingRight="10dp"
+                        android:text="Nama Games"
+                        android:textAllCaps="false"
+                        android:textSize="14sp" />
+
                 </RelativeLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/TataNilai"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/Games">
+                android:layout_below="@+id/ceritaMotivasi">
 
                 <RelativeLayout
                     android:id="@+id/judulTanil"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:background="@color/birudetil">
 
                     <TextView
@@ -232,7 +219,7 @@
                 <RelativeLayout
                     android:id="@+id/judulDoAndDont"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:background="@color/birudetil">
 
                     <TextView
@@ -272,7 +259,7 @@
                 <RelativeLayout
                     android:id="@+id/judulThematik"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:background="@color/birudetil">
 
                     <TextView

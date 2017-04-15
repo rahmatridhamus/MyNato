@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DetailHistoryCoc extends AppCompatActivity {
-    Button showMotivasi, showGames;
+    TextView showMotivasi, showGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
     TextView nmMotivasi, nmGames, tiltle, tanggal;
 
@@ -81,8 +81,20 @@ public class DetailHistoryCoc extends AppCompatActivity {
         mapDoDont = new HashMap<>();
         mapThematik = new HashMap<>();
 
-        showMotivasi = (Button) findViewById(R.id.buttonOpened);
-        showGames = (Button) findViewById(R.id.buttonOpen);
+        showMotivasi = (TextView) findViewById(R.id.buttonOpened);
+        showMotivasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailHistoryCoc.this, "no data", Toast.LENGTH_SHORT).show();
+            }
+        });
+        showGames = (TextView) findViewById(R.id.buttonOpen);
+        showGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailHistoryCoc.this, "no data", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         nmMotivasi = (TextView) findViewById(R.id.textViewNamot);
         nmGames = (TextView) findViewById(R.id.textVNagem);
@@ -173,8 +185,8 @@ public class DetailHistoryCoc extends AppCompatActivity {
 
                                 tanggal.setText(data.optString("date", "null"));
 
-                                nmMotivasi.setText(data.optString("cerita_motivasi", "null"));
-                                nmGames.setText(data.optString("games", "null"));
+                                nmMotivasi.setText("Cerita Motivasi:\n"+data.optString("cerita_motivasi", "null"));
+                                nmGames.setText("Games:\n"+data.optString("games", "null"));
 
                                 strTanil = data.optString("tata_nilai", "null");
                                 strDoDont = data.optString("title_do_and_dont", "null");

@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.GamesAdapter;
 import my.mynato.rahmatridham.mynato.Adapter.MotivasiAdapter;
 import my.mynato.rahmatridham.mynato.Config;
@@ -107,9 +108,9 @@ public class Step2Motivasi extends AppCompatActivity {
                     SharedPreferences sharedPreferences = Step2Motivasi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                     pushCeritaMotivasi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
                 } else {
-                    Toast.makeText(Step2Motivasi.this, "Lengkapi pilihan Motivasi ataupun Games Anda", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step2Motivasi.this, "Lengkapi pilihan Motivasi ataupun Games Anda", Toast.LENGTH_SHORT).show();
 
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Lengkapi pilihan Motivasi ataupun Games Anda", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
@@ -179,7 +180,7 @@ public class Step2Motivasi extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
                                 Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
@@ -227,7 +228,7 @@ public class Step2Motivasi extends AppCompatActivity {
                 } catch (Exception e) {
                     e.getMessage();
 //                    Toast.makeText(Step2Motivasi.this, "errorParam: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),  "errorParam: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "errorParam: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
                 return params;

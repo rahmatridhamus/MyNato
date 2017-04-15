@@ -1,11 +1,13 @@
 package my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import my.mynato.rahmatridham.mynato.R;
 
@@ -84,9 +86,17 @@ public class DetailThematikAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.listrow_detilthematik_adapter, null);
         }
 
+
         TextView subtitle = (TextView) convertView.findViewById(R.id.subtitExpandable);
         subtitle.setTextSize(14);
-        subtitle.setText(childText);
+        subtitle.setText(Html.fromHtml(childText));
+        TextView detailSubtit = (TextView) convertView.findViewById(R.id.button);
+        detailSubtit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
+            }
+        });
         return convertView;
     }
 

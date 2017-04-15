@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.ThematikAdapter;
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.SubtitleThematik;
@@ -49,7 +50,7 @@ public class Step5Thematik extends AppCompatActivity {
     HashMap<String, List<String>> listDataChild;
     ExpandableListView listView;
     ThematikAdapter adapter;
-    String themSel, subThemSel;
+    String themSel="", subThemSel="";
 
 
     @Override
@@ -68,8 +69,13 @@ public class Step5Thematik extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = Step5Thematik.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                pushThematik(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
+                if (!subThemSel.equals("")) {
+                    SharedPreferences sharedPreferences = Step5Thematik.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    pushThematik(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
+                }else {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Belum ada pilihan, pilih untuk melanjutkan", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
             }
         });
 
@@ -172,13 +178,13 @@ public class Step5Thematik extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(Step5Thematik.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step5Thematik.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -190,7 +196,7 @@ public class Step5Thematik extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step5Thematik.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -237,13 +243,13 @@ public class Step5Thematik extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(Step5Thematik.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step5Thematik.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -255,7 +261,7 @@ public class Step5Thematik extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step5Thematik.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -276,7 +282,7 @@ public class Step5Thematik extends AppCompatActivity {
                 } catch (Exception e) {
                     e.getMessage();
 //                    Toast.makeText(Step5Thematik.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
                 return params;

@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -82,8 +81,12 @@
         <activity android:name=".StepCoCActivity.Step5Insidental" />
         <activity android:name=".Survey.DoSurvey" />
         <activity android:name=".PakKadir.DetailPakKadir" />
-        <activity android:name=".Pemberitahuan.ForwardPemberitahuan"></activity>
-
+        <activity android:name=".Pemberitahuan.ForwardPemberitahuan" />
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step1VisiMisiAnggota" />
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step2MotivasiAnggota" />
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step3TataNilaiAnggota" />
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step4DoAndDontAnggota" />
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota"></activity>
     </application>
 
 </manifest>

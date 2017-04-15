@@ -62,7 +62,6 @@ public class CocVerified extends AppCompatActivity {
             judul.setText("CoC Thematik");
         }
 
-
         next.setEnabled(isCheck);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +83,7 @@ public class CocVerified extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
                 groupCoc = groupCocs.get(checkedId);
                 isCheck = true;
                 next.setEnabled(isCheck);
@@ -160,8 +159,8 @@ public class CocVerified extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
-                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data", Snackbar.LENGTH_LONG);
+//                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbars.show();
                         dialog.dismiss();
                     }

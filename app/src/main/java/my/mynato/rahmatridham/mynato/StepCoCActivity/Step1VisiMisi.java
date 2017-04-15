@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -88,7 +89,7 @@ public class Step1VisiMisi extends AppCompatActivity {
                     SharedPreferences sharedPreferences = Step1VisiMisi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                     pushVisiMisi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
                 } else {
-                    Toast.makeText(Step1VisiMisi.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Step1VisiMisi.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Checklist untuk melanjutkan", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
@@ -113,14 +114,14 @@ public class Step1VisiMisi extends AppCompatActivity {
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 vis = data.optString("visi");
                                 mis = data.optString("misi");
-                                txtVisi.setText(vis);
-                                txtMisi.setText(mis);
+                                txtVisi.setText(Html.fromHtml(vis));
+                                txtMisi.setText(Html.fromHtml(mis));
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
 //                                Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi.", Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data, mohon ulangi.", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }

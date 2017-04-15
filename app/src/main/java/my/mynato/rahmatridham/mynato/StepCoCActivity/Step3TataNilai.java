@@ -156,7 +156,7 @@ public class Step3TataNilai extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("messageError:\n");
                                 Toast.makeText(Step3TataNilai.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }

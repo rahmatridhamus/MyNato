@@ -70,8 +70,8 @@ public class Step4DoAndDont extends AppCompatActivity {
                     pushDoandDont(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
 
                 } else {
-                    Toast.makeText(Step4DoAndDont.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "test", Snackbar.LENGTH_LONG);
+//                    Toast.makeText(Step4DoAndDont.this, "Checklist untuk melanjutkan", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Belum ada pilihan, pilih untuk melanjutkan", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
             }
