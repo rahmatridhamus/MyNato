@@ -24,5 +24,6 @@
     <color name="foreground_material_light">#ffffff</color>
     <color name="primary_text_material_light">#deffffff</color>
     <color name="primary_text_material_dark">#b2b0b0</color>
+    <color name="bgkoreksi">#d6e5e7</color>
 
 </resources>

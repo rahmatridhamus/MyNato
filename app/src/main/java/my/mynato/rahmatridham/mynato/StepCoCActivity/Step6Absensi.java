@@ -54,7 +54,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_ABSENSI = 100;
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_PEGAWAI = 300;
     private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
-    public static final String IMAGE_DIRECTORY_NAME = "Android File Upload";
+    public static final String IMAGE_DIRECTORY_NAME = "MyNato File Upload";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
 

@@ -145,6 +145,7 @@ public class CocVerified extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Toast.makeText(CocVerified.this, response, Toast.LENGTH_SHORT).show();
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
 

@@ -100,7 +100,7 @@ public class PrepareAddCoc extends AppCompatActivity {
 //                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Anda masih memiliki data CoC yang belum selesai", Snackbar.LENGTH_LONG);
 //                        snackbars.show();
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject exist = jsonObject.getJSONObject("page_eksisting");
+                        JSONObject exist = data.getJSONObject("page_eksisting");
                         int i = exist.optInt("id", 0);
                         switch (i) {
                             case 0:

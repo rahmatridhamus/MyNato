@@ -10,9 +10,26 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import my.mynato.rahmatridham.mynato.Absensi.AbsensiPage;
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.Model.CoC;
 import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import my.mynato.rahmatridham.mynato.R;
 import my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified;
@@ -25,7 +42,8 @@ import my.mynato.rahmatridham.mynato.Survey.Survey;
  */
 public class Home extends Fragment implements View.OnClickListener {
 
-    CardView cocThematik, cocinsidental, absensi, pemberitahuan, survey, pakKadirun;
+    CardView cocThematik, cocinsidental, absensi, pemberitahuan, survey, pakKadirun, suratPernyataan;
+    ImageView isReadSurvey, isReadabsensi, isReadpemberitahuan, isReadpakKadirun, isReadSurat;
 
     public Home() {
         // Required empty public constructor
@@ -38,12 +56,20 @@ public class Home extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        isReadSurvey = (ImageView) view.findViewById(R.id.isReadSurvey);
+        isReadabsensi = (ImageView) view.findViewById(R.id.isReadabsensi);
+        isReadpemberitahuan = (ImageView) view.findViewById(R.id.isReadpemberitahuan);
+        isReadpakKadirun = (ImageView) view.findViewById(R.id.isReadpakKadir);
+        isReadSurat = (ImageView) view.findViewById(R.id.isReadsuratPernyataan);
+
+
         cocThematik = (CardView) view.findViewById(R.id.cocThematik);
         cocinsidental = (CardView) view.findViewById(R.id.insidental);
         absensi = (CardView) view.findViewById(R.id.absensi);
         pemberitahuan = (CardView) view.findViewById(R.id.pemberitahuan);
         survey = (CardView) view.findViewById(R.id.survey);
         pakKadirun = (CardView) view.findViewById(R.id.pakKadir);
+        suratPernyataan = (CardView) view.findViewById(R.id.suratPernyataan);
 
         cocThematik.setOnClickListener(this);
         cocinsidental.setOnClickListener(this);
@@ -52,6 +78,7 @@ public class Home extends Fragment implements View.OnClickListener {
         survey.setOnClickListener(this);
         pakKadirun.setOnClickListener(this);
 
+        getHome();
         return view;
     }
 
@@ -83,7 +110,9 @@ public class Home extends Fragment implements View.OnClickListener {
                 break;
 
             case my.mynato.rahmatridham.mynato.R.id.absensi:
-                Toast.makeText(v.getContext(), "menu absensi clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "menu absensi clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Home.this.getContext(), AbsensiPage.class));
+
                 break;
 
             case my.mynato.rahmatridham.mynato.R.id.pemberitahuan:
@@ -100,5 +129,81 @@ public class Home extends Fragment implements View.OnClickListener {
 
         }
 
+    }
+
+    private void getHome() {
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Home",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                //array of Do and Dont
+                                JSONObject data = jsonObject.getJSONObject("data");
+
+                                if (data.optInt("data_pemberitahuan") != 0) {
+                                    isReadpemberitahuan.setVisibility(View.VISIBLE);
+                                }
+
+                                if (data.optInt("data_pakkadir") != 0) {
+                                    isReadpakKadirun.setVisibility(View.VISIBLE);
+                                }
+
+                                if (data.optInt("data_survey") != 0) {
+                                    isReadSurvey.setVisibility(View.VISIBLE);
+                                }
+
+                                if (data.optInt("data_absensi") != 0) {
+                                    isReadabsensi.setVisibility(View.VISIBLE);
+                                }
+
+                                if (data.optInt("data_choi") != 0) {
+                                    isReadSurat.setVisibility(View.VISIBLE);
+                                }
+
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(Home.this.getContext(), error, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(Home.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        error.printStackTrace();
+                        Toast.makeText(Home.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        refreshLayout.setRefreshing(false);
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = Home.this.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                    //Adding parameters to request
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+                    Toast.makeText(Home.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(Home.this.getContext());
+        requestQueue.add(stringRequest);
     }
 }

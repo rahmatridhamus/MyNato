@@ -52,10 +52,10 @@
                     android:layout_height="70dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:clickable="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp">
+                    android:layout_marginStart="20dp"
+                    android:clickable="true"
+                    android:foreground="@drawable/butrectnormal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -84,9 +84,9 @@
                     android:layout_height="70dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp">
+                    android:layout_marginRight="20dp"
+                    android:foreground="@drawable/butrectnormal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -115,11 +115,27 @@
                     android:layout_height="70dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_below="@+id/cocThematik"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:foreground="@drawable/butrectnormal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/isReadpemberitahuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="invisible"
+                            app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,12 +163,29 @@
                     android:layout_width="150dp"
                     android:layout_height="70dp"
                     android:layout_alignParentEnd="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/insidental"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:foreground="@drawable/butrectnormal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/isReadpakKadir"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="invisible"
+
+                            app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -181,12 +214,29 @@
                     android:layout_height="70dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_below="@+id/pemberitahuan"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:foreground="@drawable/butrectnormal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/isReadSurvey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="invisible"
+
+                            app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -206,6 +256,57 @@
                             android:paddingLeft="5dp"
                             android:text="Survey"
                             android:textSize="10sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/suratPernyataan"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignEnd="@+id/absensi"
+                    android:layout_alignRight="@+id/absensi"
+                    android:layout_below="@+id/survey"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:foreground="@drawable/butrectnormal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/isReadsuratPernyataan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="invisible"
+                            app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/icon_pernyataan_budaya_perilaku" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingLeft="25dp"
+                            android:text="Surat Pernyataan (CHOI)"
+                            android:textSize="10sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -214,13 +315,29 @@
                     android:layout_width="150dp"
                     android:layout_height="70dp"
                     android:layout_alignParentEnd="true"
-                    android:foreground="@drawable/butrectnormal"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/pakKadir"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:foreground="@drawable/butrectnormal">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/isReadabsensi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="invisible"
+                            app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

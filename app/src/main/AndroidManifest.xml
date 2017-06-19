@@ -86,7 +86,9 @@
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step2MotivasiAnggota" />
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step3TataNilaiAnggota" />
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step4DoAndDontAnggota" />
-        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota"></activity>
+        <activity android:name=".StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota" />
+        <activity android:name=".Absensi.AbsensiPage" />
+        <activity android:name=".Absensi.RequestKoreksi"></activity>
     </application>
 
 </manifest>

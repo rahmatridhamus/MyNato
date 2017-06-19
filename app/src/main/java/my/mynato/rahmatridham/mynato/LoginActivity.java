@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     Button signIn;
     private boolean loggedIn = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 //If we are getting success from server
 
-
+                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
