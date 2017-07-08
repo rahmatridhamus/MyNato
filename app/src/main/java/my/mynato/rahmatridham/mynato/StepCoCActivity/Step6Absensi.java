@@ -137,6 +137,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Absensi/get_data/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Toast.makeText(Step6Absensi.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
@@ -163,7 +164,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                 } catch (Exception e) {
 //                    Toast.makeText(Step6Absensi.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(Step6Absensi.this, "error Response: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data \n"+e.getMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -176,7 +177,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                         error.printStackTrace();
 //                        Toast.makeText(Step6Absensi.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
 //                        Toast.makeText(Step6Absensi.this, "error getting response: \n" + "Gagal mentransfer data, mohon diulang.", Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data \n"+error.getMessage(), Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

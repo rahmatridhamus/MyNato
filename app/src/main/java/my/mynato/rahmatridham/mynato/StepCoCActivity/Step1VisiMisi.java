@@ -127,7 +127,7 @@ public class Step1VisiMisi extends AppCompatActivity {
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
 
                             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Snackbar.LENGTH_LONG);
                             snackbar.show();
@@ -187,13 +187,13 @@ public class Step1VisiMisi extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data" + e.getMessage(), Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();

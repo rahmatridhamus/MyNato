@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Home;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.MyCOC;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Profile;
@@ -75,6 +77,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        FirebaseMessaging.getInstance();
 
         setupTabIcons();
     }

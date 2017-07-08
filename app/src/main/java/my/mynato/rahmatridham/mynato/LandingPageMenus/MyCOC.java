@@ -68,12 +68,15 @@ public class MyCOC extends Fragment {
                     intent.putExtra("id_group_coc", dataCoc.getId_group_coc());
                     intent.putExtra("keterangan_coc", "THEMATIK");
                     startActivity(intent);
+                    Toast.makeText(MyCOC.this.getContext(),dataCoc.getId_coc_activity() , Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(MyCOC.this.getContext(), DetailHistoryCocInsidental.class);
                     intent.putExtra("id_coc_activity", dataCoc.getId_coc_activity());
                     intent.putExtra("id_group_coc", dataCoc.getId_group_coc());
                     intent.putExtra("keterangan_coc", "INSIDENTAL");
                     startActivity(intent);
+                    Toast.makeText(MyCOC.this.getContext(),dataCoc.getId_coc_activity() , Toast.LENGTH_SHORT).show();
+
                 }
 
 

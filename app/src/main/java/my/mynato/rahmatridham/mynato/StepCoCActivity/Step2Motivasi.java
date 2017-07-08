@@ -179,13 +179,13 @@ public class Step2Motivasi extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step2Motivasi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step2Motivasi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();

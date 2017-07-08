@@ -40,6 +40,9 @@ public class PakKadir extends AppCompatActivity {
         setContentView(my.mynato.rahmatridham.mynato.R.layout.activity_pak_kadir);
         pakKadirArrayList = new ArrayList<>();
 
+        this.setTitle("Pak Kadir");
+
+
         listPakKadir = (ListView) findViewById(my.mynato.rahmatridham.mynato.R.id.listPakkadir);
         listPakKadir.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

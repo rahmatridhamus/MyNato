@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtTitlePakkadir"
-        android:text="Title"
-        android:textSize="18sp"
-        android:layout_marginLeft="15dp"
-        android:layout_toLeftOf="@+id/isReadPemberitahuan"
-        android:layout_toStartOf="@+id/isReadPemberitahuan" />
+        android:layout_margin="5dp">
 
-    <TextView
-        android:id="@+id/txtTanggalPakkadir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTitlePakkadir"
-        android:layout_marginLeft="15dp"
-        android:text="tanggal"
-        android:layout_toLeftOf="@+id/isReadPemberitahuan"
-        android:layout_toStartOf="@+id/isReadPemberitahuan" />
+        <TextView
+            android:id="@+id/txtTitlePakkadir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/isReadPemberitahuan"
+            android:layout_toStartOf="@+id/isReadPemberitahuan"
+            android:text="Title"
+            android:textSize="18sp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_notification_overlay"
-        android:id="@+id/isReadPemberitahuan"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/txtTanggalPakkadir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitlePakkadir"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/isReadPemberitahuan"
+            android:layout_toStartOf="@+id/isReadPemberitahuan"
+            android:text="tanggal" />
+
+        <ImageView
+            android:id="@+id/isReadPemberitahuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@android:drawable/ic_notification_overlay" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

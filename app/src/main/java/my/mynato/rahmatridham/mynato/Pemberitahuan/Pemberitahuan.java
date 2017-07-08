@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.PemberitahuanAdapter;
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.PemberitahuanModel;
@@ -34,6 +37,7 @@ public class Pemberitahuan extends AppCompatActivity {
     ListView listView;
     PemberitahuanAdapter adapter;
     ArrayList<PemberitahuanModel> pemberitahuanModelArrayList;
+    ImageView createPemb;
 
 
     @Override
@@ -41,8 +45,18 @@ public class Pemberitahuan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemberitahuan);
 
+        this.setTitle("Pemberitahuan");
+
         pemberitahuanModelArrayList = new ArrayList<>();
         adapter = new PemberitahuanAdapter(this, pemberitahuanModelArrayList);
+
+        createPemb = (ImageView) findViewById(R.id.imageViewCreatePemberitahuan);
+        createPemb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Pemberitahuan.this,CreatePemberitahuan.class));
+            }
+        });
 
         listView = (ListView) findViewById(R.id.listPemberitahuan);
         listView.setAdapter(adapter);
@@ -50,10 +64,10 @@ public class Pemberitahuan extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PemberitahuanModel model = pemberitahuanModelArrayList.get(position);
-                Intent intent = new Intent(Pemberitahuan.this,pemberitahuanDetil.class);
-                intent.putExtra("id_pemberitahuan",model.getId_pemberitahuan());
+                Intent intent = new Intent(Pemberitahuan.this, pemberitahuanDetil.class);
+                intent.putExtra("id_pemberitahuan", model.getId_pemberitahuan());
                 startActivity(intent);
-                finish();
+//                Toast.makeText(Pemberitahuan.this, model.getId_pemberitahuan(), Toast.LENGTH_SHORT).show();
             }
         });
 

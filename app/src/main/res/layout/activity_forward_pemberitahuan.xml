@@ -19,7 +19,7 @@
         <RelativeLayout
             android:id="@+id/relvisi"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/darker_gray"
             android:gravity="center_vertical">
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="Judul Pemberitahuan"
-                android:textSize="14sp"
+                android:textSize="17sp"
                 android:textStyle="normal|bold" />
         </RelativeLayout>
 
@@ -139,7 +139,7 @@
         android:layout_alignParentStart="true"
         android:layout_margin="10dp"
         android:background="@color/greenButton"
-        android:text="Lanjutkan"
+        android:text="Submit"
         android:textColor="@color/white"
         android:textStyle="normal|bold" />
 </RelativeLayout>

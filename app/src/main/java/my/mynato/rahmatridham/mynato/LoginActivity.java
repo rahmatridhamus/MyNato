@@ -71,25 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    void login() {
-//        SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//
-//        //Creating editor to store values to shared preferences
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//
-//        //Adding values to editor
-//        editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
-////        editor.putString(Config.EMAIL_SHARED_PREF, email);
-////        editor.putString("idUser",""+id);
-//
-//        editor.commit();
-//
-//        //Starting profile activity
-//        Intent intent = new Intent(LoginActivity.this, LandingPage.class);
-//        startActivity(intent);
-//        finish();
-//    }
-
     void authenticate() {
         final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "", "Loading. Please wait...", true);
 
@@ -103,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 //If we are getting success from server
 
-                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();

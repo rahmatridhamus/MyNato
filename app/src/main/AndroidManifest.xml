@@ -45,7 +45,9 @@
             android:name=".StepCoCActivity.Step6Absensi"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".StepCoCActivity.CocVerified" />
-        <activity android:name=".Pemberitahuan.Pemberitahuan" />
+        <activity
+            android:name=".Pemberitahuan.Pemberitahuan"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Pemberitahuan.pemberitahuanDetil"
             android:theme="@style/AppThemeNoActionBar" />
@@ -88,7 +90,12 @@
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step4DoAndDontAnggota" />
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota" />
         <activity android:name=".Absensi.AbsensiPage" />
-        <activity android:name=".Absensi.RequestKoreksi"></activity>
+        <activity android:name=".Absensi.RequestKoreksi" />
+        <activity android:name=".Pemberitahuan.CreatePemberitahuan" />
+        <activity android:name=".Absensi.ApprovalKoreksi" />
+        <activity android:name=".CHOI.SuratPernyataan" />
+        <activity android:name=".CHOI.PernyataanBudayaPerilaku" />
+        <activity android:name=".CHOI.DetailFormPernyataan"></activity>
     </application>
 
 </manifest>

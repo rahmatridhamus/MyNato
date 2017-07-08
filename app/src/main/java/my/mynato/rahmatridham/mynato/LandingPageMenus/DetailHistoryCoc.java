@@ -4,17 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailDodontAdapter;
 import my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter.DetailTanilAdapter;
@@ -40,7 +47,13 @@ import java.util.Map;
 public class DetailHistoryCoc extends AppCompatActivity {
     TextView showMotivasi, showGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
-    TextView nmMotivasi, nmGames, tiltle, tanggal;
+    TextView nmMotivasi, nmGames, tiltle, tanggal, detCerMot, detGames;
+    String urldetCerMot,urldetGames;
+    public static String urldetThematik;
+
+    ImageView absensi, suasana;
+    VideoView vidSuasana;
+    private MediaController ctlr;
 
     ArrayList<String> tataNilaiArrayList;
     ArrayList<String> doAndDontArrayList;
@@ -81,25 +94,35 @@ public class DetailHistoryCoc extends AppCompatActivity {
         mapDoDont = new HashMap<>();
         mapThematik = new HashMap<>();
 
-        showMotivasi = (TextView) findViewById(R.id.buttonOpened);
-        showMotivasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(DetailHistoryCoc.this, "no data", Toast.LENGTH_SHORT).show();
-            }
-        });
-        showGames = (TextView) findViewById(R.id.buttonOpen);
-        showGames.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(DetailHistoryCoc.this, "no data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         nmMotivasi = (TextView) findViewById(R.id.textViewNamot);
         nmGames = (TextView) findViewById(R.id.textVNagem);
         tiltle = (TextView) findViewById(R.id.toolbar_title);
         tanggal = (TextView) findViewById(R.id.toolbar_tanggal);
+
+
+        detCerMot = (TextView) findViewById(R.id.buttonOpendetCerMot);
+        detCerMot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(urldetCerMot); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        detGames = (TextView) findViewById(R.id.buttonOpened);
+        detGames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(urldetGames); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        absensi = (ImageView) findViewById(R.id.imageViewFotoAbsensi);
+        suasana = (ImageView) findViewById(R.id.imageViewFotoSuasana);
+        vidSuasana = (VideoView) findViewById(R.id.videoViewVideoSuasana);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -176,36 +199,77 @@ public class DetailHistoryCoc extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+//                            Toast.makeText(DetailHistoryCoc.this, response, Toast.LENGTH_SHORT).show();
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
 
                                 //array of Do and Dont
                                 JSONObject data = jsonObject.getJSONObject("data");
-
                                 tanggal.setText(data.optString("date", "null"));
 
-                                nmMotivasi.setText("Cerita Motivasi:\n"+data.optString("cerita_motivasi", "null"));
-                                nmGames.setText("Games:\n"+data.optString("games", "null"));
+                                nmMotivasi.setText("Cerita Motivasi:\n" + data.optString("cerita_motivasi", "null"));
+                                nmGames.setText("Games:\n" + data.optString("games", "null"));
 
                                 strTanil = data.optString("tata_nilai", "null");
                                 strDoDont = data.optString("title_do_and_dont", "null");
                                 strThematik = data.optString("title_thematik", "null");
+                                urldetThematik = data.optString("content_thematik", "null");
+                                urldetCerMot = data.optString("file_cerita_motivasi", "null");
+                                urldetGames = data.optString("file_games", "null");
 
                                 itemTanil.add(data.optString("content_tata_nilai", "null"));
-                                itemDodont.add("Do:\n" + data.optString("content_do", "null") + "\n\n" + "Don't:\n" + data.optString("content_dont", "null"));
-                                itemThematik.add(data.optString("content_thematik", "null"));
+                                itemDodont.add("Do:\n" + data.optString("content_do", "null") + "<br></br>" + "<br>Don't:</br>\n" + data.optString("content_dont", "null"));
+                                itemThematik.add(data.optString("sub_title_thematik", "null"));
 
+                                Picasso.with(DetailHistoryCoc.this).load(data.optString("foto_absensi", "null")).into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        absensi.setImageBitmap(bitmap);
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        absensi.setImageResource(R.drawable.empty_picture);
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+
+                                Picasso.with(DetailHistoryCoc.this).load(data.optString("foto_suasana", "null")).into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        suasana.setImageBitmap(bitmap);
+
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        suasana.setImageResource(R.drawable.empty_picture);
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+
+                                vidSuasana.setVideoPath(data.optString("video", "null"));
+                                vidSuasana.start();
+                                thematikAdapter.notifyDataSetChanged();
                                 prepare();
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(DetailHistoryCoc.this, error, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data \n" + error, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(DetailHistoryCoc.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }

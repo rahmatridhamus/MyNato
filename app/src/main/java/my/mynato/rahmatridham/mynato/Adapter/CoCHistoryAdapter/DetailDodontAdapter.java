@@ -1,6 +1,7 @@
 package my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class DetailDodontAdapter extends BaseExpandableListAdapter {
 
         TextView subtitle = (TextView) convertView.findViewById(R.id.subtitExpandable);
         subtitle.setTextSize(14);
-        subtitle.setText(childText);
+        subtitle.setText(Html.fromHtml(childText));
         return convertView;
     }
 

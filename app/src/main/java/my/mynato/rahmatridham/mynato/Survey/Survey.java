@@ -35,6 +35,7 @@ public class Survey extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+        this.setTitle("Survey Pemahaman");
 
         modelArrayList = new ArrayList<>();
         listView =(ListView) findViewById(R.id.listSurvey);

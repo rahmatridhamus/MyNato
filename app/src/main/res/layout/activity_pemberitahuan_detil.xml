@@ -27,34 +27,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/butForward"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                app:srcCompat="@mipmap/ic_forward" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbars">
+
+        <ImageView
+            android:id="@+id/butForward"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/button_forward" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="false"
-        android:layout_below="@+id/toolbars"
+        android:layout_below="@+id/share"
+        android:background="@color/lighter_gray"
         android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/judulpemberitahuan"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
             android:foregroundGravity="center"
             android:text="Judul Pemberitahuan"
-            android:textSize="18sp"
+            android:textAlignment="viewStart"
+            android:textSize="15sp"
             android:textStyle="normal|bold" />
     </RelativeLayout>
 
@@ -104,7 +116,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1.02"
-                app:srcCompat="@mipmap/check_circle" />
+                app:srcCompat="@drawable/document" />
 
             <TextView
                 android:id="@+id/button2"
@@ -115,7 +127,8 @@
                 android:layout_weight="1"
                 android:text="document.pdf"
                 android:textColor="@color/darker_grayText"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="italic" />
         </LinearLayout>
 
     </RelativeLayout>

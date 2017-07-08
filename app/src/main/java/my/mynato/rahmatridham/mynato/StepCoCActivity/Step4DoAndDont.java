@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -95,7 +96,7 @@ public class Step4DoAndDont extends AppCompatActivity {
                 parent.setItemChecked(index, true);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
-                builder.setMessage("Do" + ": \n" + doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDost() + "\n\nDont: \n" + doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDont())
+                builder.setMessage("Do" + ": \n" + Html.fromHtml( doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDost()) + "\n\nDont: \n" + Html.fromHtml(doandontArrayList.get(groupPosition).getSubDoDonts().get(childPosition).getDont()))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {

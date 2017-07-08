@@ -51,14 +51,17 @@ public class PemberitahuanAdapter extends BaseAdapter {
         TextView title = (TextView) v.findViewById(R.id.titlePemberitahuan);
         TextView date = (TextView) v.findViewById(R.id.tanggalPemberitahuan);
         ImageView isRead = (ImageView) v.findViewById(R.id.isReadPemberitahuan);
+        ImageView messageIcon = (ImageView) v.findViewById(R.id.imageViewMesIcon);
 
         title.setText(model.getTitle());
         date.setText(model.getReceived_date());
 
-        if (model.getStatus().equals("SENT")) {
+        if (!model.getStatus().equals("READ")) {
             isRead.setVisibility(View.VISIBLE);
+            messageIcon.setImageResource(R.drawable.pemberitahuan_a);
         } else {
             isRead.setVisibility(View.GONE);
+            messageIcon.setImageResource(R.drawable.pemberitahuan_b);
         }
 
         return v;

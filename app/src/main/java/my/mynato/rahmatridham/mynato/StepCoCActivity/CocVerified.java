@@ -83,7 +83,7 @@ public class CocVerified extends AppCompatActivity {
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CocVerified.this, "id: " + groupCocs.get(checkedId).getId_group_coc(), Toast.LENGTH_SHORT).show();
                 groupCoc = groupCocs.get(checkedId);
                 isCheck = true;
                 next.setEnabled(isCheck);
@@ -145,7 +145,7 @@ public class CocVerified extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Toast.makeText(CocVerified.this, response, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CocVerified.this, response, Toast.LENGTH_SHORT).show();
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
 
@@ -166,7 +166,7 @@ public class CocVerified extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(CocVerified.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CocVerified.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();

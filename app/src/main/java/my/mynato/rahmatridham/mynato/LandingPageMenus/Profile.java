@@ -4,6 +4,8 @@ package my.mynato.rahmatridham.mynato.LandingPageMenus;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +42,7 @@ import my.mynato.rahmatridham.mynato.R;
  */
 public class Profile extends Fragment {
     TextView nama, jabatan, lokasi;
+    CircularImageView profile;
 
     public Profile() {
         // Required empty public constructor
@@ -52,6 +58,7 @@ public class Profile extends Fragment {
         nama = (TextView) view.findViewById(R.id.NamaProfil);
         jabatan = (TextView) view.findViewById(R.id.JabatanProfil);
         lokasi = (TextView) view.findViewById(R.id.kantorProfil);
+        profile = (CircularImageView) view.findViewById(R.id.circularImageView);
 
         getPemberitahuan();
         return view;
@@ -73,13 +80,29 @@ public class Profile extends Fragment {
                                 nama.setText(object.optString("nama",""));
                                 jabatan.setText(object.optString("nama_jabatan",""));
                                 lokasi.setText(object.optString("nama_kantor",""));
+                                Picasso.with(Profile.this.getContext()).load(object.optString("url_foto","")).into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        profile.setImageBitmap(bitmap);
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        profile.setImageResource(R.drawable.icon_profile_active);
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n"+error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(Profile.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }

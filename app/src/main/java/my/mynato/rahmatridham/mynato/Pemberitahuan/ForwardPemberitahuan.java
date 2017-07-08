@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,13 +42,14 @@ import my.mynato.rahmatridham.mynato.R;
 import my.mynato.rahmatridham.mynato.StepCoCActivity.Step6Absensi;
 
 public class ForwardPemberitahuan extends AppCompatActivity {
-    TextView title,itemDesc, counterForward;
+    TextView title, itemDesc, counterForward;
     Button submit, open;
     ListView listForwarder;
     MyCustomAdapter adapter;
     ArrayList<PenerimaForwarder> penerimaForwarderArrayList;
+    ArrayList<String> pushDaftarAbsen = new ArrayList<>();
 
-    String idPemb;
+    String idPemb, pdf_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,34 @@ public class ForwardPemberitahuan extends AppCompatActivity {
         itemDesc = (TextView) findViewById(R.id.textViewDescForward);
         counterForward = (TextView) findViewById(R.id.txtcountForward);
         submit = (Button) findViewById(R.id.buttonSubmit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pushDaftarAbsen = new ArrayList<>();
+                ArrayList<PenerimaForwarder> absensiModels = adapter.absensiModels;
+                for (int i = 0; i < absensiModels.size(); i++) {
+                    PenerimaForwarder model = absensiModels.get(i);
+                    if (model.isSelected()) {
+                        pushDaftarAbsen.add(model.getKode_jabatan());
+                    }
+                }
+
+                postForward(idPemb);
+            }
+        });
+
         open = (Button) findViewById(R.id.buttonOpenDoc);
+        open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    Toast.makeText(ForwardPemberitahuan.this, "gagal mengambil file", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         listForwarder = (ListView) findViewById(R.id.listForwarder);
 
         adapter = new MyCustomAdapter(this, R.layout.listrow_absensi, penerimaForwarderArrayList);
@@ -86,7 +115,7 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                                 JSONObject dataPemberitahuan = data.getJSONObject("data_pemberitahuan");
                                 itemDesc.setText(dataPemberitahuan.optString("content", ""));
                                 title.setText(dataPemberitahuan.optString("title", ""));
-
+                                pdf_url = dataPemberitahuan.optString("file", "");
 
                                 JSONArray dataPenerima = data.getJSONArray("daftar_penerima");
                                 for (int i = 0; i < dataPenerima.length(); i++) {
@@ -126,6 +155,75 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                     SharedPreferences sharedPreferences = ForwardPemberitahuan.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+                    Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void postForward(final String id_pemberitahuan) {
+        //Creating a string request
+        final ProgressDialog dialog = ProgressDialog.show(ForwardPemberitahuan.this, "", "Loading. Please wait...", true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Pemberitahuan/forward_message/" + id_pemberitahuan,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.optString("status").trim();
+                            if (status.equals(String.valueOf(1))) {
+                                startActivity(new Intent(ForwardPemberitahuan.this, Pemberitahuan.class));
+                                Toast.makeText(ForwardPemberitahuan.this, "Forward pemberitahuan berhasil dilakukan", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            } else {
+                                String error = jsonObject.optString("message");
+                                Toast.makeText(ForwardPemberitahuan.this, error, Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        error.printStackTrace();
+                        Toast.makeText(ForwardPemberitahuan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = ForwardPemberitahuan.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    //Adding parameters to request
+                    String s = "";
+                    for (int i = 0; i < pushDaftarAbsen.size(); i++) {
+                        if (s.equals("")) {
+                            s = pushDaftarAbsen.get(i);
+                        } else {
+                            s += "," + pushDaftarAbsen.get(i);
+                        }
+                    }
+//                    Toast.makeText(ForwardPemberitahuan.this, s, Toast.LENGTH_SHORT).show();
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+                    params.put("id_pemberitahuan", id_pemberitahuan);
+                    params.put("forwardnipeg", sharedPreferences.getString(Config.NIPEG_SHARED_PREF, ""));
+                    params.put("penerima", s);
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

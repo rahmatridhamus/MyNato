@@ -90,7 +90,7 @@ public class PrepareAddCoc extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_group/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PrepareAddCoc.this, response, Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
@@ -168,7 +168,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(PrepareAddCoc.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(PrepareAddCoc.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + e.getMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
 //                    Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
@@ -182,7 +182,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(PrepareAddCoc.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(PrepareAddCoc.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + error.getMessage(), Snackbar.LENGTH_LONG);
                         snackbar.show();
 //                        Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();

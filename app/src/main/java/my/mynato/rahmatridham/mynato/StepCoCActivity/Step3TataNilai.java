@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -87,7 +88,7 @@ public class Step3TataNilai extends AppCompatActivity {
                 lanjut.setClickable(isCheck);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(group.getContext());
-                builder.setMessage(tataNilais.getTitle()+": \n\n"+tataNilais.getContent())
+                builder.setMessage(tataNilais.getTitle()+": \n\n"+ Html.fromHtml(tataNilais.getContent()))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -155,13 +156,13 @@ public class Step3TataNilai extends AppCompatActivity {
 
                             } else {
                                 String error = jsonObject.optString("messageError:\n");
-                                Toast.makeText(Step3TataNilai.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step3TataNilai.this, error, Toast.LENGTH_SHORT).show();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step3TataNilai.this, "errorResponse: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step3TataNilai.this, "errorResponse: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
@@ -173,7 +174,7 @@ public class Step3TataNilai extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step3TataNilai.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step3TataNilai.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Gagal menerima data. Periksa kembali internet", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();

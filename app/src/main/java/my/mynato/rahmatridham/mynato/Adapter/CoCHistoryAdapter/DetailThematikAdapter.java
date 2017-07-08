@@ -1,6 +1,10 @@
 package my.mynato.rahmatridham.mynato.Adapter.CoCHistoryAdapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +13,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.LandingPageMenus.DetailHistoryCoc;
 import my.mynato.rahmatridham.mynato.R;
 
 import java.util.HashMap;
@@ -94,7 +100,16 @@ public class DetailThematikAdapter extends BaseExpandableListAdapter {
         detailSubtit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage(Html.fromHtml(DetailHistoryCoc.urldetThematik))
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
         return convertView;

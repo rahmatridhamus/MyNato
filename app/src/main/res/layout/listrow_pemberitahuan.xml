@@ -19,38 +19,44 @@
 
 
             <ImageView
+                android:id="@+id/imageViewMesIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/pemberitahuan_b" />
+
+            <ImageView
+                android:id="@+id/isReadPemberitahuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_notification_overlay"
-                android:id="@+id/isReadPemberitahuan"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp" />
+                android:visibility="gone"
+                app:srcCompat="@android:drawable/ic_notification_overlay" />
 
             <TextView
                 android:id="@+id/titlePemberitahuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/isReadPemberitahuan"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/imageViewMesIcon"
+                android:layout_toRightOf="@+id/imageViewMesIcon"
                 android:text="Title"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"
-                android:layout_marginTop="5dp"
-                android:textStyle="normal|bold"
-                android:textColor="@color/holo_green" />
+                android:textColor="@color/holo_green"
+                android:textStyle="normal|bold" />
 
             <TextView
                 android:id="@+id/tanggalPemberitahuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="tanggal"
-                android:layout_below="@+id/titlePemberitahuan"
                 android:layout_alignLeft="@+id/titlePemberitahuan"
                 android:layout_alignStart="@+id/titlePemberitahuan"
-                android:layout_marginTop="5dp" />
+                android:layout_below="@+id/titlePemberitahuan"
+                android:layout_marginTop="5dp"
+                android:text="tanggal" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

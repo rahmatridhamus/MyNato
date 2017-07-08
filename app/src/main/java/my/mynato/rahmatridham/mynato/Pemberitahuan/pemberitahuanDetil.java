@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.R;
 
@@ -40,7 +42,10 @@ public class pemberitahuanDetil extends AppCompatActivity {
     Toolbar mToolBar;
     LinearLayout layout;
 
+    String pdf_url;
+
     boolean isAccess = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +62,12 @@ public class pemberitahuanDetil extends AppCompatActivity {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdf_url));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    Toast.makeText(pemberitahuanDetil.this, "gagal mengambil file", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         judul = (TextView) findViewById(R.id.judulpemberitahuan);
@@ -68,8 +78,8 @@ public class pemberitahuanDetil extends AppCompatActivity {
         butForward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(pemberitahuanDetil.this,ForwardPemberitahuan.class);
-                intent.putExtra("id_pemberitahuan",idPemb);
+                Intent intent = new Intent(pemberitahuanDetil.this, ForwardPemberitahuan.class);
+                intent.putExtra("id_pemberitahuan", idPemb);
                 startActivity(intent);
             }
         });
@@ -107,10 +117,10 @@ public class pemberitahuanDetil extends AppCompatActivity {
                                 judul.setText(data.optString("title", ""));
                                 content.setText(data.optString("content", ""));
 
-                                if(data.optString("forward_access", "").equals("FORBIDDEN")){
+                                if (data.optString("forward_access", "").equals("FORBIDDEN")) {
                                     isAccess = false;
                                     butForward.setVisibility(View.GONE);
-                                }else {
+                                } else {
                                     isAccess = true;
                                 }
 
@@ -119,11 +129,11 @@ public class pemberitahuanDetil extends AppCompatActivity {
                                     okBut.setText("Kembali");
                                     isRead = true;
                                 }
-
+                                pdf_url = data.optString("file", "");
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(pemberitahuanDetil.this, "errorMessage: \n"+error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(pemberitahuanDetil.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {

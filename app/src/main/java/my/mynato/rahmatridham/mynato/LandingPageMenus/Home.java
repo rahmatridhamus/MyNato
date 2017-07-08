@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import my.mynato.rahmatridham.mynato.Absensi.AbsensiPage;
+import my.mynato.rahmatridham.mynato.CHOI.SuratPernyataan;
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.CoC;
 import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
@@ -77,6 +78,7 @@ public class Home extends Fragment implements View.OnClickListener {
         pemberitahuan.setOnClickListener(this);
         survey.setOnClickListener(this);
         pakKadirun.setOnClickListener(this);
+        suratPernyataan.setOnClickListener(this);
 
         getHome();
         return view;
@@ -127,6 +129,10 @@ public class Home extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(Home.this.getContext(), Survey.class));
                 break;
 
+            case R.id.suratPernyataan:
+//                Toast.makeText(Home.this.getContext(), "surat pernyataan", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Home.this.getContext(), SuratPernyataan.class));
+                break;
         }
 
     }
@@ -137,6 +143,7 @@ public class Home extends Fragment implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Toast.makeText(Home.this.getContext(), response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
