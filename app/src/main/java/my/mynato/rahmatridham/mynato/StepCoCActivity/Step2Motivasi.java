@@ -116,14 +116,14 @@ public class Step2Motivasi extends AppCompatActivity {
             }
         });
 
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setTitle("Step 2: Motivasi");
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         SharedPreferences sharedPreferences = Step2Motivasi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         getMotivasi(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
@@ -197,8 +197,8 @@ public class Step2Motivasi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step2Motivasi.this, "errorResponse: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + error.getMessage(), Snackbar.LENGTH_LONG);
+//                        Toast.makeText(Step2Motivasi.this, "errorResponse: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -258,13 +258,13 @@ public class Step2Motivasi extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+//                                Toast.makeText(Step2Motivasi.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Step2Motivasi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Step2Motivasi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
@@ -276,8 +276,8 @@ public class Step2Motivasi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step2Motivasi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data. Periksa kembali internet", Snackbar.LENGTH_LONG);
+//                        Toast.makeText(Step2Motivasi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

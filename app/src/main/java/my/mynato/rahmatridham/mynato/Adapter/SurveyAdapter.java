@@ -1,5 +1,7 @@
 package my.mynato.rahmatridham.mynato.Adapter;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -60,8 +62,10 @@ public class SurveyAdapter extends BaseAdapter {
         tanggal.setText(model.getTanggal_mulai());
         if (model.getKeterangan().equals("Open")) {
             status.setText("Kerjakan Survey");
+            button.setBackgroundResource(R.drawable.border_green);
+
         } else {
-            button.setBackgroundColor(v.getResources().getColor(R.color.warnamerah));
+            button.setBackgroundResource(R.drawable.border_red);
             button.setText("Closed");
             status.setText("Lihat Hasil Pengerjaan");
         }
@@ -70,9 +74,10 @@ public class SurveyAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), DetailSurvey.class);
-                intent.putExtra("id_survey",model.getId_survey());
-                intent.putExtra("keterangan_survey",model.getKeterangan());
+                intent.putExtra("id_survey", model.getId_survey());
+                intent.putExtra("keterangan_survey", model.getKeterangan());
                 context.startActivity(intent);
+                ((Activity) context).finish();
             }
         });
         return v;

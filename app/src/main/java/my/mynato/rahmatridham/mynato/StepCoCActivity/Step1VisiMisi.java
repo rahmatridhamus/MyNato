@@ -47,13 +47,13 @@ public class Step1VisiMisi extends AppCompatActivity {
         setContentView(R.layout.activity_step1_visi_misi);
         Toolbar mToolBar = (Toolbar) findViewById(R.id.my_toolbar);
 
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setTitle("Step 1: Visi & Misi");
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+//        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
         screen = (RelativeLayout) findViewById(R.id.activity_step1_visi_misi);
         cbVisi = (CheckBox) findViewById(R.id.checkBoxMotivasi);
@@ -129,7 +129,7 @@ public class Step1VisiMisi extends AppCompatActivity {
 //                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(Step1VisiMisi.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
 
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -141,7 +141,7 @@ public class Step1VisiMisi extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data: \n", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -188,13 +188,13 @@ public class Step1VisiMisi extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(Step1VisiMisi.this, error, Toast.LENGTH_SHORT).show();
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step1VisiMisi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -205,8 +205,8 @@ public class Step1VisiMisi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet", Snackbar.LENGTH_LONG);
+//                        Toast.makeText(Step1VisiMisi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

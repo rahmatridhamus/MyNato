@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,7 @@ public class DetailFormPernyataan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_form_pernyataan);
+
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
@@ -51,16 +53,19 @@ public class DetailFormPernyataan extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.webviewPernyataan);
         webView.getSettings().setJavaScriptEnabled(true);
-
         mengerti = (CheckBox) findViewById(R.id.checkBox);
         submit = (Button) findViewById(R.id.buttonSummition);
+
+        mengerti.setVisibility(View.GONE);
+        submit.setVisibility(View.GONE);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mengerti.isChecked()){
+                if (mengerti.isChecked()) {
                     pushUpdateForm(id_aktivasi_choi, id_formulir);
-                }else {
-                    Toast.makeText(DetailFormPernyataan.this, "Checklist untuk melakukan submit", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v.getContext(), "Checklist untuk melakukan submit", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -85,8 +90,10 @@ public class DetailFormPernyataan extends AppCompatActivity {
 
                         if (data.optString("status", "null").equals("PENDING")) {
                             mengerti.setVisibility(View.VISIBLE);
+                            submit.setVisibility(View.VISIBLE);
                         } else {
-                            mengerti.setVisibility(View.INVISIBLE);
+                            mengerti.setVisibility(View.GONE);
+                            submit.setVisibility(View.GONE);
                         }
 
                         webView.loadDataWithBaseURL(null, data.optString("content", "null"), "text/html", "utf-8", null);
@@ -94,11 +101,15 @@ public class DetailFormPernyataan extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(DetailFormPernyataan.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DetailFormPernyataan.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(DetailFormPernyataan.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(DetailFormPernyataan.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     dialog.dismiss();
                 }
             }
@@ -108,7 +119,9 @@ public class DetailFormPernyataan extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailFormPernyataan.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DetailFormPernyataan.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -146,7 +159,7 @@ public class DetailFormPernyataan extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(DetailFormPernyataan.this, response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(DetailFormPernyataan.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
@@ -156,11 +169,15 @@ public class DetailFormPernyataan extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DetailFormPernyataan.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(DetailFormPernyataan.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailFormPernyataan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DetailFormPernyataan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -170,7 +187,8 @@ public class DetailFormPernyataan extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailFormPernyataan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

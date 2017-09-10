@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.R;
 
 public class Step4DoAndDontAnggota extends AppCompatActivity {
-    TextView does, dont;
+    TextView does, dont, hist;
     Button lanjut;
 
     @Override
@@ -37,23 +38,33 @@ public class Step4DoAndDontAnggota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step4_do_and_dont_anggota);
 
-        does = (TextView) findViewById(R.id.descVisi);
-        dont = (TextView) findViewById(R.id.descMisi);
+        does = (TextView) findViewById(R.id.descDo);
+        dont = (TextView) findViewById(R.id.descDont);
+        hist = (TextView) findViewById(R.id.strMotivSebelum);
+
         lanjut = (Button) findViewById(R.id.buttonLanjutkan);
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Step4DoAndDontAnggota.this, Step5ThematikAnggota.class));
+                finish();
+
             }
         });
         SharedPreferences sharedPreferences = Step4DoAndDontAnggota.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        getDoDont(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+        getDoDont(sharedPreferences.getString(Config.IDCOCACTIVITY_SHARED_PREF, ""));
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Step4DoAndDontAnggota.this, Step3TataNilaiAnggota.class));
+        finish();
     }
 
     private void getDoDont(String idGroup) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Step4DoAndDontAnggota.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_and_Dont/get_data/"+idGroup, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Anggota_CoC/do_and_dont/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -62,26 +73,31 @@ public class Step4DoAndDontAnggota extends AppCompatActivity {
 
                     if (status.equals(String.valueOf(1))) {
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject eksisting = data.getJSONObject("eksisting");
-                        if (!eksisting.optString("id_do_and_dont", "").equals("")) {
-                            Toast.makeText(Step4DoAndDontAnggota.this, "Admin melum menyelesaikan halaman ini", Toast.LENGTH_SHORT).show();
+//                        JSONObject eksisting = data.getJSONObject("eksisting");
+                        if (data.optString("id_do_and_dont", "").equals("")) {
+//                            Toast.makeText(Step4DoAndDontAnggota.this, "Admin melum menyelesaikan halaman ini", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Step4DoAndDontAnggota.this, Step3TataNilaiAnggota.class));
                             finish();
-                        }else {
-                            does.setText(eksisting.optString("do_and_dont",""));
-                            dont.setText(eksisting.optString("sub_do_and_dont",""));
+                        } else {
+                            does.setText(data.optString("do_and_dont", "") + " (" + data.optString("sub_do_and_dont", "") + ")");
+                            dont.setText(Html.fromHtml("<b>Do</b>:\n" + data.optString("content_do", "null") + "<br></br>" + "<br><b>Don't</b>:</br>\n" + data.optString("content_dont", "null")));
+
+                            JSONObject history = jsonObject.getJSONObject("history");
+                            hist.setText("Pertemuan sebelumnya: " + history.optString("do_and_dont", ""));
                         }
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
 //                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Step4DoAndDontAnggota.this, Step3TataNilaiAnggota.class));
+                        finish();
                         Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbars.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step4DoAndDontAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
+//                    Toast.makeText(Step4DoAndDontAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -93,7 +109,7 @@ public class Step4DoAndDontAnggota extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error getting response: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data \n", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

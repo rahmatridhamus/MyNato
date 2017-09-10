@@ -4,6 +4,7 @@ package my.mynato.rahmatridham.mynato.Absensi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +68,7 @@ public class absensi extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+//                        Toast.makeText(absensi.this.getContext(), response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
@@ -77,17 +79,26 @@ public class absensi extends Fragment {
 
                                 for (int i = 0; i < absensis.length(); i++) {
                                     JSONObject object = absensis.getJSONObject(i);
-                                    dataAbsenArrayList.add(new DataAbsen(object.getString("nipeg"), object.getString("tanggal"),"", object.getString("status")));
+                                    dataAbsenArrayList.add(new DataAbsen(object.getString("nipeg"), object.getString("tanggal"), "", object.getString("status")));
 
                                 }
                                 adapter.notifyDataSetChanged();
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(absensi.this.getContext(), error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(absensi.this.getContext(), error, Toast.LENGTH_SHORT).show();
+                                if (error.equals("empty data")) {
+                                    Snackbar snackbar = Snackbar.make(getView(), "Belum ada list absensi ", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                } else {
+                                    Snackbar snackbar = Snackbar.make(getView(),error, Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
                             }
                         } catch (Exception e) {
-                            Toast.makeText(absensi.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(absensi.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data absensi", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
                 },
@@ -96,8 +107,9 @@ public class absensi extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(absensi.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
+//                        Toast.makeText(absensi.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data absensi", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                 }) {
             @Override

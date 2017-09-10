@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimaryDarkBlue"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        android:navigationIcon="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+        app:theme="@style/ToolbarStyle"
         android:minHeight="?attr/actionBarSize">
 
         <TextView

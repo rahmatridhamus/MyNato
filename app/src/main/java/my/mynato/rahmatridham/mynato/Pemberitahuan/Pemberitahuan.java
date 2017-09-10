@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 
 import my.mynato.rahmatridham.mynato.Adapter.PemberitahuanAdapter;
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.Model.PemberitahuanModel;
 import my.mynato.rahmatridham.mynato.R;
 
@@ -45,6 +47,18 @@ public class Pemberitahuan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pemberitahuan);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbars);
+//        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Pemberitahuan.this, LandingPage.class));
+                finish();
+            }
+        });
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         this.setTitle("Pemberitahuan");
 
         pemberitahuanModelArrayList = new ArrayList<>();
@@ -54,7 +68,7 @@ public class Pemberitahuan extends AppCompatActivity {
         createPemb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Pemberitahuan.this,CreatePemberitahuan.class));
+                startActivity(new Intent(Pemberitahuan.this, CreatePemberitahuan.class));
             }
         });
 
@@ -75,6 +89,19 @@ public class Pemberitahuan extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        onBackPressed();
+//        return true;
+//    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Pemberitahuan.this,LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+    }
+
     private void getPemberitahuan() {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Pemberitahuan.this, "", "Loading. Please wait...", true);
@@ -86,6 +113,11 @@ public class Pemberitahuan extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
                             if (status.equals(String.valueOf(1))) {
+
+                                if (!jsonObject.optString("create_access").equals("OPEN")) {
+                                    createPemb.setVisibility(View.GONE);
+                                }
+
                                 JSONArray data = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject object = data.getJSONObject(i);
@@ -97,11 +129,20 @@ public class Pemberitahuan extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Pemberitahuan.this, error, Toast.LENGTH_SHORT).show();
+                                if (error.equals("empty data")) {
+                                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Belum ada pemberitahuan ", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                } else {
+                                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
+//                                Toast.makeText(Pemberitahuan.this, error, Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Pemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Pemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -111,7 +152,9 @@ public class Pemberitahuan extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Pemberitahuan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Pemberitahuan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

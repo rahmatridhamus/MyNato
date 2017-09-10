@@ -91,7 +91,9 @@
         <activity android:name=".StepCoCActivity.StepCoCAnggota.Step5ThematikAnggota" />
         <activity android:name=".Absensi.AbsensiPage" />
         <activity android:name=".Absensi.RequestKoreksi" />
-        <activity android:name=".Pemberitahuan.CreatePemberitahuan" />
+        <activity
+            android:name=".Pemberitahuan.CreatePemberitahuan"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Absensi.ApprovalKoreksi" />
         <activity android:name=".CHOI.SuratPernyataan" />
         <activity android:name=".CHOI.PernyataanBudayaPerilaku" />

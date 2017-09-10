@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.JawabanModel;
 import my.mynato.rahmatridham.mynato.Model.SoalModel;
@@ -55,8 +57,12 @@ public class DoSurvey extends AppCompatActivity {
     String id_aktivasi_ujian = "";
     String jsonStringAnswer = "";
 
+    String id_survey = "";
+    String id_soal_survey = "";
+
     int index = 0;
     int timer = 15;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,9 @@ public class DoSurvey extends AppCompatActivity {
         if (b != null) {
             String nameExam = (String) b.get("nama_ujian");
             timer = (Integer) b.getInt("durasiSurvey");
+            id_survey = (String) b.get("id_survey");
+            id_soal_survey = (String) b.get("id_soal_survey");
+
             namaUjian.setText(nameExam);
         }
 
@@ -117,7 +126,7 @@ public class DoSurvey extends AppCompatActivity {
                 }
             }
         });
-        getSurvey("1489228742", "4");
+        getSurvey(id_survey, id_soal_survey);
     }
 
     void startTimer(int minutes) {
@@ -150,8 +159,8 @@ public class DoSurvey extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
-//                            if (status.equals(String.valueOf(1))) {
-                            if (true) {
+                            if (status.equals(String.valueOf(1))) {
+//                            if (true) {
                                 JSONObject data = jsonObject.getJSONObject("data");
 
                                 id_data_survey = data.optString("id_data_survey", "");
@@ -177,16 +186,18 @@ public class DoSurvey extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi.", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
-                                startActivity(new Intent(DoSurvey.this,Survey.class));
+                                startActivity(new Intent(DoSurvey.this, Survey.class));
                                 finish();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
-                            startActivity(new Intent(DoSurvey.this,Survey.class));
+                            startActivity(new Intent(DoSurvey.this, Survey.class));
                             finish();
 
                         }
@@ -198,9 +209,10 @@ public class DoSurvey extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(DoSurvey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(DoSurvey.this, "Gagal menerima data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
-                        startActivity(new Intent(DoSurvey.this,Survey.class));
+                        startActivity(new Intent(DoSurvey.this, Survey.class));
                         finish();
                     }
                 }) {
@@ -251,13 +263,14 @@ public class DoSurvey extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(DoSurvey.this, error, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(DoSurvey.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
-
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(DoSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(DoSurvey.this, "Gagal mengirim data, mohon ulangi.", Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -267,7 +280,8 @@ public class DoSurvey extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DoSurvey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

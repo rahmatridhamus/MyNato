@@ -1,11 +1,14 @@
 package my.mynato.rahmatridham.mynato;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,9 +25,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import my.mynato.rahmatridham.mynato.CHOI.SuratPernyataan;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Home;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.MyCOC;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Profile;
@@ -35,9 +51,12 @@ import my.github.mikephil.charting.data.Entry;
 import my.github.mikephil.charting.highlight.Highlight;
 import my.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import my.github.mikephil.charting.utils.MPPointF;
+import my.mynato.rahmatridham.mynato.Model.ChoiModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LandingPage extends AppCompatActivity implements OnChartValueSelectedListener {
     private Toolbar toolbar;
@@ -50,6 +69,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     };
 
     protected BarChart mChart;
+    String token, device_id;
 
 
     @Override
@@ -77,9 +97,84 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        FirebaseMessaging.getInstance();
+
+        FirebaseInstanceId.getInstance();
+        token = FirebaseInstanceId.getInstance().getToken();
+        device_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         setupTabIcons();
+        sendToken();
+    }
+
+    private void sendToken() {
+        //Creating a string request
+        final ProgressDialog dialog = ProgressDialog.show(LandingPage.this, "", "Loading. Please wait...", true);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Login/create_token", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String status = jsonObject.optString("status").trim();
+
+                    if (status.equals(String.valueOf(1))) {
+
+                        dialog.dismiss();
+                    } else {
+                        String error = jsonObject.optString("message");
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim token ke server, " + error + ". mohon login ulang", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        startActivity(new Intent(LandingPage.this, LoginActivity.class));
+                        finish();
+                        dialog.dismiss();
+                    }
+                } catch (Exception e) {
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim token ke server, mohon login ulang", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    startActivity(new Intent(LandingPage.this, LoginActivity.class));
+                    finish();
+                    dialog.dismiss();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim token ke server, mohon login ulang", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                        startActivity(new Intent(LandingPage.this, LoginActivity.class));
+                        finish();
+                        dialog.dismiss();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                try {
+                    //Creating a shared preference
+                    SharedPreferences sharedPreferences = LandingPage.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                    //Adding parameters to request
+//                    params.put(Config.KODEPOSISI_SHARED_PREF, sharedPreferences.getString(Config.KODEPOSISI_SHARED_PREF, ""));
+                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+
+                    params.put("nipeg", sharedPreferences.getString(Config.NIPEG_SHARED_PREF, ""));
+                    params.put("token_firebase", token);
+                    params.put("device_id", device_id);
+                    return params;
+                } catch (Exception e) {
+                    e.getMessage();
+                    Toast.makeText(LandingPage.this, "error param: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    return params;
+                }
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void setupTabIcons() {
@@ -93,7 +188,7 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new Home(), "Home");
         adapter.addFrag(new MyCOC(), "My CoC");
-        adapter.addFrag(new Profile(), "Profile");
+        adapter.addFrag(new Profile(), "Profil");
         viewPager.setAdapter(adapter);
     }
 

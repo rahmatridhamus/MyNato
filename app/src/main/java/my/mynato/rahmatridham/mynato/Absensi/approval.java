@@ -2,12 +2,15 @@ package my.mynato.rahmatridham.mynato.Absensi;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class approval extends Fragment {
     ArrayList<absensi.DataAbsen> dataAbsenArrayList;
     FragApprovalAdapter adapter;
 
+
     public approval() {
         // Required empty public constructor
     }
@@ -55,6 +59,24 @@ public class approval extends Fragment {
         listAbsensi = (ListView) view.findViewById(R.id.listApproval);
         adapter = new FragApprovalAdapter(approval.this.getContext(), dataAbsenArrayList);
         listAbsensi.setAdapter(adapter);
+        listAbsensi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                absensi.DataAbsen model = dataAbsenArrayList.get(position);
+                if (model.getStatus().equals("PENDING")) {
+                    Intent intent = new Intent(approval.this.getContext(), ApprovalKoreksi.class);
+                    intent.putExtra("idApproval", model.getId());
+                    intent.putExtra("isPending", true);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(approval.this.getContext(), ApprovalKoreksi.class);
+                    intent.putExtra("idApproval", model.getId());
+                    intent.putExtra("isPending", false);
+                    startActivity(intent);
+                }
+            }
+        });
+
         getApproval();
         adapter.notifyDataSetChanged();
         return view;
@@ -75,17 +97,22 @@ public class approval extends Fragment {
 
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject object = data.getJSONObject(i);
-                                    dataAbsenArrayList.add(new absensi.DataAbsen(object.getString("nipeg"), object.getString("tanggal"), object.getString("keterangan"), object.getString("status"),object.getString("id_koreksi_absensi")));
-
+                                    dataAbsenArrayList.add(new absensi.DataAbsen(object.getString("nipeg"), object.getString("tanggal"), object.getString("keterangan"), object.getString("status"), object.getString("id_koreksi_absensi")));
                                 }
                                 adapter.notifyDataSetChanged();
-
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(approval.this.getContext(), error, Toast.LENGTH_SHORT).show();
+                                if (error.equals("empty data")) {
+                                    Snackbar snackbar = Snackbar.make(getView(), "Belum ada list approval ", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                } else {
+                                    Snackbar snackbar = Snackbar.make(getView(), error, Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
                             }
                         } catch (Exception e) {
-                            Toast.makeText(approval.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
                 },
@@ -94,8 +121,8 @@ public class approval extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(approval.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
+                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                 }) {
             @Override
@@ -116,7 +143,6 @@ public class approval extends Fragment {
                 return params;
             }
         };
-
         //Adding the string request to the queue
         RequestQueue requestQueue = Volley.newRequestQueue(approval.this.getContext());
         requestQueue.add(stringRequest);

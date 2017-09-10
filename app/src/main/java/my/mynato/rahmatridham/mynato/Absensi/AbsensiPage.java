@@ -1,5 +1,6 @@
 package my.mynato.rahmatridham.mynato.Absensi;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Home;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.MyCOC;
 import my.mynato.rahmatridham.mynato.LandingPageMenus.Profile;
+import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import my.mynato.rahmatridham.mynato.R;
 
 public class AbsensiPage extends AppCompatActivity {
@@ -36,6 +38,9 @@ public class AbsensiPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absensi_page);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Koreksi Absensi");
+
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -45,6 +50,19 @@ public class AbsensiPage extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 //        setupTabIcons();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        startActivity(new Intent(AbsensiPage.this, LandingPage.class));
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(AbsensiPage.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
     }
 
     private void setupTabIcons() {

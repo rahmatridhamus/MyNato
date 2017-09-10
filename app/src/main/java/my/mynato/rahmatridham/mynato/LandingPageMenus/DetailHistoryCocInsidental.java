@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -208,14 +209,14 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
                                 strTanil = data.optString("tata_nilai", "");
                                 strDoDont = data.optString("title_do_and_dont", "");
-                                strThematik = data.optString("title_thematik", "");
+//                                strThematik = data.optString("title_thematik", "");
+                                strThematik = "Insidental";
                                 urldetCerMot = data.optString("file_cerita_motivasi", "null");
                                 urldetGames = data.optString("file_games", "null");
 
-
                                 itemTanil.add(data.optString("content_tata_nilai", "bla"));
-                                itemDodont.add("Do:\n" + data.optString("content_do", "") + '\n' + "Don't:\n" + data.optString("content_dont", "bla"));
-                                itemThematik.add(data.optString("content_thematik", "bla"));
+                                itemDodont.add("<b>Do</b>:\n" + data.optString("content_do", "") + '\n' + "<br></br>" + "<br><b>Don't</b>:</br>\n" + data.optString("content_dont", "bla"));
+                                itemThematik.add(data.optString("insidental", "bla"));
                                 Picasso.with(DetailHistoryCocInsidental.this).load(data.optString("foto_absensi", "null")).into(new Target() {
                                     @Override
                                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -257,11 +258,13 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DetailHistoryCocInsidental.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailHistoryCocInsidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -271,7 +274,8 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailHistoryCocInsidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                 }) {
             @Override

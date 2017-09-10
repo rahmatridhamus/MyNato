@@ -2,7 +2,9 @@ package my.mynato.rahmatridham.mynato.Survey;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -15,9 +17,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.SurveyAdapter;
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.Model.SurveyModel;
+import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import my.mynato.rahmatridham.mynato.R;
 
 import org.json.JSONArray;
@@ -31,19 +36,34 @@ public class Survey extends AppCompatActivity {
     ArrayList<SurveyModel> modelArrayList;
     ListView listView;
     SurveyAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.setTitle("Survey Pemahaman");
 
         modelArrayList = new ArrayList<>();
-        listView =(ListView) findViewById(R.id.listSurvey);
-        adapter = new SurveyAdapter(Survey.this,modelArrayList);
+        listView = (ListView) findViewById(R.id.listSurvey);
+        adapter = new SurveyAdapter(Survey.this, modelArrayList);
         listView.setAdapter(adapter);
 
         getSurvey();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        startActivity(new Intent(Survey.this, LandingPage.class));
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Survey.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
     }
 
     public void getSurvey() {
@@ -59,18 +79,20 @@ public class Survey extends AppCompatActivity {
                                 JSONArray data = jsonObject.getJSONArray("data");
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject object = data.getJSONObject(i);
-                                    SurveyModel model = new SurveyModel(object.optString("id_survey",""),object.optString("nama_ujian",""),object.optString("tanggal_mulai",""),object.optString("tanggal_berakhir",""),object.optString("keterangan",""));
+                                    SurveyModel model = new SurveyModel(object.optString("id_survey", ""), object.optString("nama_ujian", ""), object.optString("tanggal_mulai", ""), object.optString("tanggal_berakhir", ""), object.optString("keterangan", ""));
                                     modelArrayList.add(model);
                                 }
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Survey.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Survey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -80,7 +102,8 @@ public class Survey extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Survey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

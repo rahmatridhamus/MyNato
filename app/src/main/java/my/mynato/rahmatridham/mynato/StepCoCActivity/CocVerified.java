@@ -28,7 +28,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.Model.GroupCoc;
+import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 import my.mynato.rahmatridham.mynato.R;
 
 import org.json.JSONArray;
@@ -51,6 +53,9 @@ public class CocVerified extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coc_verified);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         sharedPreferences = CocVerified.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         next = (Button) findViewById(R.id.buttonSelanjutnya);
@@ -96,13 +101,26 @@ public class CocVerified extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        startActivity(new Intent(CocVerified.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(CocVerified.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+    }
+
     public void addRadioButtons(ArrayList<GroupCoc> groupCocs) {
         ColorStateList colorStateList = new ColorStateList(
-                new int[][] {
-                        new int[] { -android.R.attr.state_checked }, // unchecked
-                        new int[] {  android.R.attr.state_checked }  // checked
+                new int[][]{
+                        new int[]{-android.R.attr.state_checked}, // unchecked
+                        new int[]{android.R.attr.state_checked}  // checked
                 },
-                new int[] {
+                new int[]{
                         getResources().getColor(R.color.greyBorder),
                         getResources().getColor(R.color.warnaijo)
                 }
@@ -112,7 +130,7 @@ public class CocVerified extends AppCompatActivity {
                 new int[][]{
                         new int[]{android.R.attr.state_enabled} //enabled
                 },
-                new int[] {getResources().getColor(R.color.colorPrimary) }
+                new int[]{getResources().getColor(R.color.colorPrimary)}
         );
 
         for (int row = 0; row < 1; row++) {

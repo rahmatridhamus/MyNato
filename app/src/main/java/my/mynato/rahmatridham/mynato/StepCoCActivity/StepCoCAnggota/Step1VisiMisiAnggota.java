@@ -31,6 +31,7 @@ import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.Model.GroupCoc;
 import my.mynato.rahmatridham.mynato.R;
 import my.mynato.rahmatridham.mynato.StepCoCActivity.CocVerified;
+import my.mynato.rahmatridham.mynato.StepCoCActivity.PrepareAddCoc;
 import my.mynato.rahmatridham.mynato.StepCoCActivity.Step1VisiMisi;
 
 public class Step1VisiMisiAnggota extends AppCompatActivity {
@@ -48,10 +49,17 @@ public class Step1VisiMisiAnggota extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Step1VisiMisiAnggota.this,Step2MotivasiAnggota.class));
+                startActivity(new Intent(Step1VisiMisiAnggota.this, Step2MotivasiAnggota.class));
+                finish();
             }
         });
         getVisiMisi();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Step1VisiMisiAnggota.this, PrepareAddCoc.class));
+        finish();
     }
 
     private void getVisiMisi() {
@@ -61,6 +69,7 @@ public class Step1VisiMisiAnggota extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+//                    Toast.makeText(Step1VisiMisiAnggota.this, response, Toast.LENGTH_SHORT).show();
                     JSONObject jsonObject = new JSONObject(response);
                     String status = jsonObject.optString("status").trim();
 
@@ -73,14 +82,14 @@ public class Step1VisiMisiAnggota extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-//                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Step1VisiMisiAnggota.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
                         Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbars.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step1VisiMisiAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
+//                    Toast.makeText(Step1VisiMisiAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data" + e.getMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -91,8 +100,8 @@ public class Step1VisiMisiAnggota extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-//                        Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error getting response: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+//                        Toast.makeText(Step1VisiMisiAnggota.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data \n" + error.getMessage(), Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

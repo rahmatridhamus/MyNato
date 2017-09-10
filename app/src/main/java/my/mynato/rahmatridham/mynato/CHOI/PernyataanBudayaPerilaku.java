@@ -42,6 +42,8 @@ public class PernyataanBudayaPerilaku extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pernyataan_budaya_perilaku);
 
+        setTitle("Surat Pernyataan (CHOI)");
+
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {

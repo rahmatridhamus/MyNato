@@ -55,7 +55,7 @@ public class Step5Insidental extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        Toast.makeText(Step5Insidental.this, response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Step5Insidental.this, response, Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.optString("status").trim();
@@ -67,14 +67,14 @@ public class Step5Insidental extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Step5Insidental.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Step5Insidental.this, error, Toast.LENGTH_SHORT).show();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step5Insidental.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data" , Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -86,7 +86,7 @@ public class Step5Insidental extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step5Insidental.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }

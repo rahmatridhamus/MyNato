@@ -45,7 +45,7 @@
                 android:layout_toEndOf="@+id/imageViewMesIcon"
                 android:layout_toRightOf="@+id/imageViewMesIcon"
                 android:text="Title"
-                android:textColor="@color/holo_green"
+                android:textColor="@color/mynatoBlue"
                 android:textStyle="normal|bold" />
 
             <TextView

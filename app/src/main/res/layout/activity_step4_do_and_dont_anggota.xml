@@ -7,20 +7,11 @@
     android:layout_height="match_parent"
     tools:context="my.mynato.rahmatridham.mynato.StepCoCActivity.Step1VisiMisi">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/stepbar"
         android:background="@drawable/stepfout"
-        android:layout_below="@+id/my_toolbar"
         android:layout_height="40dp">
 
     </RelativeLayout>
@@ -52,6 +43,41 @@
         </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/eaaa"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/relvisi"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/border_notifbefore">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
+                app:srcCompat="@mipmap/check_circle" />
+
+            <TextView
+                android:id="@+id/strMotivSebelum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView4"
+                android:layout_toRightOf="@+id/imageView4"
+                android:text="Pertemuan Sebelumnya: blablabla"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
         <ScrollView
             android:id="@+id/scrollView3"
             android:layout_width="match_parent"
@@ -59,17 +85,34 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/relvisi">
+            android:layout_below="@+id/eaaa"
+            android:layout_margin="5dp">
 
-            <TextView
-                android:id="@+id/descVisi"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingStart="5dp"
-                android:paddingTop="5dp" />
+                android:layout_margin="8dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/descDo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/descDont"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp" />
+            </LinearLayout>
         </ScrollView>
 
     </RelativeLayout>

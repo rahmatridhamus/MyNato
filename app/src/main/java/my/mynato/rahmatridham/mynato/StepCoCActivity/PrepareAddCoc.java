@@ -41,6 +41,8 @@ public class PrepareAddCoc extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(my.mynato.rahmatridham.mynato.R.layout.activity_prepare_add_coc);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         sharedPreferences = PrepareAddCoc.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         adminInput = (CardView) findViewById(my.mynato.rahmatridham.mynato.R.id.adminInput);
@@ -83,7 +85,11 @@ public class PrepareAddCoc extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     private void postDataBeforeStep1(final String role, String idGroup, final View view) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(PrepareAddCoc.this, "", "Loading. Please wait...", true);
@@ -99,8 +105,13 @@ public class PrepareAddCoc extends AppCompatActivity {
                         Toast.makeText(PrepareAddCoc.this, "Anda masih memiliki data CoC yang belum selesai", Toast.LENGTH_SHORT).show();
 //                        Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), "Anda masih memiliki data CoC yang belum selesai", Snackbar.LENGTH_LONG);
 //                        snackbars.show();
+
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject exist = data.getJSONObject("page_eksisting");
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(Config.IDCOCACTIVITY_SHARED_PREF, data.optString("id_coc_activity",""));
+                        editor.commit();
+
+                        JSONObject exist = jsonObject.getJSONObject("page_eksisting");
                         int i = exist.optInt("id", 0);
                         switch (i) {
                             case 0:
@@ -117,7 +128,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                                 break;
                             case 2:
                                 if (Config.isAnggota) {
-                                    startActivity(new Intent(PrepareAddCoc.this, Step2MotivasiAnggota.class));
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
 
                                 } else {
                                     startActivity(new Intent(PrepareAddCoc.this, Step2Motivasi.class));
@@ -125,14 +136,14 @@ public class PrepareAddCoc extends AppCompatActivity {
                                 break;
                             case 3:
                                 if (Config.isAnggota) {
-                                    startActivity(new Intent(PrepareAddCoc.this, Step3TataNilaiAnggota.class));
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
                                 } else {
                                     startActivity(new Intent(PrepareAddCoc.this, Step3TataNilai.class));
                                 }
                                 break;
                             case 4:
                                 if (Config.isAnggota) {
-                                    startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDontAnggota.class));
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
 
                                 } else {
                                     startActivity(new Intent(PrepareAddCoc.this, Step4DoAndDont.class));
@@ -140,7 +151,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                                 break;
                             case 5:
                                 if (Config.isAnggota) {
-                                    startActivity(new Intent(PrepareAddCoc.this, Step5ThematikAnggota.class));
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
 
                                 } else {
                                     startActivity(new Intent(PrepareAddCoc.this, Step5Thematik.class));
@@ -148,7 +159,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                                 break;
                             case 6:
                                 if (Config.isAnggota) {
-                                    Toast.makeText(PrepareAddCoc.this, "ID didn't match", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(PrepareAddCoc.this, Step1VisiMisiAnggota.class));
                                 } else {
                                     startActivity(new Intent(PrepareAddCoc.this, Step6Absensi.class));
                                 }
@@ -169,7 +180,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                     }
                 } catch (Exception e) {
 //                    Toast.makeText(PrepareAddCoc.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + e.getMessage(), Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                     snackbar.show();
 //                    Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
 
@@ -183,7 +194,7 @@ public class PrepareAddCoc extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(PrepareAddCoc.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data. Periksa kembali internet" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
 //                        Toast.makeText(PrepareAddCoc.this, "Gagal mengirim data, mohon ulangi. Pastikan internet Anda aktif.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();

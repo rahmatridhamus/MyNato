@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,35 +7,42 @@
     android:paddingBottom="5dp"
     android:paddingTop="5dp">
 
-    <TextView
-        android:id="@+id/textViewTanggalAbsensi"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="Tanggal"
-        android:textSize="18sp" />
+        android:paddingTop="5dp">
 
-    <TextView
-        android:id="@+id/textViewStatusAbsensi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewTanggalAbsensi"
-        android:layout_alignStart="@+id/textViewTanggalAbsensi"
-        android:layout_below="@+id/textViewTanggalAbsensi"
-        android:layout_marginTop="0dp"
-        android:background="@color/greenButton"
-        android:text="STATUS"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/textViewTanggalAbsensi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="Tanggal"
+            android:textSize="18sp" />
 
-    <ImageView
-        android:id="@+id/imageViewArrowDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        app:srcCompat="@mipmap/right_arrow" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewStatusAbsensi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textViewTanggalAbsensi"
+            android:layout_alignStart="@+id/textViewTanggalAbsensi"
+            android:layout_below="@+id/textViewTanggalAbsensi"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/border_green"
+            android:text="STATUS"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/imageViewArrowDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@mipmap/right_arrow" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

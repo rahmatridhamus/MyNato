@@ -71,7 +71,7 @@ public class DetailThematikInsidentalAdapter extends BaseExpandableListAdapter {
         }
 
         TextView title = (TextView) convertView.findViewById(my.mynato.rahmatridham.mynato.R.id.titleExpandable);
-        title.setTypeface(null, Typeface.BOLD);
+        title.setTypeface(null, Typeface.NORMAL);
         title.setText(headerTitle);
         return convertView;
     }

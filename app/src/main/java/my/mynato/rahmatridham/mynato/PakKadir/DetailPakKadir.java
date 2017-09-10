@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,13 +33,18 @@ import my.mynato.rahmatridham.mynato.StepCoCActivity.Step3TataNilai;
 
 public class DetailPakKadir extends AppCompatActivity {
     CheckBox gotIt;
-    TextView title,content;
+    TextView title, content;
     Button lanjutkan;
     String id_pak_kadir;
+    boolean isRead;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_pak_kadir);
+
+        setTitle("Pak Kadir");
+
 
         gotIt = (CheckBox) findViewById(R.id.checkBoxPakKadir);
         title = (TextView) findViewById(R.id.titleDetail);
@@ -51,20 +57,32 @@ public class DetailPakKadir extends AppCompatActivity {
             title.setText((String) b.get("getTitle"));
             content.setText((String) b.get("getContent"));
             id_pak_kadir = (String) b.get("getId_pak_kadir");
+            isRead = (boolean) b.get("getStatus");
+        }
+
+        if (isRead) {
+            gotIt.setVisibility(View.GONE);
+            lanjutkan.setVisibility(View.GONE);
         }
 
         lanjutkan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(gotIt.isChecked()){
+                if (gotIt.isChecked()) {
                     pushPakKadir(id_pak_kadir);
-                }else {
+                } else {
                     Toast.makeText(DetailPakKadir.this, "Mohon dichecklist terlebih dahulu", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(DetailPakKadir.this,PakKadir.class));
+        finish();
     }
 
     public void pushPakKadir(String id_pak_kadir) {
@@ -86,11 +104,13 @@ public class DetailPakKadir extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DetailPakKadir.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailPakKadir.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -100,7 +120,8 @@ public class DetailPakKadir extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailPakKadir.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -114,7 +135,7 @@ public class DetailPakKadir extends AppCompatActivity {
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
-                    params.put("status","READ");
+                    params.put("status", "READ");
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

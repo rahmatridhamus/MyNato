@@ -60,24 +60,24 @@ public class ChoiAdapter extends BaseAdapter {
         tanggal.setText(model.getNama_choi());
         status.setText(model.getKeterangan());
         if(!model.getKeterangan().equals("PENDING APPROVAL") || model.getKeterangan().equals("CLOSED")){
-            status.setBackgroundResource(R.color.greenButton);
+            status.setBackgroundResource(R.drawable.border_green);
         }else {
-            status.setBackgroundResource(R.color.warnamerah);
+            status.setBackgroundResource(R.drawable.border_red);
         }
 
-        arrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(v.getContext(), PernyataanBudayaPerilaku.class);
-                    intent.putExtra("id_aktivasi_choi", model.getId_aktivasi_choi());
-                    v.getContext().startActivity(intent);
-                    ((Activity)context).finish();
-                }catch (Exception e){
-                    Toast.makeText(v.getContext(), "Gagal ke halaman koreksi", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        arrow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    Intent intent = new Intent(v.getContext(), PernyataanBudayaPerilaku.class);
+//                    intent.putExtra("id_aktivasi_choi", model.getId_aktivasi_choi());
+//                    v.getContext().startActivity(intent);
+//                    ((Activity)context).finish();
+//                }catch (Exception e){
+//                    Toast.makeText(v.getContext(), "Gagal ke halaman koreksi", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         return v;
     }

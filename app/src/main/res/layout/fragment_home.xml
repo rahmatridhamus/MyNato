@@ -19,10 +19,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true">
 
-            <my.github.mikephil.charting.charts.BarChart
+            <WebView
                 android:id="@+id/chart1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:padding="10dp" />
 
 
         </RelativeLayout>

@@ -8,8 +8,8 @@ android {
         applicationId "my.mynato.rahmatridham.mynato"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.2"
+        versionCode 8
+        versionName "1.7"
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,10 +102,17 @@ public class request extends Fragment {
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(request.this.getContext(), error, Toast.LENGTH_SHORT).show();
+                                if (error.equals("empty data")) {
+                                    Snackbar snackbar = Snackbar.make(getView(), "Belum ada data", Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                } else {
+                                    Snackbar snackbar = Snackbar.make(getView(), error, Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                }
                             }
                         } catch (Exception e) {
-                            Toast.makeText(request.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data"+e.getMessage(), Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
                 },
@@ -113,7 +121,8 @@ public class request extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(request.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
 
                     }
                 }) {

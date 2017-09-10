@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import my.mynato.rahmatridham.mynato.Adapter.PakKadirAdapter;
 import my.mynato.rahmatridham.mynato.Config;
+import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.Model.PakKadirModel;
+import my.mynato.rahmatridham.mynato.Pemberitahuan.Pemberitahuan;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,6 +43,7 @@ public class PakKadir extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(my.mynato.rahmatridham.mynato.R.layout.activity_pak_kadir);
         pakKadirArrayList = new ArrayList<>();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         this.setTitle("Pak Kadir");
 
@@ -48,10 +53,15 @@ public class PakKadir extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PakKadirModel model = pakKadirArrayList.get(position);
-                Intent intent = new Intent(PakKadir.this,DetailPakKadir.class);
-                intent.putExtra("getId_pak_kadir",model.getId_pak_kadir());
-                intent.putExtra("getContent",model.getContent());
-                intent.putExtra("getTitle",model.getTitle());
+                Intent intent = new Intent(PakKadir.this, DetailPakKadir.class);
+                intent.putExtra("getId_pak_kadir", model.getId_pak_kadir());
+                intent.putExtra("getContent", model.getContent());
+                intent.putExtra("getTitle", model.getTitle());
+                if (model.getStatus().equals("READ")) {
+                    intent.putExtra("getStatus", true);
+                } else {
+                    intent.putExtra("getStatus", false);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -60,6 +70,19 @@ public class PakKadir extends AppCompatActivity {
         listPakKadir.setAdapter(adapter);
         getPakKadir();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        startActivity(new Intent(PakKadir.this, LandingPage.class));
+        finish();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(PakKadir.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
     }
 
     private void getPakKadir() {
@@ -83,11 +106,18 @@ public class PakKadir extends AppCompatActivity {
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
-                        Toast.makeText(PakKadir.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        if (error.equals("empty data")) {
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Belum ada data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        } else {
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(PakKadir.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     dialog.dismiss();
                 }
             }
@@ -97,7 +127,8 @@ public class PakKadir extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(PakKadir.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

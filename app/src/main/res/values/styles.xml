@@ -14,6 +14,10 @@
         <item name="android:textViewStyle">@style/OpenSansRegular</item>
     </style>
 
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 
     <!-- Base application theme. -->
     <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
@@ -33,4 +37,10 @@
     <!--<style name="OpenSansSemibold" parent="android:Widget.TextView">-->
         <!--<item name="android:typeface">@ass</item>-->
     <!--</style>-->
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#b2b0b0</item>
+    </style>
 </resources>

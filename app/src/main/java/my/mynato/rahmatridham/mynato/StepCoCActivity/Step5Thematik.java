@@ -79,13 +79,13 @@ public class Step5Thematik extends AppCompatActivity {
             }
         });
 
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setTitle("Step 5: Thematik");
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+//        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -99,13 +99,11 @@ public class Step5Thematik extends AppCompatActivity {
                 dialog.setContentView(R.layout.thematik_weburl);
 
                 WebView wv = (WebView) dialog.findViewById(R.id.webthematik);
-//                wv.loadUrl("http://stackoverflow.com/questions/26030885/android-how-can-i-open-a-webview-in-a-popup-window");
                 wv.loadUrl(thematikArrayList.get(groupPosition).getSubtitle().get(childPosition).getUrl());
                 wv.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {
                         view.loadUrl(url);
-
                         return true;
                     }
                 });

@@ -1,13 +1,20 @@
 package my.mynato.rahmatridham.mynato.StepCoCActivity.StepCoCAnggota;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +36,12 @@ import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.LandingPage;
 import my.mynato.rahmatridham.mynato.R;
 
+import static my.mynato.rahmatridham.mynato.R.id.parent;
+
 public class Step5ThematikAnggota extends AppCompatActivity {
-    TextView thematik;
-    Button lanjut;
+    TextView thematik, hist, cont;
+    Button lanjut, buka;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +49,65 @@ public class Step5ThematikAnggota extends AppCompatActivity {
         setContentView(R.layout.activity_step5_thematik_anggota);
 
         thematik = (TextView) findViewById(R.id.descVisi);
+        cont = (TextView) findViewById(R.id.descVissi);
+        hist = (TextView) findViewById(R.id.strMotivSebelum);
+
+        buka = (Button) findViewById(R.id.bukfil);
+        buka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(v.getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.thematik_weburl);
+
+                WebView wv = (WebView) dialog.findViewById(R.id.webthematik);
+                wv.loadUrl(url);
+                wv.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                });
+
+                dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                            dialog.dismiss();
+                        }
+                        return false;
+                    }
+
+                });
+                dialog.show();
+            }
+        });
+
         lanjut = (Button) findViewById(R.id.buttonLanjutkan);
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Step5ThematikAnggota.this, LandingPage.class));
+                startActivity(new Intent(Step5ThematikAnggota.this, LandingPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
             }
         });
 
         SharedPreferences sharedPreferences = Step5ThematikAnggota.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        getThematik(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+        getThematik(sharedPreferences.getString(Config.IDCOCACTIVITY_SHARED_PREF, ""));
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Step5ThematikAnggota.this, Step4DoAndDontAnggota.class));
+        finish();
     }
 
     private void getThematik(String idGroup) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Step5ThematikAnggota.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL+ "Thematik/get_data/"+idGroup, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Anggota_CoC/thematik/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -64,25 +116,33 @@ public class Step5ThematikAnggota extends AppCompatActivity {
 
                     if (status.equals(String.valueOf(1))) {
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject eksisting = data.getJSONObject("eksisting");
-                        if (!eksisting.optString("id_content_thematik", "").equals("")) {
-                            Toast.makeText(Step5ThematikAnggota.this, "Admin melum menyelesaikan halaman ini", Toast.LENGTH_SHORT).show();
+//                        JSONObject eksisting = data.getJSONObject("eksisting");
+                        if (data.optString("id_content_thematik", "").equals("")) {
+//                            Toast.makeText(Step5ThematikAnggota.this, "Admin melum menyelesaikan halaman ini", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Step5ThematikAnggota.this, Step4DoAndDontAnggota.class));
                             finish();
-                        }else {
-                            thematik.setText(eksisting.optString("title","")+":\n"+eksisting.optString("sub_title",""));
+                        } else {
+
+                            thematik.setText(data.optString("title", ""));
+                            cont.setText(data.optString("sub_title", ""));
+                            url = data.optString("url", "");
+
+                            JSONObject history = jsonObject.getJSONObject("history");
+                            hist.setText("Pertemuan sebelumnya: " + history.optString("title", ""));
                         }
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
 //                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Step5ThematikAnggota.this, Step4DoAndDontAnggota.class));
+                        finish();
                         Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbars.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step5ThematikAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
+//                    Toast.makeText(Step5ThematikAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }

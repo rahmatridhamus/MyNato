@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +31,7 @@ import java.util.Map;
 public class DetailSurvey extends AppCompatActivity {
     TextView judul, tanggal, waktuPengerjaan, nilai;
     Button doIt;
-    String id_survey, ket_survey;
+    String id_survey, ket_survey, id_soal_survey;
     int durasiSurvey = 15;
 
     @Override
@@ -57,6 +58,8 @@ public class DetailSurvey extends AppCompatActivity {
                     Intent intent = new Intent(DetailSurvey.this, DoSurvey.class);
                     intent.putExtra("nama_ujian", judul.getText().toString());
                     intent.putExtra("durasiSurvey", durasiSurvey);
+                    intent.putExtra("id_survey", id_survey);
+                    intent.putExtra("id_soal_survey", id_soal_survey);
                     startActivity(intent);
                     finish();
                 }
@@ -65,12 +68,11 @@ public class DetailSurvey extends AppCompatActivity {
         });
 
 
-
         Toast.makeText(this, ket_survey, Toast.LENGTH_SHORT).show();
-        if(ket_survey.equals("Open")){
+        if (ket_survey.equals("Open")) {
             doIt.setText("Kerjakan Survey");
             doIt.setBackgroundResource(R.color.greenButton);
-        }else {
+        } else {
             doIt.setText("Closed");
             doIt.setBackgroundResource(R.color.red);
 
@@ -93,7 +95,9 @@ public class DetailSurvey extends AppCompatActivity {
                                 tanggal.setText(object.optString("tanggal_mulai", "") + " s/d " + object.optString("tanggal_berakhir", ""));
                                 waktuPengerjaan.setText(object.optString("waktu_pengerjaan", "") + " Menit");
                                 durasiSurvey = Integer.valueOf(object.optString("waktu_pengerjaan", ""));
+                                id_soal_survey = object.optString("id_soal_survey", "");
                                 nilai.setText(object.optString("nilai", ""));
+
 //                                if (object.optString("hasil", "").equals("BELUM DILAKUKAN SURVEY")) {
 //                                    doIt.setText("Kerjakan Survey");
 //                                    doIt.setBackgroundResource(R.color.greenButton);
@@ -101,16 +105,19 @@ public class DetailSurvey extends AppCompatActivity {
 //                                    doIt.setText("Closed");
 //                                    doIt.setBackgroundResource(my.mynato.rahmatridham.mynato.R.color.red);
 //                                }
+
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(DetailSurvey.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                                 startActivity(new Intent(DetailSurvey.this, Survey.class));
                                 finish();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailSurvey.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                             startActivity(new Intent(DetailSurvey.this, Survey.class));
                             finish();
@@ -122,7 +129,8 @@ public class DetailSurvey extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailSurvey.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

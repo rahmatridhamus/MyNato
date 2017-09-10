@@ -1,13 +1,22 @@
 package my.mynato.rahmatridham.mynato.FirebaseConsole;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import my.mynato.rahmatridham.mynato.LandingPage;
+import my.mynato.rahmatridham.mynato.R;
 
 import static java.security.AccessController.getContext;
 
@@ -35,9 +44,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), LandingPage.class);
+// use System.currentTimeMillis() to have a unique ID for the pending intent
+                PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
+
+// build notification
+// the addAction re-use the same intent to keep the example short
+                Notification n = new Notification.Builder(getApplicationContext())
+                        .setContentTitle("Notifikasi MyNato")
+                        .setContentText(string)
+                        .setSmallIcon(R.mipmap.logo)
+                        .setContentIntent(pIntent)
+                        .setAutoCancel(true).build();
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(0, n);
             }
         });
     }
+
+
 }
 

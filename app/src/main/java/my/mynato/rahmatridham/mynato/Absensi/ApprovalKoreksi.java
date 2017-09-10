@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,17 +38,28 @@ public class ApprovalKoreksi extends AppCompatActivity {
     Button submit;
     TextView nama, nipeg, kantor, atasan;
     String id;
+    boolean isPending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_approval_koreksi);
+
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         this.setTitle("Approval Koreksi Absensi");
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
         if (b != null) {
             id = (String) b.get("idApproval");
+            isPending = (boolean) b.get("isPending");
         }
+
 
         luarUnit = (TextView) findViewById(R.id.radioButtonUnitLuar);
         nama = (TextView) findViewById(R.id.textViewNamaPemohon);
@@ -59,6 +71,9 @@ public class ApprovalKoreksi extends AppCompatActivity {
         tanggal = (EditText) findViewById(R.id.editTextTanggalKoreksi);
         submit = (Button) findViewById(R.id.buttonSubmit);
 
+        if (!isPending) {
+            submit.setVisibility(View.INVISIBLE);
+        }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,15 +103,18 @@ public class ApprovalKoreksi extends AppCompatActivity {
                                 atasan.setText(": " + data.optString("nama_atasan", "null"));
                                 masuk.setText(": " + data.optString("masuk_seharusnya", "null"));
                                 keluar.setText(": " + data.optString("pulang_seharusnya", "null"));
-                                tanggal.setText(": " + data.optString("tanggal_dikoreksi", "null"));
+                                tanggal.setText(" " + data.optString("tanggal_dikoreksi", "null"));
+                                luarUnit.setText(data.optString("keterangan", "null"));
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(ApprovalKoreksi.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(ApprovalKoreksi.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -106,7 +124,8 @@ public class ApprovalKoreksi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(ApprovalKoreksi.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {

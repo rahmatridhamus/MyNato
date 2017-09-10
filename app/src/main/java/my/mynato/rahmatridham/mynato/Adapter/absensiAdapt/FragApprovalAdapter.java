@@ -59,22 +59,22 @@ public class FragApprovalAdapter extends BaseAdapter {
         tanggal.setText(model.getTanggal());
         status.setText(model.getStatus());
         if(!model.getStatus().equals("PENDING")){
-            status.setBackgroundResource(R.color.greenButton);
+            status.setBackgroundResource(R.drawable.border_green);
             arrow.setVisibility(View.INVISIBLE);
         }else {
-            status.setBackgroundResource(R.color.warnamerah);
-            arrow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(v.getContext(), ApprovalKoreksi.class);
-                        intent.putExtra("idApproval", model.getId());
-                        v.getContext().startActivity(intent);
-                    }catch (Exception e){
-                        Toast.makeText(v.getContext(), "Gagal ke halaman koreksi", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            status.setBackgroundResource(R.drawable.border_red);
+//            arrow.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        Intent intent = new Intent(v.getContext(), ApprovalKoreksi.class);
+//                        intent.putExtra("idApproval", model.getId());
+//                        v.getContext().startActivity(intent);
+//                    }catch (Exception e){
+//                        Toast.makeText(v.getContext(), "Gagal ke halaman koreksi", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
         }
         return v;
     }

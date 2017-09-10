@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextpassword);
         signIn = (Button) findViewById(R.id.buttonSignIn);
 
+
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, LandingPage.class);
             startActivity(intent);
             finish();
+        } else {
+            Toast.makeText(this, "Silahkan login terlebih dahulu", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -121,7 +125,8 @@ public class LoginActivity extends AppCompatActivity {
                         final String error = jsonObject.optString("message");
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Login gagal, mohon diulangi\n" + error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
 
                             }
@@ -132,7 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                     final String error = e.getMessage();
                     LoginActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(LoginActivity.this, "errorJSON: \n" + error, Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Login gagal, mohon diulangi", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
 
                         }
@@ -148,7 +154,8 @@ public class LoginActivity extends AppCompatActivity {
                         error.printStackTrace();
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "errorResponse: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Login gagal, mohon diulangi", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
 
                             }
@@ -169,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     LoginActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(LoginActivity.this, "errorParam: \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "errorParam: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                     dialog.dismiss();

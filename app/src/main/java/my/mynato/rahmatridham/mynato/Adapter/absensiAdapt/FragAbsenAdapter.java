@@ -57,15 +57,16 @@ public class FragAbsenAdapter extends BaseAdapter {
 
         if(model.getKeterangan().isEmpty()){ //masuk di fragment absensi
             if(!model.getStatus().equals("TERLAMBAT")){
-                status.setBackgroundResource(R.color.greenButton);
+                status.setBackgroundResource(R.drawable.border_green);
+
             }else {
-                status.setBackgroundResource(R.color.warnamerah);
+                status.setBackgroundResource(R.drawable.border_red);
             }
         }else{
             if(!model.getStatus().equals("PENDING")){
-                status.setBackgroundResource(R.color.greenButton);
+                status.setBackgroundResource(R.drawable.border_green);
             }else {
-                status.setBackgroundResource(R.color.warnamerah);
+                status.setBackgroundResource(R.drawable.border_red);
             }
         }
 

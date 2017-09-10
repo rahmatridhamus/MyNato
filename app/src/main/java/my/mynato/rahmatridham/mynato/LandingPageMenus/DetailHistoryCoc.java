@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,7 @@ public class DetailHistoryCoc extends AppCompatActivity {
     TextView showMotivasi, showGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
     TextView nmMotivasi, nmGames, tiltle, tanggal, detCerMot, detGames;
-    String urldetCerMot,urldetGames;
+    String urldetCerMot, urldetGames;
     public static String urldetThematik;
 
     ImageView absensi, suasana;
@@ -219,7 +220,7 @@ public class DetailHistoryCoc extends AppCompatActivity {
                                 urldetGames = data.optString("file_games", "null");
 
                                 itemTanil.add(data.optString("content_tata_nilai", "null"));
-                                itemDodont.add("Do:\n" + data.optString("content_do", "null") + "<br></br>" + "<br>Don't:</br>\n" + data.optString("content_dont", "null"));
+                                itemDodont.add("<b>Do</b>:\n" + data.optString("content_do", "null") + "<br></br>" + "<br><b>Don't</b>:</br>\n" + data.optString("content_dont", "null"));
                                 itemThematik.add(data.optString("sub_title_thematik", "null"));
 
                                 Picasso.with(DetailHistoryCoc.this).load(data.optString("foto_absensi", "null")).into(new Target() {
@@ -265,11 +266,13 @@ public class DetailHistoryCoc extends AppCompatActivity {
                             } else {
                                 String error = jsonObject.optString("message");
 //                                Toast.makeText(DetailHistoryCoc.this, error, Toast.LENGTH_SHORT).show();
-                                Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data \n" + error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                            snackbar.show();
 //                            Toast.makeText(DetailHistoryCoc.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
@@ -280,7 +283,8 @@ public class DetailHistoryCoc extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(DetailHistoryCoc.this, "Gagal menerima data", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                        snackbar.show();
 //                        Toast.makeText(DetailHistoryCoc.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
 

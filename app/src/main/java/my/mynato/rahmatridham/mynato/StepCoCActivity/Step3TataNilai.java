@@ -46,7 +46,8 @@ public class Step3TataNilai extends AppCompatActivity {
     TataNilai tataNilais;
     boolean isCheck = false;
     TextView descTanilBef;
-    String tanilSel="";
+    String tanilSel = "";
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class Step3TataNilai extends AppCompatActivity {
         tataNilaiArrayList = new ArrayList<>();
         Toolbar mToolBar = (Toolbar) findViewById(R.id.my_toolbar);
         radioGroup = (RadioGroup) findViewById(R.id.listTataNilai);
-        descTanilBef =(TextView) findViewById(R.id.strTanilSebelum);
+        descTanilBef = (TextView) findViewById(R.id.strTanilSebelum);
 
         lanjut = (Button) findViewById(R.id.buttonLanjutkan);
         lanjut.setEnabled(isCheck);
@@ -64,18 +65,18 @@ public class Step3TataNilai extends AppCompatActivity {
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    SharedPreferences sharedPreferences = Step3TataNilai.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                    pushTataNilai(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+                SharedPreferences sharedPreferences = Step3TataNilai.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                pushTataNilai(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
             }
         });
 
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+//        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolBar.setTitle("Step 3: Tata Nilai");
-        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+//        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -88,7 +89,7 @@ public class Step3TataNilai extends AppCompatActivity {
                 lanjut.setClickable(isCheck);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(group.getContext());
-                builder.setMessage(tataNilais.getTitle()+": \n\n"+ Html.fromHtml(tataNilais.getContent()))
+                builder.setMessage(tataNilais.getTitle() + ": \n\n" + Html.fromHtml(tataNilais.getContent()))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -103,7 +104,7 @@ public class Step3TataNilai extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = Step3TataNilai.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        getTataNilai(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+        getTataNilai(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, ""));
     }
 
     public void addRadioButtons(ArrayList<TataNilai> groupCocs) {
@@ -116,7 +117,7 @@ public class Step3TataNilai extends AppCompatActivity {
                 RadioButton rdbtn = new RadioButton(this);
                 rdbtn.setBackgroundResource(R.drawable.border_radio);
                 ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-                int margin = (int)(6*density);
+                int margin = (int) (6 * density);
                 params.setMargins(0, margin, 0, margin);
                 rdbtn.setLayoutParams(params);
                 rdbtn.setId((row * 2) + (i - 1));
@@ -131,11 +132,12 @@ public class Step3TataNilai extends AppCompatActivity {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Step3TataNilai.this, "", "Loading. Please wait...", true);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Tata_Nilai/get_data/"+idGroup,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Tata_Nilai/get_data/" + idGroup,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+//                            Toast.makeText(Step3TataNilai.this, response, Toast.LENGTH_SHORT).show();
                             JSONObject jsonObject = new JSONObject(response);
 
                             String status = jsonObject.optString("status").trim();
@@ -151,7 +153,7 @@ public class Step3TataNilai extends AppCompatActivity {
                                 addRadioButtons(tataNilaiArrayList);
 
                                 JSONObject history = data.getJSONObject("history");
-                                descTanilBef.setText("Pertemuan Sebelumnya: \n"+history.optString("title","(kosong)"));
+                                descTanilBef.setText("Pertemuan Sebelumnya: \n" + history.optString("title", "(kosong)"));
                                 dialog.dismiss();
 
                             } else {
@@ -175,7 +177,7 @@ public class Step3TataNilai extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step3TataNilai.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Gagal menerima data. Periksa kembali internet", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -206,7 +208,7 @@ public class Step3TataNilai extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void pushTataNilai(String idGroup){
+    public void pushTataNilai(String idGroup) {
         final ProgressDialog dialog = ProgressDialog.show(Step3TataNilai.this, "", "Loading. Please wait...", true);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Do_CoC/set_tata_nilai/" + idGroup,
                 new Response.Listener<String>() {
@@ -228,7 +230,7 @@ public class Step3TataNilai extends AppCompatActivity {
                             }
                         } catch (Exception e) {
 //                            Toast.makeText(Step3TataNilai.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data \n", Snackbar.LENGTH_LONG);
                             snackbar.show();
                             dialog.dismiss();
                         }
@@ -240,7 +242,7 @@ public class Step3TataNilai extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(Step3TataNilai.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data \n", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
@@ -255,7 +257,7 @@ public class Step3TataNilai extends AppCompatActivity {
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
-                    params.put("id_tata_nilai",tanilSel);
+                    params.put("id_tata_nilai", tanilSel);
                     return params;
                 } catch (Exception e) {
                     e.getMessage();

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,10 +78,10 @@ public class Profile extends Fragment {
                                 JSONArray data = jsonObject.getJSONArray("data");
                                 JSONObject object = data.getJSONObject(0);
 
-                                nama.setText(object.optString("nama",""));
-                                jabatan.setText(object.optString("nama_jabatan",""));
-                                lokasi.setText(object.optString("nama_kantor",""));
-                                Picasso.with(Profile.this.getContext()).load(object.optString("url_foto","")).into(new Target() {
+                                nama.setText(object.optString("nama", ""));
+                                jabatan.setText(object.optString("nama_jabatan", ""));
+                                lokasi.setText(object.optString("nama_kantor", ""));
+                                Picasso.with(Profile.this.getContext()).load(object.optString("url_foto", "")).into(new Target() {
                                     @Override
                                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                                         profile.setImageBitmap(bitmap);
@@ -99,11 +100,15 @@ public class Profile extends Fragment {
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n"+error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n" + error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data profil", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n"+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(Profile.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data profil", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
                 },
@@ -112,7 +117,8 @@ public class Profile extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(Profile.this.getContext(), "Gagal menerima data profil", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data profil", Snackbar.LENGTH_LONG);
+                        snackbar.show();
 
                     }
                 }) {

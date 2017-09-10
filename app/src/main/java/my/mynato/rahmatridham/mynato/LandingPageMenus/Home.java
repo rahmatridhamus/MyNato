@@ -1,15 +1,23 @@
 package my.mynato.rahmatridham.mynato.LandingPageMenus;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -45,6 +53,7 @@ public class Home extends Fragment implements View.OnClickListener {
 
     CardView cocThematik, cocinsidental, absensi, pemberitahuan, survey, pakKadirun, suratPernyataan;
     ImageView isReadSurvey, isReadabsensi, isReadpemberitahuan, isReadpakKadirun, isReadSurat;
+    WebView wv;
 
     public Home() {
         // Required empty public constructor
@@ -79,6 +88,23 @@ public class Home extends Fragment implements View.OnClickListener {
         survey.setOnClickListener(this);
         pakKadirun.setOnClickListener(this);
         suratPernyataan.setOnClickListener(this);
+
+        wv = (WebView) view.findViewById(R.id.chart1);
+        WebSettings settings = wv.getSettings();
+        settings.setMinimumFontSize(18);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
+        settings.setJavaScriptEnabled(true);
+        wv.loadUrl("http://119.252.170.4:8089/mynato/mastercoc/chart/chartview/101025");
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
 
         getHome();
         return view;
@@ -173,10 +199,13 @@ public class Home extends Fragment implements View.OnClickListener {
 
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(Home.this.getContext(), error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data \n" + error, Snackbar.LENGTH_LONG);
+                                snackbar.show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(Home.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Home.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     }
                 },
@@ -184,8 +213,8 @@ public class Home extends Fragment implements View.OnClickListener {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
-                        error.printStackTrace();
-                        Toast.makeText(Home.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data ", Snackbar.LENGTH_LONG);
+                        snackbar.show();
 //                        refreshLayout.setRefreshing(false);
 
                     }

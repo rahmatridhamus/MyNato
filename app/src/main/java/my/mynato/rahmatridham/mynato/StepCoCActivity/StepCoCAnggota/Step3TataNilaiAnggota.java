@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,30 +30,41 @@ import my.mynato.rahmatridham.mynato.Config;
 import my.mynato.rahmatridham.mynato.R;
 
 public class Step3TataNilaiAnggota extends AppCompatActivity {
-    TextView tataNilai;
+    TextView tataNilai, hist, contTanil;
     Button lanjut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step3_tata_nilai_anggota);
 
-        tataNilai = (TextView) findViewById(R.id.descVisi);
+        tataNilai = (TextView) findViewById(R.id.descTitl);
+        contTanil = (TextView) findViewById(R.id.descCOnt);
+        hist = (TextView) findViewById(R.id.strMotivSebelum);
         lanjut = (Button) findViewById(R.id.buttonLanjutkan);
         lanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Step3TataNilaiAnggota.this,Step4DoAndDontAnggota.class));
+                startActivity(new Intent(Step3TataNilaiAnggota.this, Step4DoAndDontAnggota.class));
+                finish();
+
             }
         });
         SharedPreferences sharedPreferences = Step3TataNilaiAnggota.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        getTanil(sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF,""));
+        getTanil(sharedPreferences.getString(Config.IDCOCACTIVITY_SHARED_PREF, ""));
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Step3TataNilaiAnggota.this, Step2MotivasiAnggota.class));
+        finish();
     }
 
     private void getTanil(String idGroup) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(Step3TataNilaiAnggota.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Tata_Nilai/get_data/"+idGroup, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Anggota_CoC/tata_nilai/" + idGroup, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -61,25 +73,31 @@ public class Step3TataNilaiAnggota extends AppCompatActivity {
 
                     if (status.equals(String.valueOf(1))) {
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject eksisting = data.getJSONObject("eksisting");
-                        if (!eksisting.optString("id_tata_nilai", "").equals("")) {
+//                        JSONObject eksisting = data.getJSONObject("eksisting");
+                        if (data.optString("id_tata_nilai", "").equals("")) {
                             Toast.makeText(Step3TataNilaiAnggota.this, "Admin melum menyelesaikan halaman ini", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Step3TataNilaiAnggota.this, Step2MotivasiAnggota.class));
                             finish();
-                        }else {
-                            tataNilai.setText(eksisting.optString("title",""));
+                        } else {
+                            tataNilai.setText(data.optString("title", ""));
+                            contTanil.setText( Html.fromHtml(data.optString("content", "")));
+
+                            JSONObject history = jsonObject.getJSONObject("history");
+                            hist.setText("Pertemuan sebelumnya: " + history.optString("title", ""));
                         }
                         dialog.dismiss();
                     } else {
                         String error = jsonObject.optString("message");
 //                        Toast.makeText(CocVerified.this, "errorMessage: \n" + error, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Step3TataNilaiAnggota.this, Step2MotivasiAnggota.class));
+                        finish();
                         Snackbar snackbars = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                         snackbars.show();
                         dialog.dismiss();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Step3TataNilaiAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data. Periksa kembali internet." + e.getMessage(), Snackbar.LENGTH_LONG);
+//                    Toast.makeText(Step3TataNilaiAnggota.this, "error Response: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -91,7 +109,7 @@ public class Step3TataNilaiAnggota extends AppCompatActivity {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(CocVerified.this, "error getting response: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "error getting response: \n" + error.getMessage(), Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mendapatkan data \n", Snackbar.LENGTH_LONG);
                         snackbar.show();
                         dialog.dismiss();
                     }
