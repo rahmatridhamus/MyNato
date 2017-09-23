@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         final String error = jsonObject.optString("message");
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Login gagal, mohon diulangi\n" + error, Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Login gagal, mohon diulangi", Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
 

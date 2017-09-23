@@ -41,7 +41,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
         holder.buka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(games.getFile()); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(games.getFile().replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }

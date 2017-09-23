@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.OpenableColumns;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -127,6 +129,7 @@ public class CreatePemberitahuan extends AppCompatActivity {
                     }
                 }
 
+
                 postForward(title.getText().toString(), itemDesc.getText().toString());
             }
         });
@@ -204,10 +207,10 @@ public class CreatePemberitahuan extends AppCompatActivity {
                                 JSONArray dataPenerima = data.getJSONArray("data_penerima");
                                 for (int i = 0; i < dataPenerima.length(); i++) {
                                     JSONObject object = dataPenerima.getJSONObject(i);
-                                    PenerimaForwarder forwarder = new PenerimaForwarder(object.optString("kode_jabatan", ""), object.optString("nama_jabatan", ""), false);
+                                    PenerimaForwarder forwarder = new PenerimaForwarder(object.optString("nipeg", ""), object.optString("nama", ""), true);
                                     penerimaForwarderArrayList.add(forwarder);
                                 }
-                                counterForward.setText("0 dari " + penerimaForwarderArrayList.size() + " dipilih");
+                                counterForward.setText(penerimaForwarderArrayList.size()+" dari " + penerimaForwarderArrayList.size() + " dipilih");
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
                             } else {
@@ -245,7 +248,9 @@ public class CreatePemberitahuan extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(CreatePemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal menerima data", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    dialog.dismiss();
                 }
                 return params;
             }
@@ -283,7 +288,7 @@ public class CreatePemberitahuan extends AppCompatActivity {
                     }
                 } catch (Exception e) {
 //                    Toast.makeText(Step6Absensi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal parsing data\n", Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -292,8 +297,8 @@ public class CreatePemberitahuan extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(CreatePemberitahuan.this, "errorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n", Snackbar.LENGTH_LONG);
+//                Toast.makeText(CreatePemberitahuan.this, "errorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data "+error.getLocalizedMessage(), Snackbar.LENGTH_LONG);
                 snackbar.show();
                 dialog.dismiss();
 
@@ -313,11 +318,12 @@ public class CreatePemberitahuan extends AppCompatActivity {
                     }
                 }
 
+                Log.d("digoda",s);
+
                 params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
                 params.put("title", title);
                 params.put("content", content);
                 params.put("penerima", s);
-
 
                 return params;
             }
@@ -336,6 +342,83 @@ public class CreatePemberitahuan extends AppCompatActivity {
 
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
     }
+
+//    private void postForwardNoFile(final String title, final String content) {
+//        //Creating a string request
+//        final ProgressDialog dialog = ProgressDialog.show(CreatePemberitahuan.this, "", "Loading. Please wait...", true);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Pemberitahuan/send_message",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        String resultResponse = new String(response);
+//                        // parse success output
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(resultResponse);
+//                            String status = jsonObject.optString("status").trim();
+//                            if (status.equals(String.valueOf(1))) {
+//
+//                                startActivity(new Intent(CreatePemberitahuan.this, Pemberitahuan.class));
+//                                finish();
+//                                Toast.makeText(CreatePemberitahuan.this, "Pemberitahuan berhasil dikirimkan", Toast.LENGTH_SHORT).show();
+//                                dialog.dismiss();
+//                            } else {
+//                                String error = jsonObject.optString("message");
+//                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
+//                                snackbar.show();
+//                                dialog.dismiss();
+//                            }
+//                        } catch (Exception e) {
+//                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal parsing data\n", Snackbar.LENGTH_LONG);
+//                            snackbar.show();
+//                            dialog.dismiss();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        //You can handle error here if you want
+//                        error.printStackTrace();
+//                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n"+error.getMessage(), Snackbar.LENGTH_LONG);
+//                        snackbar.show();
+//                        dialog.dismiss();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//
+//                try {
+//                    //Creating a shared preference
+//                    SharedPreferences sharedPreferences = CreatePemberitahuan.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//                    //Adding parameters to request
+//                    String s = "";
+//                    for (int i = 0; i < pushDaftarAbsen.size(); i++) {
+//                        if (s.equals("")) {
+//                            s = pushDaftarAbsen.get(i);
+//                        } else {
+//                            s += "," + pushDaftarAbsen.get(i);
+//                        }
+//                    }
+//
+//                    params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
+//                    params.put("title", title);
+//                    params.put("content", content);
+//                    params.put("penerima", s);
+//                    return params;
+//                } catch (Exception e) {
+//                    e.getMessage();
+//                    Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//                return params;
+//            }
+//        };
+//
+//        //Adding the string request to the queue
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
+//    }
+
 
     private class MyCustomAdapter extends ArrayAdapter<PenerimaForwarder> {
 

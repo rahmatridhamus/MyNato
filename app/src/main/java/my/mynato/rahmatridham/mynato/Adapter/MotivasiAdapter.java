@@ -41,7 +41,7 @@ public class MotivasiAdapter extends RecyclerView.Adapter<MotivasiAdapter.MyView
         holder.buka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(motivasi.getFile()); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(motivasi.getFile().replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }

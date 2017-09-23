@@ -100,12 +100,12 @@ public class DetailHistoryCoc extends AppCompatActivity {
         tiltle = (TextView) findViewById(R.id.toolbar_title);
         tanggal = (TextView) findViewById(R.id.toolbar_tanggal);
 
-
         detCerMot = (TextView) findViewById(R.id.buttonOpendetCerMot);
         detCerMot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(urldetCerMot); // missing 'http://' will cause crashed
+                Toast.makeText(DetailHistoryCoc.this, urldetCerMot, Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(urldetCerMot.replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }
@@ -115,7 +115,8 @@ public class DetailHistoryCoc extends AppCompatActivity {
         detGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(urldetGames); // missing 'http://' will cause crashed
+                Toast.makeText(DetailHistoryCoc.this, urldetGames, Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(urldetGames.replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }

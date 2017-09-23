@@ -153,8 +153,7 @@ public class MyCOC extends Fragment {
                         //You can handle error here if you want
                         error.printStackTrace();
 //                        Toast.makeText(MyCOC.this.getContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        Snackbar snackbar = Snackbar.make(getView(), "Gagal menerima data CoC ", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        Snackbar.make(getView(), "Gagal menerima data CoC ", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         refreshLayout.setRefreshing(false);
 
                     }
@@ -165,21 +164,21 @@ public class MyCOC extends Fragment {
 
                 try {
                     //Creating a shared preference
-                    SharedPreferences sharedPreferences = MyCOC.this.getContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                     //Adding parameters to request
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(MyCOC.this.getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }
         };
 
         //Adding the string request to the queue
-        RequestQueue requestQueue = Volley.newRequestQueue(MyCOC.this.getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
 

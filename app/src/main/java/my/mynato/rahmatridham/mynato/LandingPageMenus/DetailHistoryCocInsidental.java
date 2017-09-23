@@ -96,7 +96,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
         detCerMot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(urldetCerMot); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(urldetCerMot.replaceAll("\\s+", "%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }
@@ -106,7 +106,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
         detGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(urldetGames); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(urldetGames.replaceAll("\\s+", "%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }
@@ -203,7 +203,6 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                                 tanggal.setText(data.optString("date", "null"));
                                 subDivisi.setText(data.optString("nama_group", "null"));
 
-
                                 nmMotivasi.setText(data.optString("cerita_motivasi", ""));
                                 nmGames.setText(data.optString("games", ""));
 
@@ -258,7 +257,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),error, Snackbar.LENGTH_LONG);
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG);
                                 snackbar.show();
                                 dialog.dismiss();
                             }

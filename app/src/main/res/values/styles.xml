@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="colorPrimary">@color/warnabiruheader</item>
+        <item name="colorPrimary">@color/biruLogin</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
         <item name="colorAccent">@color/warnaijo</item>
         <item name="android:colorForeground">@color/darker_grayText</item>
@@ -22,7 +22,7 @@
     <!-- Base application theme. -->
     <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/warnabiruheader</item>
+        <item name="colorPrimary">@color/biruLogin</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
         <item name="colorAccent">@color/warnaijo</item>
         <item name="android:textColorPrimary">@color/white</item>

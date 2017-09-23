@@ -20,17 +20,20 @@
             android:id="@+id/relvisi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/darker_gray"
-            android:gravity="center_vertical">
+            android:background="#c5c5c5"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/textViewJudulForward"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Judul Pemberitahuan"
-                android:textSize="17sp"
-                android:textStyle="normal|bold" />
+                android:layout_marginRight="10dp"
+                android:text="Pemberitahuan"
+                android:textSize="14sp"
+                android:textStyle="normal|bold"  />
         </RelativeLayout>
 
         <ScrollView

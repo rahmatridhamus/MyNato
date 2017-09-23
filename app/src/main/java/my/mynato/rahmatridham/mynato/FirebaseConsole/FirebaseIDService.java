@@ -63,9 +63,9 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Toast.makeText(FirebaseIDService.this, response, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(FirebaseIDService.this, response, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed to get server", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -74,7 +74,7 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed to get server", Toast.LENGTH_SHORT).show();
 
                     }
                 }) {
@@ -94,7 +94,7 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(getApplicationContext(), "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed to get server", Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }

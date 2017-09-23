@@ -121,10 +121,10 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                                 JSONArray dataPenerima = data.getJSONArray("daftar_penerima");
                                 for (int i = 0; i < dataPenerima.length(); i++) {
                                     JSONObject object = dataPenerima.getJSONObject(i);
-                                    PenerimaForwarder forwarder = new PenerimaForwarder(object.optString("kode_jabatan", ""), object.optString("nama_jabatan", ""), false);
+                                    PenerimaForwarder forwarder = new PenerimaForwarder(object.optString("nipeg", ""), object.optString("nama", ""), true);
                                     penerimaForwarderArrayList.add(forwarder);
                                 }
-                                counterForward.setText("0 dari " + penerimaForwarderArrayList.size() + " dipilih");
+                                counterForward.setText(penerimaForwarderArrayList.size() + " dari " + penerimaForwarderArrayList.size() + " dipilih");
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();
                             } else {
@@ -176,7 +176,7 @@ public class ForwardPemberitahuan extends AppCompatActivity {
     private void postForward(final String id_pemberitahuan) {
         //Creating a string request
         final ProgressDialog dialog = ProgressDialog.show(ForwardPemberitahuan.this, "", "Loading. Please wait...", true);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Pemberitahuan/forward_message/" + id_pemberitahuan,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.MAIN_URL + "Pemberitahuan/send_forward/" + id_pemberitahuan,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -189,11 +189,15 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                                 dialog.dismiss();
                             } else {
                                 String error = jsonObject.optString("message");
-                                Toast.makeText(ForwardPemberitahuan.this, error, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(ForwardPemberitahuan.this, error, Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n", Snackbar.LENGTH_LONG);
+                                snackbar.show();
                                 dialog.dismiss();
                             }
                         } catch (Exception e) {
                             Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n", Snackbar.LENGTH_LONG);
+                            snackbar.show();
                             dialog.dismiss();
                         }
                     }
@@ -203,7 +207,9 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         //You can handle error here if you want
                         error.printStackTrace();
-                        Toast.makeText(ForwardPemberitahuan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ForwardPemberitahuan.this, "error: \n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data\n", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                         dialog.dismiss();
                     }
                 }) {
@@ -223,7 +229,8 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                             s += "," + pushDaftarAbsen.get(i);
                         }
                     }
-//                    Toast.makeText(ForwardPemberitahuan.this, s, Toast.LENGTH_SHORT).show();
+
+                    Log.d("dicoba",s);
                     params.put(Config.TOKEN_SHARED_PREF, sharedPreferences.getString(Config.TOKEN_SHARED_PREF, ""));
                     params.put("id_pemberitahuan", id_pemberitahuan);
                     params.put("forwardnipeg", sharedPreferences.getString(Config.NIPEG_SHARED_PREF, ""));
@@ -231,7 +238,7 @@ public class ForwardPemberitahuan extends AppCompatActivity {
                     return params;
                 } catch (Exception e) {
                     e.getMessage();
-                    Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ForwardPemberitahuan.this, "error: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return params;
             }
