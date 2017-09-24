@@ -251,6 +251,7 @@ public class DetailHistoryCoc extends AppCompatActivity {
                                     @Override
                                     public void onBitmapFailed(Drawable errorDrawable) {
                                         suasana.setImageResource(R.drawable.empty_picture);
+                                        Toast.makeText(DetailHistoryCoc.this, errorDrawable.toString(), Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override

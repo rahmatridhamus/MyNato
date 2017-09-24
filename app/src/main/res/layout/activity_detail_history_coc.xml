@@ -337,7 +337,7 @@
 
                     <ImageView
                         android:id="@+id/imageViewFotoSuasana"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
