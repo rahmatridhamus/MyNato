@@ -10,7 +10,8 @@ import java.io.RandomAccessFile;
 public class Config {
     //URL to our loginBut.php file
 //    public static final String MAIN_URL = "http://scripthink.com/mynato/api/";
-    public static final String MAIN_URL = "http://119.252.170.4:8089/mynato/api/";
+//    public static final String MAIN_URL = "http://119.252.170.4:8089/mynato/api/";
+    public static final String MAIN_URL = "https://nd04.plnbabel.co.id/mynato/api/";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php
     public static final String KEY_EMAIL = "email";

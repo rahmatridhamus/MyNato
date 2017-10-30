@@ -74,7 +74,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageView4"
                 android:layout_toRightOf="@+id/imageView4"
-                android:text="Pertemuan Sebelumnya: blablabla"
+                android:text="Pertemuan Sebelumnya: "
                 android:textSize="10sp" />
         </RelativeLayout>
 

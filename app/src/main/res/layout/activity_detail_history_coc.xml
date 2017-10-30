@@ -280,16 +280,20 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_below="@+id/Thematik">
 
                 <RelativeLayout
                     android:id="@+id/judulDokumentasi"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:background="@color/birudetil">
+                    android:background="@color/birudetil"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
 
                     <TextView
                         android:id="@+id/textView2cuyDokumentasi"
@@ -309,64 +313,88 @@
                     android:layout_height="match_parent"
                     android:layout_below="@+id/judulDokumentasi"
                     android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <ImageView
-                        android:id="@+id/imageViewFotoAbsensi"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:maxHeight="100dp"
-                        android:maxWidth="100dp"
-                        app:srcCompat="@drawable/empty_picture" />
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:text="Foto Absensi"
-                        android:textAlignment="center" />
-
-                    <ImageView
-                        android:id="@+id/imageViewFotoSuasana"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/empty_picture" />
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:text="Foto Suasana"
-                        android:textAlignment="center" />
-
-                    <VideoView
-                        android:id="@+id/videoViewVideoSuasana"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/textView21"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Video Suasana"
-                        android:textAlignment="center" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:text="Foto Absensi"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:id="@+id/imageViewFotoAbsensi"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:maxHeight="100dp"
+                            android:maxWidth="100dp"
+                            app:srcCompat="@drawable/empty_picture" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="Foto Suasana"
+                            android:textAlignment="center" />
+
+                        <ImageView
+                            android:id="@+id/imageViewFotoSuasana"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            app:srcCompat="@drawable/empty_picture" />
+                    </LinearLayout>
+
                 </LinearLayout>
-            </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Lihat Video Suasana"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <VideoView
+                    android:id="@+id/videoview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+            </LinearLayout>
 
         </RelativeLayout>
     </ScrollView>

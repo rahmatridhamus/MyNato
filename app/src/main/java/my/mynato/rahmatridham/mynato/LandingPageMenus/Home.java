@@ -97,7 +97,7 @@ public class Home extends Fragment implements View.OnClickListener {
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
         settings.setJavaScriptEnabled(true);
-        wv.loadUrl("http://119.252.170.4:8089/mynato/mastercoc/chart/chartview/101025");
+        wv.loadUrl("https://nd04.plnbabel.co.id/mynato/mastercoc/chart/chartview/101025");
         wv.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -1,10 +1,12 @@
 package my.mynato.rahmatridham.mynato.StepCoCActivity;
 
+import android.app.Instrumentation;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -42,7 +44,11 @@ import my.mynato.rahmatridham.mynato.VolleyAssets.VolleySingleton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -275,9 +281,9 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
                 if (typeInput == 0) {
-                    params.put("foto_absensi", new DataPart(fileUri.getPath(), AppHelper.getFileDataFromDrawable(getBaseContext(), absen.getDrawable()), "image/jpeg"));
+                    params.put("foto_absensi", new DataPart(fileUri.getLastPathSegment(), AppHelper.getFileDataFromDrawable(getBaseContext(), Drawable.createFromPath(fileUri.getPath())), "image/jpeg"));
                 } else {
-                    params.put("foto_suasana", new DataPart(fileUri.getPath(), AppHelper.getFileDataFromDrawable(getBaseContext(), pegawai.getDrawable()), "image/jpeg"));
+                    params.put("foto_suasana", new DataPart(fileUri.getLastPathSegment(), AppHelper.getFileDataFromDrawable(getBaseContext(), Drawable.createFromPath(fileUri.getPath())), "image/jpeg"));
                 }
                 return params;
             }
@@ -310,7 +316,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                     }
                 } catch (Exception e) {
 //                    Toast.makeText(Step6Absensi.this, "errorJSON: \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data" + e.getLocalizedMessage(), Snackbar.LENGTH_LONG);
                     snackbar.show();
                     dialog.dismiss();
                 }
@@ -320,7 +326,7 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 //                Toast.makeText(Step6Absensi.this, "errorResponse" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Gagal mengirim data" + error.getLocalizedMessage(), Snackbar.LENGTH_LONG);
                 snackbar.show();
                 dialog.dismiss();
 
@@ -340,7 +346,22 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
                 Map<String, DataPart> params = new HashMap<>();
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
-                params.put("video", new DataPart(fileUri.getPath(), AppHelper.getFileDataFromDrawable(getBaseContext(), absen.getDrawable()), "image/jpeg"));
+//                params.put("video", new DataPart(fileUri.getLastPathSegment(), AppHelper.getFileDataFromDrawable(getBaseContext(), Drawable.createFromPath(fileUri.getPath())),"video/mp4"));
+                byte[] videoBytes = null;
+                try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    FileInputStream fis = new FileInputStream(new File(fileUri.getPath()));
+                    byte[] buf = new byte[1024];
+                    int n;
+                    while (-1 != (n = fis.read(buf)))
+                        baos.write(buf, 0, n);
+
+                    videoBytes = baos.toByteArray();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                params.put("video", new DataPart(fileUri.getLastPathSegment(), videoBytes, "video/mp4"));
                 return params;
             }
         };
@@ -463,6 +484,18 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    Bitmap uriTOBitmap(Uri data) {
+
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
     /**
      * Receiving activity result method will be called after closing the camera
      */
@@ -471,9 +504,11 @@ public class Step6Absensi extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPreferences = Step6Absensi.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String idGroup = sharedPreferences.getString(Config.IDGROUPCOC_SHARED_PREF, "");
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_ABSENSI) {
+
             if (resultCode == RESULT_OK) {
                 // successfully captured the image
                 // launching upload activity
+//                absen.setImageBitmap(uriTOBitmap(fileUri));
                 postGambar("set_foto_absensi/" + idGroup, fileUri, 0);
 //                postGambar("set_foto_absensi/" + idGroup, data.getData(), 0);
             } else if (resultCode == RESULT_CANCELED) {

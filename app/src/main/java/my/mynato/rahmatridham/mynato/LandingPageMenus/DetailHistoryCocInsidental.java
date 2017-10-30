@@ -28,6 +28,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -47,7 +49,7 @@ import java.util.Map;
 public class DetailHistoryCocInsidental extends AppCompatActivity {
     TextView detCerMot, detGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
-    TextView nmMotivasi, nmGames, subDivisi, tanggal;
+    TextView nmMotivasi, nmGames, subDivisi, tanggal, videoSuasana;
     String urldetCerMot, urldetGames;
 
     ImageView absensi, suasana;
@@ -68,6 +70,7 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
     String strTanil;
     String strDoDont;
     String strThematik;
+    String urlVidSuasana;
 
     String id_coc_activity = "";
 
@@ -111,6 +114,18 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
+
+        videoSuasana= (TextView) findViewById(R.id.textView_video);
+        videoSuasana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(urlVidSuasana), "video/mp4");
+                startActivity(intent);
+            }
+        });
+
         nmMotivasi = (TextView) findViewById(R.id.textViewNamot);
         nmGames = (TextView) findViewById(R.id.textVNagem);
         subDivisi = (TextView) findViewById(R.id.toolbar_subBidang);
@@ -118,7 +133,6 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
 
         absensi = (ImageView) findViewById(R.id.imageViewFotoAbsensi);
         suasana = (ImageView) findViewById(R.id.imageViewFotoSuasana);
-        vidSuasana = (VideoView) findViewById(R.id.videoViewVideoSuasana);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -216,43 +230,32 @@ public class DetailHistoryCocInsidental extends AppCompatActivity {
                                 itemTanil.add(data.optString("content_tata_nilai", "bla"));
                                 itemDodont.add("<b>Do</b>:\n" + data.optString("content_do", "") + '\n' + "<br></br>" + "<br><b>Don't</b>:</br>\n" + data.optString("content_dont", "bla"));
                                 itemThematik.add(data.optString("insidental", "bla"));
-                                Picasso.with(DetailHistoryCocInsidental.this).load(data.optString("foto_absensi", "null")).into(new Target() {
+
+                                Glide.with(DetailHistoryCocInsidental.this).load(data.optString("foto_absensi", "null"))
+                                        .thumbnail(0.5f)
+                                        .error(R.drawable.empty_picture)
+                                        .crossFade()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(absensi);
+
+                                Glide.with(DetailHistoryCocInsidental.this).load(data.optString("foto_suasana", "null"))
+                                        .thumbnail(0.5f)
+                                        .error(R.drawable.empty_picture)
+                                        .crossFade()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(suasana);
+
+                                urlVidSuasana = data.optString("video", "null");
+                                videoSuasana = (TextView) findViewById(R.id.textView_video);
+                                videoSuasana.setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        absensi.setImageBitmap(bitmap);
-                                    }
-
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        absensi.setImageResource(R.drawable.empty_picture);
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                    }
-                                });
-
-                                Picasso.with(DetailHistoryCocInsidental.this).load(data.optString("foto_suasana", "null")).into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        suasana.setImageBitmap(bitmap);
-
-                                    }
-
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        suasana.setImageResource(R.drawable.empty_picture);
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_VIEW);
+                                        intent.setDataAndType(Uri.parse(urlVidSuasana), "video/mp4");
+                                        startActivity(intent);
                                     }
                                 });
-
-                                vidSuasana.setVideoPath(data.optString("video", "null"));
-                                vidSuasana.start();
                                 prepare();
                                 dialog.dismiss();
                             } else {

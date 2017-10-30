@@ -58,7 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LandingPage extends AppCompatActivity implements OnChartValueSelectedListener {
+public class LandingPage extends AppCompatActivity{
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -76,20 +76,6 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
-
-
-//        mChart = (BarChart) findViewById(R.id.chart1);
-//        mChart.setOnChartValueSelectedListener(this);
-//        mChart.setDrawBarShadow(false);
-//        mChart.setDrawValueAboveBar(true);
-//        mChart.getDescription().setEnabled(false);
-//        // if more than 60 entries are displayed in the chart, no values will be
-//        // drawn
-//        mChart.setMaxVisibleValueCount(60);
-//
-//        // scaling can now only be done on x- and y-axis separately
-//        mChart.setPinchZoom(false);
-//        mChart.setDrawGridBackground(false);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -190,32 +176,6 @@ public class LandingPage extends AppCompatActivity implements OnChartValueSelect
         adapter.addFrag(new MyCOC(), "My CoC");
         adapter.addFrag(new Profile(), "Profil");
         viewPager.setAdapter(adapter);
-    }
-
-    protected RectF mOnValueSelectedRectF = new RectF();
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-        if (e == null)
-            return;
-
-        RectF bounds = mOnValueSelectedRectF;
-        mChart.getBarBounds((BarEntry) e, bounds);
-        MPPointF position = mChart.getPosition(e, YAxis.AxisDependency.LEFT);
-
-        Log.i("bounds", bounds.toString());
-        Log.i("position", position.toString());
-
-        Log.i("x-index",
-                "low: " + mChart.getLowestVisibleX() + ", high: "
-                        + mChart.getHighestVisibleX());
-
-        MPPointF.recycleInstance(position);
-    }
-
-    @Override
-    public void onNothingSelected() {
-
     }
 
 

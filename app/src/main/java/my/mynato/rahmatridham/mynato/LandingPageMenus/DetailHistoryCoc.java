@@ -1,11 +1,14 @@
 package my.mynato.rahmatridham.mynato.LandingPageMenus;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.rtoshiro.view.video.FullscreenVideoLayout;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -48,13 +54,13 @@ import java.util.Map;
 public class DetailHistoryCoc extends AppCompatActivity {
     TextView showMotivasi, showGames;
     ExpandableListView listTataNilai, listDoAndDont, listThematik;
-    TextView nmMotivasi, nmGames, tiltle, tanggal, detCerMot, detGames;
+    TextView nmMotivasi, nmGames, tiltle, tanggal, detCerMot, detGames, videoSuasana;
     String urldetCerMot, urldetGames;
     public static String urldetThematik;
 
     ImageView absensi, suasana;
     VideoView vidSuasana;
-    private MediaController ctlr;
+    MediaController mediacontroller;
 
     ArrayList<String> tataNilaiArrayList;
     ArrayList<String> doAndDontArrayList;
@@ -71,6 +77,7 @@ public class DetailHistoryCoc extends AppCompatActivity {
     String strTanil;
     String strDoDont;
     String strThematik;
+    String urlVidSuasana;
 
     String id_coc_activity = "";
 
@@ -104,8 +111,8 @@ public class DetailHistoryCoc extends AppCompatActivity {
         detCerMot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(DetailHistoryCoc.this, urldetCerMot, Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(urldetCerMot.replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
+//                Toast.makeText(DetailHistoryCoc.this, urldetCerMot, Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse(urldetCerMot.replaceAll("\\s+", "%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }
@@ -116,15 +123,30 @@ public class DetailHistoryCoc extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(DetailHistoryCoc.this, urldetGames, Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse(urldetGames.replaceAll("\\s+","%20")); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(urldetGames.replaceAll("\\s+", "%20")); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 v.getContext().startActivity(intent);
             }
         });
 
+        videoSuasana= (TextView) findViewById(R.id.textView_video);
+        videoSuasana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.parse(urlVidSuasana), "video/mp4");
+                startActivity(intent);
+            }
+        });
+
+
+
         absensi = (ImageView) findViewById(R.id.imageViewFotoAbsensi);
         suasana = (ImageView) findViewById(R.id.imageViewFotoSuasana);
-        vidSuasana = (VideoView) findViewById(R.id.videoViewVideoSuasana);
+        vidSuasana = (VideoView) findViewById(R.id.videoview);
+
+//        vidSuasana.setActivity(this);
 
         Intent iin = getIntent();
         Bundle b = iin.getExtras();
@@ -224,44 +246,23 @@ public class DetailHistoryCoc extends AppCompatActivity {
                                 itemDodont.add("<b>Do</b>:\n" + data.optString("content_do", "null") + "<br></br>" + "<br><b>Don't</b>:</br>\n" + data.optString("content_dont", "null"));
                                 itemThematik.add(data.optString("sub_title_thematik", "null"));
 
-                                Picasso.with(DetailHistoryCoc.this).load(data.optString("foto_absensi", "null")).into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        absensi.setImageBitmap(bitmap);
-                                    }
+                                Glide.with(DetailHistoryCoc.this).load(data.optString("foto_absensi", "null"))
+                                        .thumbnail(0.5f)
+                                        .error(R.drawable.empty_picture)
+                                        .crossFade()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(absensi);
 
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        absensi.setImageResource(R.drawable.empty_picture);
-                                    }
+                                Glide.with(DetailHistoryCoc.this).load(data.optString("foto_suasana", "null"))
+                                        .thumbnail(0.5f)
+                                        .error(R.drawable.empty_picture)
+                                        .crossFade()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .into(suasana);
 
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                urlVidSuasana = data.optString("video", "null");
 
-                                    }
-                                });
 
-                                Picasso.with(DetailHistoryCoc.this).load(data.optString("foto_suasana", "null")).into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        suasana.setImageBitmap(bitmap);
-
-                                    }
-
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        suasana.setImageResource(R.drawable.empty_picture);
-                                        Toast.makeText(DetailHistoryCoc.this, errorDrawable.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                    }
-                                });
-
-                                vidSuasana.setVideoPath(data.optString("video", "null"));
-                                vidSuasana.start();
                                 thematikAdapter.notifyDataSetChanged();
                                 prepare();
                                 dialog.dismiss();
@@ -315,6 +316,11 @@ public class DetailHistoryCoc extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(DetailHistoryCoc.this);
         requestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     private void setListViewHeight(ListView listView) {
